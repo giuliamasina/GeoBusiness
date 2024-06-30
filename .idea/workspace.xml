@@ -10,14 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment="first">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Articolo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloAsta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloVendita.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Compratore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Recensione.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Utente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Venditore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/ArticoloAstaDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/ArticoloDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/ArticoloVenditaDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CompratoreDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CookieDAOFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/DAOFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/RecensioneDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/UtenteDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/VenditoreDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloAsta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloAsta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloVendita.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloVendita.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Compratore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Compratore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Recensione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Recensione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Venditore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Venditore.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +35,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -83,6 +92,12 @@
     "project.structure.side.proportion": "0.40574712",
     "settings.editor.selected.configurable": "preferences.updates",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver.localdb",
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RunManager">
@@ -193,6 +208,7 @@
       <workItem from="1719522111015" duration="2886000" />
       <workItem from="1719572199786" duration="1266000" />
       <workItem from="1719573506375" duration="3048000" />
+      <workItem from="1719680138070" duration="8494000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />

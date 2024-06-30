@@ -8,6 +8,8 @@ public class Recensione {
     private Integer valutazione;
     private String commento;
     private Date Data_pubblicazione;
+    private Venditore venditore;
+    private Compratore compratore;
 
     public Integer getId() { return id; }
 
@@ -26,6 +28,14 @@ public class Recensione {
     public void setDataPubblicazione(Date Data_pubblicazione) {
         this.Data_pubblicazione = Data_pubblicazione;
     }
+
+    public Venditore getVenditore() { return venditore; }
+
+    public void setVenditore(Venditore venditore) { this.venditore = venditore; }
+
+    public Compratore getCompratore() { return compratore; }
+
+    public void setCompratore(Compratore compratore) { this.compratore = compratore; }
 
 }
 
