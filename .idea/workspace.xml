@@ -10,22 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment="DAO and CookieDAOFactory">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/ArticoloAstaDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/ArticoloDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/ArticoloVenditaDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CompratoreDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CookieDAOFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/DAOFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/RecensioneDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/UtenteDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/VenditoreDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CompratoreDAOCoockiImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/UtenteDAOCookieImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/VenditoreDAOCoockieImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/UtenteDAOMySQLJDBCImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloAsta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloAsta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloVendita.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/ArticoloVendita.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Compratore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Compratore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Recensione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Recensione.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Venditore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/mo/Venditore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CookieDAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CookieDAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/UtenteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/UtenteDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,32 +65,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Tomcat Server.Tomcat 10.1.19.executor": "Run",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/giuggiu/GeoBusiness/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.40574712",
-    "settings.editor.selected.configurable": "preferences.updates",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Tomcat 10.1.19.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/giuggiu/GeoBusiness/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.40574712&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlserver.localdb",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlserver.localdb&quot;,
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Tomcat 10.1.19" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.19" ALTERNATIVE_JRE_ENABLED="false">
       <deployment>
@@ -208,7 +199,8 @@
       <workItem from="1719522111015" duration="2886000" />
       <workItem from="1719572199786" duration="1266000" />
       <workItem from="1719573506375" duration="3048000" />
-      <workItem from="1719680138070" duration="8830000" />
+      <workItem from="1719680138070" duration="8870000" />
+      <workItem from="1719862215625" duration="6926000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
@@ -234,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719772757335</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="DAO and CookieDAOFactory">
+      <option name="closed" value="true" />
+      <created>1719772771550</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719772771550</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

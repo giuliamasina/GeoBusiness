@@ -14,6 +14,8 @@ public interface UtenteDAO {
 
     public void delete(Utente utente);
 
+    public Utente findLoggedUtente();
+
     public Utente findByUtenteId(Integer id);
 
 }

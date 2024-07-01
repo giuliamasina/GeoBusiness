@@ -17,24 +17,31 @@ public class CookieDAOFactory extends DAOFactory {
     @Override
     public void beginTransaction() {
 
+        try {
+            this.request=(HttpServletRequest) factoryParameters.get("request");
+            this.response=(HttpServletResponse) factoryParameters.get("response");;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
     public void commitTransaction() {
-
+            // si lascia vuoto
     }
 
     @Override
     public void rollbackTransaction() {
-
+            // si lascia vuoto
     }
 
     @Override
     public void closeTransaction() {
-
+        // si lascia vuoto
     }
 
-    // DECIDERE SE USARE COOKI OPPURE NO
+    // DECIDERE SE USARE COOKIE OPPURE NO
     @Override
     public UtenteDAO getUtenteDAO() {
         return null;
