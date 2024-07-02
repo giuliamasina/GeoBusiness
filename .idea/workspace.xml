@@ -10,13 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment="DAO and CookieDAOFactory">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CompratoreDAOCoockiImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/UtenteDAOCookieImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/VenditoreDAOCoockieImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/UtenteDAOMySQLJDBCImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/ArticoloDAOMySQLJDBCImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CookieDAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CookieImpl/CookieDAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/DAOFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/UtenteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/UtenteDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/UtenteDAOMySQLJDBCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/UtenteDAOMySQLJDBCImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +198,8 @@
       <workItem from="1719572199786" duration="1266000" />
       <workItem from="1719573506375" duration="3048000" />
       <workItem from="1719680138070" duration="8870000" />
-      <workItem from="1719862215625" duration="6926000" />
+      <workItem from="1719862215625" duration="7605000" />
+      <workItem from="1719947830562" duration="6033000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
@@ -234,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719772771550</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="DAO and CookieDAOFactory">
+      <option name="closed" value="true" />
+      <created>1719870489077</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1719870489077</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

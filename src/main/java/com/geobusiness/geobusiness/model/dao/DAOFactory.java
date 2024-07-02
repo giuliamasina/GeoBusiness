@@ -1,7 +1,7 @@
 package com.geobusiness.geobusiness.model.dao;
 
 //import com.geobusiness.geobusiness.model.dao.mySQLJDBCImpl.MySQLJDBCDAOFactory;
-//import com.geobusiness.geobusiness.model.dao.CookieImpl.CookieDAOFactory;
+import com.geobusiness.geobusiness.model.dao.CookieImpl.CookieDAOFactory;
 
 import java.util.Map;
 

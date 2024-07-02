@@ -16,9 +16,19 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
         this.conn = conn;
     }
     @Override
-    public Utente create(Integer id, String Username, String Paswword) {   // DA IMPLEMENTARE
+    public Utente create(         // DA FINIRE
+            Integer id,
+            String Username,
+            String Password
+    ) {
+        PreparedStatement ps;
+        Utente utente = new Utente();
+        utente.setId(id);
+        utente.setUsername(Username);
+        utente.setPassword(Password);
+
         return null;
-    }
+    }  // La devo mettere per l'utente gestone, per venditore e compratore ne specifico un'altra
 
     @Override
     public void update(Utente utente) {         // DA IMPLEMENTARE
@@ -26,8 +36,25 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
     }
 
     @Override
-    public void delete(Utente utente) {        // DA IMPLEMENTARE
+    public void delete(Utente utente) {
+        PreparedStatement ps;
 
+        try {
+
+            String sql
+                    = " UPDATE UTENTE "
+                    + " SET Deleted='Y' "
+                    + " WHERE "
+                    + " ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, utente.getId());
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

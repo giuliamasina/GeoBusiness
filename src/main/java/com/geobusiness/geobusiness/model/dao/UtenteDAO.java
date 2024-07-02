@@ -14,8 +14,8 @@ public interface UtenteDAO {
 
     public void delete(Utente utente);
 
-    public Utente findLoggedUtente();
+    public Utente findLoggedUtente();     // coockie
 
-    public Utente findByUtenteId(Integer id);
+    public Utente findByUtenteId(Integer id);    // sql impl
 
 }
