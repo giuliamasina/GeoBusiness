@@ -16,18 +16,40 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
         this.conn = conn;
     }
     @Override
-    public Utente create(         // DA FINIRE
-            Integer id,
+    public Utente create(
+            Integer id,      // Probabilmente dovrò toglierlo, non lo uso per creare un utente, lo crea direttamente il database
             String Username,
             String Password
     ) {
         PreparedStatement ps;
         Utente utente = new Utente();
-        utente.setId(id);
+        //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
         utente.setUsername(Username);
         utente.setPassword(Password);
 
-        return null;
+        try{
+
+            String sql
+                    = " INSERT INTO UTENTE "
+                    + "   ( Username,"
+                    + "     Password,"
+                    + "   ) "
+                    + " VALUES (?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setString(i, utente.getUsername());
+            ps.setString(i++, utente.getPassword());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+    }
+
+    return utente;
+
+
     }  // La devo mettere per l'utente gestone, per venditore e compratore ne specifico un'altra
 
     @Override

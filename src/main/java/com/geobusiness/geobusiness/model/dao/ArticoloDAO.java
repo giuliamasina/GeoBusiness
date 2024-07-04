@@ -11,7 +11,7 @@ public interface ArticoloDAO {
             String nome,
             String categoria,
             String immagine,
-            String description  // non ho messo deleted e status perchè alla crezione hanno un default
+            String description  // non ho messo deleted e status perchè alla crezione hanno un default, se voglio cambiarli faccio una query (esempio in utenteDAOMySQLImpl)
     );
 
     public void update(Articolo articolo);

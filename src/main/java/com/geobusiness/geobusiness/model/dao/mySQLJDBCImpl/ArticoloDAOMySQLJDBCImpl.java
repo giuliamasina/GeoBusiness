@@ -22,8 +22,45 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
     }
 
     @Override
-    public Articolo create(Integer id, String nome, String categoria, String immagine, String description) {  // da fare su Articolo_vendita, Articolo_asta
-        return null;
+    public Articolo create(Integer id,  // da fare su Articolo_vendita, Articolo_asta
+                           String nome,
+                           String categoria,
+                           String immagine,
+                           String description
+    ) {
+        PreparedStatement ps;
+        Articolo articolo = new Articolo();
+        //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
+        articolo.setNome(nome);
+        articolo.setCategoria(categoria);
+        articolo.setImmagine(immagine);
+        articolo.setDescription(description);
+
+        try{
+
+            String sql
+                    = " INSERT INTO ARTICOLO "
+                    + "   ( Nome,"
+                    + "     Categoria,"
+                    + "     Immagine,"
+                    + "      Descrizione,"
+                    + "   ) "
+                    + " VALUES (?,?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setString(i, articolo.getNome());
+            ps.setString(i++, articolo.getCategoria());
+            ps.setString(i++, articolo.getImmagine());
+            ps.setString(i++, articolo.getDescription());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return articolo;
     }
 
     @Override
@@ -33,7 +70,24 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
 
     @Override
     public void delete(Articolo articolo) {
+        PreparedStatement ps;
 
+        try {
+
+            String sql
+                    = " UPDATE ARTICOLO "
+                    + " SET Deleted='Y' "
+                    + " WHERE "
+                    + " ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, articolo.getId());
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
