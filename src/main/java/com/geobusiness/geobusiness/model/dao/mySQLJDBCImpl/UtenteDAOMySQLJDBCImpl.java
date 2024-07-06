@@ -2,6 +2,8 @@ package com.geobusiness.geobusiness.model.dao.mySQLJDBCImpl;
 
 import com.geobusiness.geobusiness.model.dao.UtenteDAO;
 import com.geobusiness.geobusiness.model.mo.Utente;
+//import com.geobusiness.geobusiness.model.dao.exception.DuplicatedObjectException;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -30,6 +32,29 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
         try{
 
             String sql
+                    = " SELECT ID "
+                    + " FROM UTENTE "
+                    + " WHERE "
+                    + " Deleted ='N' AND "
+                    + " Username = ? AND"
+                    + " Password = ? AND";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setString(i, utente.getUsername());
+            ps.setString(i++, utente.getPassword());
+
+            ResultSet resultSet = ps.executeQuery();
+
+            boolean exist;
+            exist = resultSet.next();
+            resultSet.close();
+
+            if (exist) { // devo aggiungere una cartella 'exception' per definire questa eccezione
+                //throw new DuplicatedObjectException("ContactDAOJDBCImpl.create: Tentativo di inserimento di un contatto già esistente.");
+            }
+
+            sql
                     = " INSERT INTO UTENTE "
                     + "   ( Username,"
                     + "     Password,"
@@ -37,7 +62,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
                     + " VALUES (?,?)";
 
             ps = conn.prepareStatement(sql);
-            int i = 1;
+            i = 1;
             ps.setString(i, utente.getUsername());
             ps.setString(i++, utente.getPassword());
 
@@ -53,7 +78,55 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
     }  // La devo mettere per l'utente gestone, per venditore e compratore ne specifico un'altra
 
     @Override
-    public void update(Utente utente) {         // DA IMPLEMENTARE
+    public void update(Utente utente) {// DA IMPLEMENTARE
+
+        PreparedStatement ps;
+
+        try {
+            String sql;
+            sql               // PROBABILMENTE NON SERVE
+                    = " SELECT ID "
+                    + " FROM UTENTE "
+                    + " WHERE "
+                    + " Deleted ='N' AND "
+                    + " Username = ? AND"
+                    + " Password = ? AND"
+                    + " ID <> ?";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setString(i, utente.getUsername());
+            ps.setString(i++, utente.getPassword());
+            ps.setInt(i++, utente.getId());
+
+            ResultSet resultSet = ps.executeQuery();
+
+            boolean exist;
+            exist = resultSet.next();
+            resultSet.close();
+
+            if (exist) {
+                //throw new DuplicatedObjectException("ContactDAOJDBCImpl.create: Tentativo di aggiornamento in un contatto già esistente.");
+            }
+
+            sql
+                    = " UPDATE  UTENTE"
+                    + " SET "
+                    + "   Username = ?, "
+                    + "   Paasword = ? "
+                    + " WHERE "
+                    + "   ID = ? ";
+
+            ps = conn.prepareStatement(sql);
+            i = 1;
+            ps.setString(i, utente.getUsername());
+            ps.setString(i++, utente.getPassword());
+            ps.setInt(i++, utente.getId());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

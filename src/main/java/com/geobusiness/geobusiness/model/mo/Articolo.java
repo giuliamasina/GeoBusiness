@@ -23,7 +23,7 @@ public class Articolo {
 
     public void setCategoria(String categoria) { this.categoria = categoria; }
 
-    public boolean isStatus() { return status; }
+    public boolean getStatus() { return status; }
 
     public void setStatus(boolean status) { this.status = status; }
 

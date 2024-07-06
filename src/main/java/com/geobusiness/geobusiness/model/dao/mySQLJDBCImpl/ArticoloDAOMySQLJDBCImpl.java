@@ -66,6 +66,66 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
     @Override
     public void update(Articolo articolo) {
 
+        PreparedStatement ps;
+
+        try {
+            String sql;
+            /* sql               // PROBABILMENTE NON SERVE
+                    = " SELECT ID "
+                    + " FROM UTENTE "
+                    + " WHERE "
+                    + " Deleted ='N' AND "
+                    + " Nome = ? AND"
+                    + " Categoria = ? AND"
+                    + " Status = ? AND"
+                    + " Immagine = ? AND "
+                    + " Descrizione = ? AND "
+                    + " ID <> ?";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setString(i, articolo.getNome());
+            ps.setString(i++, articolo.getCategoria());
+            ps.setBoolean(i++, articolo.getStatus());
+            ps.setString(i++, articolo.getImmagine());
+            ps.setString(i++, articolo.getDescription());
+            ps.setInt(i++, articolo.getId());
+
+            ResultSet resultSet = ps.executeQuery();
+
+            boolean exist;
+            exist = resultSet.next();
+            resultSet.close();
+
+            if (exist) {
+                throw new DuplicatedObjectException("ContactDAOJDBCImpl.create: Tentativo di aggiornamento in un contatto già esistente.");
+            } */
+
+            sql
+                    = " UPDATE  ARTICOLO"
+                    + " SET "
+                    + "   Nome = ?, "
+                    + "   Categoria = ?, "
+                    + "   Status = ?, "
+                    + "   Immagine = ?, "
+                    + "   Descrizione = ? "
+                    + " WHERE "
+                    + "   ID = ? ";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setString(i, articolo.getNome());
+            ps.setString(i++, articolo.getCategoria());
+            ps.setBoolean(i++, articolo.getStatus());  // qui è boolean ma sul database è char. come faccio?
+            ps.setString(i++, articolo.getImmagine());
+            ps.setString(i++, articolo.getDescription());
+            ps.setInt(i++, articolo.getId());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
