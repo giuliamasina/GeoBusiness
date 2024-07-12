@@ -14,7 +14,7 @@
     <title>GeoBusiness</title>
     <style>
         body {
-            height:2100px;
+            width:100%;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -62,8 +62,8 @@
         section {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
             align-items: center;
+            gap: 10px;
         }
         figure {
             height:380px;
@@ -78,6 +78,7 @@
             height:355px;
             max-width: 100%;
             border-radius: 5px;
+            margin: 5px;
         }
         footer {
             background-color: #5B533D;
@@ -96,7 +97,7 @@
     <nav>
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">Iscrivit</a></li>
+            <li><a href="#">Iscriviti</a></li>
             <li><a href="#">Log-in</a></li>
         </ul>
     </nav>
