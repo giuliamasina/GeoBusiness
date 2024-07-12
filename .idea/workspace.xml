@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment="DAO SQL Impl">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" afterDir="false" />
+    <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment="first html">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/SignIn/sign.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +201,8 @@
       <workItem from="1719947830562" duration="6033000" />
       <workItem from="1720120676050" duration="4467000" />
       <workItem from="1720297832368" duration="2739000" />
-      <workItem from="1720715111495" duration="1861000" />
+      <workItem from="1720715111495" duration="2315000" />
+      <workItem from="1720769409598" duration="5756000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
@@ -267,7 +268,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720300559690</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="first html">
+      <option name="closed" value="true" />
+      <created>1720717473315</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1720717473316</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,6 +298,7 @@
     <MESSAGE value="DAO and CookieDAOFactory" />
     <MESSAGE value="Configuration, DAO SQL Impl" />
     <MESSAGE value="DAO SQL Impl" />
-    <option name="LAST_COMMIT_MESSAGE" value="DAO SQL Impl" />
+    <MESSAGE value="first html" />
+    <option name="LAST_COMMIT_MESSAGE" value="first html" />
   </component>
 </project>
