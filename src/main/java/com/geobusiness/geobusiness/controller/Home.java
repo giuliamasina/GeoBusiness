@@ -71,6 +71,78 @@ public class Home {
 
     }
 
+    public static void viewsign(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory= null;
+        Utente loggedUser;
+
+        Logger logger = LogService.getApplicationLogger();
+
+        try{
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+
+            loggedUser=null;
+
+            request.setAttribute("loggedOn", false);
+            request.setAttribute("loggedUser", null);
+            request.setAttribute("viewUrl", "Home/sign");
+
+
+        }catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+        }
+    }
+
+    public static void viewlogin(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory= null;
+        Utente loggedUser;
+
+        Logger logger = LogService.getApplicationLogger();
+
+        try{
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+
+            loggedUser=null;
+
+            request.setAttribute("loggedOn", false);
+            request.setAttribute("loggedUser", null);
+            request.setAttribute("viewUrl", "Home/login");
+
+
+        }catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+        }
+    }
+
     public static void logon(HttpServletRequest request, HttpServletResponse response){
         DAOFactory sessionDAOFactory= null;
         DAOFactory daoFactory = null;
@@ -87,7 +159,7 @@ public class Home {
             sessionDAOFactory.beginTransaction();
 
             UtenteDAO sessionUtenteDAO = sessionDAOFactory.getUtenteDAO();
-            loggedUser = sessionUtenteDAO.findLoggedUtente();
+            //loggedUser = sessionUtenteDAO.findLoggedUtente();
 
             daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
             daoFactory.beginTransaction();

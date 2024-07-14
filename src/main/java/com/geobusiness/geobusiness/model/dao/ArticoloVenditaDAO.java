@@ -23,7 +23,7 @@ public interface ArticoloVenditaDAO extends ArticoloDAO{
 
     public Articolo findByArticoloId(Integer id);    // da riveredere
 
-    public List<Articolo> findByCategoria(String categoria);        // da riveredere
+    public List<ArticoloVendita> findByCategoria(String categoria);        // da riveredere
 
     // public List<Articolo> findBySearchString(Utente utente, String SearchString);       // da riveredere
 }

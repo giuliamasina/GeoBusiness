@@ -44,6 +44,9 @@
             text-decoration: none;
             padding: 10px;
         }
+        nav ul li a:hover{
+
+        }
         main {
             padding: 0;
             height: 800px;
@@ -143,16 +146,16 @@
     <h1>GeoBusiness</h1>
     <nav>
         <ul>
-            <li><a href="view.jsp">Home</a></li>
-            <li><a href="sign.jsp">Iscriviti</a></li>
-            <li><a href="login.jsp">Log-in</a></li>
+            <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
+            <li><a href="Dispatcher?controllerAction=Home.viewsign">Iscriviti</a></li>
+            <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
         </ul>
     </nav>
 </header>
 
 <main>
     <img src="https://via.placeholder.com/150" alt="Image 1">
-    <form action="#" method="post">
+    <form action="Dispatcher" method="post">
         <h1>Entra nel tuo account</h1>
         <h2>Inserisci i tuoi dati</h2>
         <div class="form-group">
@@ -163,7 +166,7 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
         </div>
-
+        <input type="hidden" name="controllerAction" value="Home.logon"/>
         <button type="submit">Log-in</button>
     </form>
 </main>

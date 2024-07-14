@@ -182,7 +182,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
         return articolo;
     }
 
-    @Override
+    /*@Override
     public List<Articolo> findByCategoria(String categoria) {
         PreparedStatement ps;
         ArrayList<Articolo> articoli = new ArrayList<Articolo>();
@@ -194,6 +194,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
                     = "SELECT * FROM ARTICOLO WHERE Categoria=?";
 
             ps = conn.prepareStatement(sql);
+            ps.setString(1, categoria);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -211,7 +212,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
 
         return articoli;
     }
-
+        */
     @Override
     public List<Articolo> findBySearchString(Utente utente, String SearchString) {  // guardare su sito rubrica del prof
         return null;

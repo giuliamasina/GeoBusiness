@@ -107,11 +107,11 @@
         <ul>
             <%if (!loggedOn) {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
-            <li><a href="sign.jsp">Iscriviti</a></li>
-            <li><a href="login.jsp">Log-in</a></li>
+            <li><a href="Dispatcher?controllerAction=Home.viewsign">Iscriviti</a></li>
+            <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
             <%} else {%>
-            <li><a href="view.jsp">Home</a></li>
-            <li><a href="view.jsp">Log-out</a></li>
+            <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
+            <li><a href="Dispatcher?controllerAction=Home.view">Log-out</a></li>
             <%}%>
         </ul>
     </nav>

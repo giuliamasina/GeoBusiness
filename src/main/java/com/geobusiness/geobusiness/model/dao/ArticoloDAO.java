@@ -20,7 +20,7 @@ public interface ArticoloDAO {
 
     public Articolo findByArticoloId(Integer id);
 
-    public List<Articolo> findByCategoria(String categoria);
+    //public List<Articolo> findByCategoria(String categoria);
 
     public List<Articolo> findBySearchString(Utente utente, String SearchString);
 

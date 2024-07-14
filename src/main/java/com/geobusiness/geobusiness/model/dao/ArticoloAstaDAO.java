@@ -24,7 +24,7 @@ public interface ArticoloAstaDAO extends ArticoloDAO{
 
     public Articolo findByArticoloId(Integer id);    // da riveredere
 
-    public List<Articolo> findByCategoria(String categoria);        // da riveredere
+    public List<ArticoloAsta> findByCategoria(String categoria);        // da riveredere
 
     public List<Articolo> findBySearchString(Utente utente, String SearchString);       // da riveredere
 }
