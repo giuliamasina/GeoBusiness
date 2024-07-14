@@ -6,7 +6,7 @@ import com.geobusiness.geobusiness.model.mo.Utente;
 public interface VenditoreDAO extends UtenteDAO{
 
     public Venditore create(
-            Integer id,
+            // ho tolto l'id
             String Username,
             String Paswword,  // non ho messo deleted
             String Indirizzo_spedizione
@@ -17,4 +17,6 @@ public interface VenditoreDAO extends UtenteDAO{
     public void delete(Venditore venditore);
 
     public Utente findByUtenteId(Integer id);     // da rivedere
+
+    public Venditore findByUsername(String username);
 }

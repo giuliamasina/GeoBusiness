@@ -5,7 +5,7 @@ import com.geobusiness.geobusiness.model.mo.Utente;
 public interface UtenteDAO {
 
     public Utente create(
-            Integer id,
+            // ho tolto l'id
             String Username,
             String Paswword  // non ho messo deleted
     );
@@ -18,4 +18,5 @@ public interface UtenteDAO {
 
     public Utente findByUtenteId(Integer id);    // sql impl
 
+    public Utente findByUsername(String username);
 }

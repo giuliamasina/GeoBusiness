@@ -2,6 +2,7 @@ package com.geobusiness.geobusiness.model.dao;
 
 //import com.geobusiness.geobusiness.model.dao.mySQLJDBCImpl.MySQLJDBCDAOFactory;
 import com.geobusiness.geobusiness.model.dao.CookieImpl.CookieDAOFactory;
+import com.geobusiness.geobusiness.model.dao.mySQLJDBCImpl.MySQLJDBCDAOFactory;
 
 import java.util.Map;
 
@@ -10,6 +11,7 @@ public abstract class DAOFactory {
     // List of DAO types supported by the factory
     public static final String MYSQLJDBCIMPL = "MySQLJDBCImpl";
     public static final String COOKIEIMPL= "CookieImpl";
+
 
     public abstract void beginTransaction();
     public abstract void commitTransaction();
@@ -25,7 +27,7 @@ public abstract class DAOFactory {
     public abstract RecensioneDAO getRecensioneDAO();
 
 
- /*   public static DAOFactory getDAOFactory(String whichFactory,Map factoryParameters) {
+   public static DAOFactory getDAOFactory(String whichFactory,Map factoryParameters) {
 
         if (whichFactory.equals(MYSQLJDBCIMPL)) {
             return new MySQLJDBCDAOFactory(factoryParameters);
@@ -34,5 +36,5 @@ public abstract class DAOFactory {
         } else {
             return null;
         }
-    }       */
+    }
 }

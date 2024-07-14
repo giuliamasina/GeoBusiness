@@ -18,12 +18,12 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
     }
     @Override
     public Utente create(
-            Integer id,
+            // ho tolto l'id
             String Username,
             String Paswword
     ) {
         Utente loggedUser = new Utente();
-        loggedUser.setId(id);
+        //loggedUser.setId(id); per adesso lo tolgo perche non so come recuperare l'id
         loggedUser.setUsername(Username);
 
         Cookie cookie;
@@ -73,11 +73,16 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public Utente findByUsername(String username) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     private String encode(Utente loggedUser) {
 
         String encodedLoggedUser;
-        encodedLoggedUser = loggedUser.getId() + "#" + loggedUser.getUsername();
-        return encodedLoggedUser;
+        encodedLoggedUser = /*loggedUser.getId() +*/ "#" + loggedUser.getUsername();
+        return encodedLoggedUser;  // ho tolto getId perchè non so come recuperarlo
 
     }
 

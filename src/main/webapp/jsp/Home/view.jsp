@@ -6,6 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page session="false"%>
+<%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
+
+<%
+    boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
+    Utente loggedUser = (Utente) request.getAttribute("loggedUser");
+    String applicationMessage = (String) request.getAttribute("applicationMessage");
+    String menuActiveLink = "Home";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,9 +105,14 @@
     <h1>GeoBusiness</h1>
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Iscriviti</a></li>
-            <li><a href="#">Log-in</a></li>
+            <%if (!loggedOn) {%>
+            <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
+            <li><a href="sign.jsp">Iscriviti</a></li>
+            <li><a href="login.jsp">Log-in</a></li>
+            <%} else {%>
+            <li><a href="view.jsp">Home</a></li>
+            <li><a href="view.jsp">Log-out</a></li>
+            <%}%>
         </ul>
     </nav>
 </header>

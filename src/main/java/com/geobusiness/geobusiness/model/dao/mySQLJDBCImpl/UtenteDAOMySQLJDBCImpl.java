@@ -19,7 +19,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
     }
     @Override
     public Utente create(
-            Integer id,      // Probabilmente dovrò toglierlo, non lo uso per creare un utente, lo crea direttamente il database
+                 // Probabilmente dovrò toglierlo, non lo uso per creare un utente, lo crea direttamente il database
             String Username,
             String Password
     ) {
@@ -187,6 +187,38 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
 
         return user;
 
+    }
+
+    @Override
+    public Utente findByUsername(String username) {
+
+        PreparedStatement ps;
+        Utente user = null;
+
+        try {
+
+            String sql
+                    = " SELECT * "
+                    + "   FROM UTENTE "
+                    + " WHERE "
+                    + "   Username = ?";
+
+            ps = conn.prepareStatement(sql);   // preparo lo statement sulla connessione database con la stringa sql appena fatta
+            ps.setString(1, username);     // settare le varabili nel statement
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {      // se ritorna più cose (per esempio voglio trovare per categoria e quindi seleziono più righe) al posto di if metto while
+                user = read(resultSet);   // e qui metterei una list, esempio: List<utente> ...
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return user;
     }
 
     Utente read(ResultSet rs) {
