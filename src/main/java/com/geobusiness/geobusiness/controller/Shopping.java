@@ -35,6 +35,10 @@ public class Shopping {
         Utente loggedUser;
         String applicationMessage = null;
 
+        List<Articolo> articoli = new ArrayList<>();
+        List<ArticoloVendita> articolivendita = null;
+        List<ArticoloAsta> articoliasta = null;
+
         Logger logger = LogService.getApplicationLogger();
 
         try{
@@ -57,7 +61,15 @@ public class Shopping {
             daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
             daoFactory.beginTransaction();
 
-            commonview(daoFactory,sessionDAOFactory,request);
+            ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
+            ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
+
+            articolivendita = articoloVenditaDAO.findByCategoria("*");
+            articoliasta = articoloAstaDAO.findByCategoria("*");
+
+            articoli.addAll(articolivendita);
+            articoli.addAll(articoliasta);
+            //commonview(daoFactory,sessionDAOFactory,request);   // potrei usarla solo se uso il filtro
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
@@ -65,6 +77,9 @@ public class Shopping {
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("viewUrl", "Shopping/view");
+            request.setAttribute("articoli",articoli);
+            request.setAttribute("articolivendita",articolivendita);
+            request.setAttribute("articoliasta",articoliasta);
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -82,6 +97,71 @@ public class Shopping {
         }
     }
 
+    public static void filterview(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory= null;
+        DAOFactory daoFactory = null;
+        Utente loggedUser;
+        String applicationMessage = null;
+
+        List<Articolo> articoli = new ArrayList<>();
+        List<ArticoloVendita> articolivendita = null;
+        List<ArticoloAsta> articoliasta = null;
+
+        Logger logger = LogService.getApplicationLogger();
+
+        try{
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory.beginTransaction();
+
+            UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+            if(sessionUserDAO!=null){
+                loggedUser = sessionUserDAO.findLoggedUtente();
+            }
+            else{
+                Utente utente = new Utente();
+                utente.setUsername("Guest");
+                loggedUser=null;
+            }
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
+            ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
+
+            articolivendita = articoloVenditaDAO.findByCategoria(request.getParameter("categoria"));
+            articoliasta = articoloAstaDAO.findByCategoria(request.getParameter("categoria"));
+
+            articoli.addAll(articolivendita);
+            articoli.addAll(articoliasta);
+
+            daoFactory.commitTransaction();
+            sessionDAOFactory.commitTransaction();
+
+            request.setAttribute("loggedOn",loggedUser!=null);
+            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("viewUrl", "Shopping/view");
+            request.setAttribute("articoli",articoli);
+            request.setAttribute("articolivendita",articolivendita);
+            request.setAttribute("articoliasta",articoliasta);
+
+        }catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+        }
+    }
     public static void commonview(DAOFactory daoFactory, DAOFactory sessionDAOFactory, HttpServletRequest request){
         List<Articolo> articoli = null;
         List<ArticoloVendita> articolivendita;
@@ -91,7 +171,8 @@ public class Shopping {
         Utente loggedUser = sessionUserDAO.findLoggedUtente();
 
         UtenteDAO userDAO = daoFactory.getUtenteDAO();
-        Utente user = userDAO.findByUtenteId(loggedUser.getId());
+        //Utente user = userDAO.findByUtenteId(loggedUser.getId());    // da' eccezione
+
 
         ArticoloDAO articoloDAO = daoFactory.getArticoloDAO();
         ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();

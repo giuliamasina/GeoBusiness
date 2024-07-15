@@ -44,7 +44,7 @@ public class CookieDAOFactory extends DAOFactory {
     // DECIDERE SE USARE COOKIE OPPURE NO
     @Override
     public UtenteDAO getUtenteDAO() {
-        return null;
+        return new UtenteDAOCookieImpl(request,response);
     }
 
     @Override

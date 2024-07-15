@@ -223,7 +223,7 @@ public class Home {
 
             request.setAttribute("loggedOn",false);
             request.setAttribute("loggedUser", null);
-            request.setAttribute("viewUrl", "homeManagement/view");
+            request.setAttribute("viewUrl", "Home/view");
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);

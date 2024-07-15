@@ -98,11 +98,18 @@
             margin-bottom: 0;
         }
     </style>
+
 </head>
 <body>
 
 <header>
     <h1>GeoBusiness</h1>
+
+    <form name="logoutForm" action="Dispatcher" method="post">
+        <input type="hidden" name="controllerAction" value="Home.logout"/>
+    </form>
+
+
     <nav>
         <ul>
             <%if (!loggedOn) {%>
@@ -111,7 +118,7 @@
             <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
             <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
-            <li><a href="Dispatcher?controllerAction=Home.view">Log-out</a></li>
+            <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
             <%}%>
         </ul>
     </nav>
@@ -121,6 +128,10 @@
     <section>
         <h1>Inizia il tuo museo personale</h1>
     </section>
+    <form name="goToShop" action="Dispatcher" method="post">
+        <input type="hidden" name="controllerAction" value="Shopping.view"/>
+        <button type="submit">Tutti i fossili</button>
+    </form>
     <h2>Categorie</h2>
     <section>
         <figure>

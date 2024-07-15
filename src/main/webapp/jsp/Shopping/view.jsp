@@ -212,6 +212,7 @@
                 <label for="a">a</label>
                 <input type="number" id="a" name="a">
             </div>
+            <input type="hidden" name="controllerAction" value="Shopping.filterview"/>
             <button type="submit">Cerca</button>
     </form>
 

@@ -1,13 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: giuggiu
-  Date: 14/07/24
-  Time: 23:56
+  Date: 15/07/24
+  Time: 13:07
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
-
 <html>
 <head>
     <title>Fossili</title>
@@ -85,7 +83,7 @@
             left:120px;
             margin-top: 90px;
         }
-        #prezzo,#venditore {
+        #prezzo,#venditore,#data {
             position: relative;
             left: 120px;
             font-size: 20px;
@@ -137,10 +135,12 @@
     <section id="info">
         <h1 id="nome">Nome</h1>
         <h2 id="venditore">Venditore: </h2>
-        <h2 id="prezzo">Prezzo: </h2>
-        <button type="button">Compra</button>
+        <h2 id="data">Scade il: </h2>
+        <h2 id="prezzo">Ultima offerta:  </h2>
+        <button type="button">Fai Offerta</button>
     </section>
 </main>
+
 <footer>
     <p>my footer</p>
 </footer>

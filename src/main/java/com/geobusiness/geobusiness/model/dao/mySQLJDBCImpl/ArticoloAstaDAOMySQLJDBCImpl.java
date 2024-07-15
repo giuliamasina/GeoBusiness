@@ -38,7 +38,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         try{
 
             String sql
-                    = " INSERT INTO ARTICOLO_ASTA "
+                    = " INSERT INTO ART_IN_ASTA "
                     + "   ( Nome,"
                     + "     Categoria,"
                     + "     Immagine,"
@@ -103,7 +103,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         try {
 
             String sql
-                    = "SELECT * FROM ARTICOLO JOIN ARTICOLO_ASTA WHERE Categoria=?";
+                    = "SELECT * FROM ARTICOLO JOIN ART_IN_ASTA WHERE Categoria=?";
 
             ps = conn.prepareStatement(sql);
             ps.setString(1, categoria);

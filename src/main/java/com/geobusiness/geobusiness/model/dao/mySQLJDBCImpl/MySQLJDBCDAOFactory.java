@@ -79,13 +79,11 @@ public class MySQLJDBCDAOFactory extends DAOFactory {
 
     @Override
     public ArticoloVenditaDAO getArticoloVenditaDAO() {
-        return null;
+        return new ArticoloVenditaDAOMySQLJDBCImpl(connection);
     }
 
     @Override
-    public ArticoloAstaDAO getArticoloAstaDAO() {
-        return null;
-    }
+    public ArticoloAstaDAO getArticoloAstaDAO() { return new ArticoloAstaDAOMySQLJDBCImpl(connection); }
 
     @Override
     public RecensioneDAO getRecensioneDAO() {

@@ -92,8 +92,8 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 
         String[] values = encodedLoggedUser.split("#");
 
-        loggedUser.setId(Integer.parseInt(values[0]));
-        loggedUser.setUsername(values[1]);
+        //loggedUser.setId(Integer.parseInt(values[0]));
+        loggedUser.setUsername(values[0]);
 
         return loggedUser;
 
