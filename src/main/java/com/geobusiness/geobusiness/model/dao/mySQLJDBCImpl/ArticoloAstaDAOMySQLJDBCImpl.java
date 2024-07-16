@@ -1,10 +1,7 @@
 package com.geobusiness.geobusiness.model.dao.mySQLJDBCImpl;
 
 import com.geobusiness.geobusiness.model.dao.ArticoloAstaDAO;
-import com.geobusiness.geobusiness.model.mo.Articolo;
-import com.geobusiness.geobusiness.model.mo.ArticoloAsta;
-import com.geobusiness.geobusiness.model.mo.ArticoloVendita;
-import com.geobusiness.geobusiness.model.mo.Utente;
+import com.geobusiness.geobusiness.model.mo.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -90,8 +87,35 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
     }
 
     @Override
-    public Articolo findByArticoloId(Integer id) {
-        return null;
+    public ArticoloAsta findByArticoloId(Integer id) {
+        PreparedStatement ps;
+        ArticoloAsta articoloasta = null;
+
+        try {
+
+            String sql
+                    = " SELECT *"
+                    + " FROM ARTICOLO NATURAL JOIN ART_IN_ASTA "
+                    + " WHERE "
+                    + "   ID = ? AND "
+                    + "   Deleted  = 'N' ";
+
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                articoloasta = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return articoloasta;
     }
 
     @Override
@@ -103,7 +127,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         try {
 
             String sql
-                    = "SELECT * FROM ARTICOLO JOIN ART_IN_ASTA WHERE Categoria=?";
+                    = "SELECT * FROM ARTICOLO NATURAL JOIN ART_IN_ASTA WHERE Categoria=?";
 
             ps = conn.prepareStatement(sql);
             ps.setString(1, categoria);
@@ -123,6 +147,104 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         }
 
         return articoliasta;
+    }
+
+    @Override
+    public List<Float> getOffersById(Integer id){
+        PreparedStatement ps;
+        List<Float> offerte = null;
+        Float offerta = null;
+
+        try{
+            String sql
+                    = "SELECT Offerta FROM FA_OFFERTA WHERE Id_asta=? ORDER BY Data DESC";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                try {
+                    offerta = resultSet.getFloat("Offerta");
+                }catch (SQLException sqle) {
+                }
+                offerte.add(offerta);
+            }
+
+            resultSet.close();
+            ps.close();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return offerte;
+    }
+
+    public List<Date> getDateOffersById(Integer id){
+        PreparedStatement ps;
+        List<Date> date = null;
+        Date data = null;
+
+        try{
+            String sql
+                    = "SELECT Data FROM FA_OFFERTA WHERE Id_asta=? ORDER BY Data DESC";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                try {
+                    data = resultSet.getDate("Data");
+                }catch (SQLException sqle) {
+                }
+                date.add(data);
+            }
+
+            resultSet.close();
+            ps.close();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return date;
+    }
+
+    public List<Compratore> getOfferingCompratoriById(Integer id){
+        PreparedStatement ps;
+        List<Compratore> compratori = null;
+        Compratore compratore = null;
+
+        try{
+            String sql
+                    = "SELECT C.ID, Username, Password, Indirizzo_cons " +
+                      "FROM FA_OFFERTA JOIN COMPRATORE AS C ON C.ID = Id_compratore NATURAL JOIN UTENTE " +
+                      "WHERE Id_asta=? " +
+                      "ORDER BY Data DESC";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+
+                compratore = readCompratore(resultSet);
+                compratori.add(compratore);
+            }
+
+            resultSet.close();
+            ps.close();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return compratori;
     }
 
     @Override
@@ -169,5 +291,32 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         }
 
         return articoloasta;
+    }
+
+    Compratore readCompratore(ResultSet rs){
+        Compratore compratore = new Compratore();
+
+        try {
+            compratore.setId(rs.getInt("ID"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            compratore.setUsername(rs.getString("Username"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            compratore.setPassword(rs.getString("Password"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            compratore.setDeleted(rs.getString("Deleted").equals("Y"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            compratore.setIndirizzo_consegna(rs.getString("Indirizzo_cons"));
+        } catch (SQLException sqle) {
+        }
+
+        return compratore;
     }
 }

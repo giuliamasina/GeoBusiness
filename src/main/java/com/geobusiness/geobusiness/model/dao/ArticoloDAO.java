@@ -18,7 +18,7 @@ public interface ArticoloDAO {
 
     public void delete(Articolo articolo);
 
-    public Articolo findByArticoloId(Integer id);
+    //public Articolo findByArticoloId(Integer id);
 
     //public List<Articolo> findByCategoria(String categoria);
 

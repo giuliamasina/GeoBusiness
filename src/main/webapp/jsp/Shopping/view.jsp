@@ -24,9 +24,9 @@
     List<ArticoloVendita> articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
     List<ArticoloAsta> articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
     String categoria = (String) request.getAttribute("categoria");
-    Integer da = (Integer) request.getAttribute("da");
-    Integer a = (Integer) request.getAttribute("a");
-
+    Float da = (Float) request.getAttribute("da");
+    Float a = (Float) request.getAttribute("a");
+    String tipoarticolo = (String) request.getAttribute("tipoarticolo");
     int i;
 %>
 <html>
@@ -165,6 +165,11 @@
 
 <header>
     <h1>GeoBusiness</h1>
+
+    <form name="logoutForm" action="Dispatcher" method="post">
+        <input type="hidden" name="controllerAction" value="Home.logout"/>
+    </form>
+
     <nav>
         <ul>
             <%if (!loggedOn) {%>
@@ -173,7 +178,7 @@
             <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
             <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
-            <li><a href="Dispatcher?controllerAction=Home.view">Log-out</a></li>
+            <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
             <%}%>
         </ul>
     </nav>
@@ -182,13 +187,21 @@
 <main>
     <h1>Tutti i fossili</h1>
 
+    <form name="filter" action="Dispatcher" method="post">
+        <input type="hidden" name="categoria" />
+        <input type="hidden" name="da"/>
+        <input type="hidden" name="a"/>
+        <input type="hidden" name="tipoarticolo"/>
+        <input type="hidden" name="controllerAction" value="Shopping.filterview"/>
+    </form>
+
     <form name="filterForm" action="Dispatcher" method="post">
             <h1>Filtri:</h1>
             <div class="form-group-select">
                 <div class="inline">
-                    <input type="radio" id="asta" name="ruolo" value="asta">
+                    <input type="radio" id="asta" name="tipoarticolo" value="asta">
                     <label for="asta">Asta</label>
-                    <input type="radio" id="fisso" name="ruolo" value="fisso">
+                    <input type="radio" id="fisso" name="tipoarticolo" value="fisso">
                     <label for="fisso">Prezzo fisso</label>
                 </div>
             </div>
@@ -196,11 +209,11 @@
                 <label for="categoria">Categoria</label>
                 <select id="categoria" name="categoria">
                     <option value="nessuna">Nessuna</option>
-                    <option value="ammoniti">Ammoniti</option>
-                    <option value="trilobiti">Trilobiti</option>
-                    <option value="ambre">Ambre</option>
-                    <option value="pesci">Pesci</option>
-                    <option value="rettili">Rettili</option>
+                    <option value="Ammoniti">Ammoniti</option>
+                    <option value="Trilobiti">Trilobiti</option>
+                    <option value="Ambre">Ambre</option>
+                    <option value="Pesci">Pesci</option>
+                    <option value="Rettili">Rettili</option>
                 </select>
             </div>
             <h2>Prezzo:</h2>
@@ -217,49 +230,45 @@
     </form>
 
     <section id="articoli">
-        <%for (i = 0; i < articoli.size(); i++) {
-        if (articolivendita.contains(articoli.get(i))) {
-         int id=articoli.get(i).getId();
-         int j;
-          for(j=0; j<articolivendita.size(); j++){
-              if(id == articolivendita.get(j).getId())  break;
-          }
-         String name=articoli.get(i).getNome();
-         String category=articoli.get(i).getCategoria();
-         Float price=articolivendita.get(j).getPrezzo();
-         String image=articolivendita.get(j).getImmagine();  %>
+        <%if(!articolivendita.isEmpty()){
+            for(i=0;i<articolivendita.size();i++){
+            String name = articolivendita.get(i).getNome();
+            String category = articolivendita.get(i).getCategoria();
+            Float price = articolivendita.get(i).getPrezzo();
+            String image = articolivendita.get(i).getImmagine(); %>
         <figure>
-
-
-            <a href="#">
-                <img src="https://via.placeholder.com/150" alt="Image 1">
+            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+                <img src="<%=image%>">
             </a>
-            <a href="#">
+            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
             </a>
             <figcaption><%= price%></figcaption>
         </figure>
-        <% }
-        if(articoliasta.contains(articoli.get(i))) {
-            int id=articoli.get(i).getId();
-            int j;
-            for(j=0; j<articoliasta.size(); j++){
-                if(id == articoliasta.get(j).getId())  break;
-            }
-            String name=articoli.get(i).getNome();
-            Date data=articoliasta.get(j).getData_scadenza();
-            String image=articoliasta.get(j).getImmagine(); %>
+        <%}
+        }else {%>
+        <p>Non sono state trovati articoli a prezzo fisso</p>
+        <%}%>
+        <% if(!articoliasta.isEmpty()){
+            for(i=0;i<articoliasta.size();i++){
+            String name = articoliasta.get(i).getNome();
+            String category = articoliasta.get(i).getCategoria();
+            Date data=articoliasta.get(i).getData_scadenza();
+            String image = articolivendita.get(i).getImmagine(); %>
         <figure>
-            <a href="#">
-                <img src="https://via.placeholder.com/150" alt="Image 1">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&item=<%=articoliasta.get(i)%>">
+                <img src="<%=image%>">
             </a>
-            <a href="#">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&item=<%=articoliasta.get(i)%>">
                 <figcaption><%=name%></figcaption>
             </a>
             <figcaption>Scade il:   <%=data%></figcaption>
         </figure>
-        <%}
-        }%>
+         <%}
+         } else {%>
+            <p>Non sono state trovate aste</p>
+        <%}%>
+
     </section>
 </main>
 

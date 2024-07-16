@@ -1,8 +1,5 @@
 package com.geobusiness.geobusiness.model.dao;
-import com.geobusiness.geobusiness.model.mo.Articolo;
-import com.geobusiness.geobusiness.model.mo.ArticoloAsta;
-import com.geobusiness.geobusiness.model.mo.ArticoloVendita;
-import com.geobusiness.geobusiness.model.mo.Utente;
+import com.geobusiness.geobusiness.model.mo.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -22,9 +19,15 @@ public interface ArticoloAstaDAO extends ArticoloDAO{
 
     public void delete(ArticoloVendita articolo);
 
-    public Articolo findByArticoloId(Integer id);    // da riveredere
+    public ArticoloAsta findByArticoloId(Integer id);    // da riveredere
 
     public List<ArticoloAsta> findByCategoria(String categoria);        // da riveredere
+
+    public List<Float> getOffersById(Integer id);
+
+    public List<Date> getDateOffersById(Integer id);
+
+    public List<Compratore> getOfferingCompratoriById(Integer id);
 
     public List<Articolo> findBySearchString(Utente utente, String SearchString);       // da riveredere
 }

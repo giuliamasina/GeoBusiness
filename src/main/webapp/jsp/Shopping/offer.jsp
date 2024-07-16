@@ -1,27 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: giuggiu
-  Date: 14/07/24
-  Time: 23:56
+  Date: 15/07/24
+  Time: 20:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
-<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
-
-<%
-    boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
-    Utente loggedUser = (Utente) request.getAttribute("loggedUser");
-    String applicationMessage = (String) request.getAttribute("applicationMessage");
-    String menuActiveLink = "Shopping";
-
-    ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
-    Venditore venditore = (Venditore) request.getAttribute("venditore");
-%>
 <html>
 <head>
-    <title>Fossili</title>
+    <title>Offerta</title>
     <style>
         body {
             display: flex;
@@ -60,46 +47,41 @@
         nav ul li a:hover{
 
         }
-        main {
-            padding: 0;
-            height: 600px;
-            background-color: #B19770;
-            width: 100%;
+        body main {
             display: flex;
             flex-direction: row;
-            position:relative;
-            top: 90px;
-            bottom: 90px;
+            background-color: #CAB18C;
         }
-        main section {
+        body main section {
             display: flex;
             flex-direction: column;
-            margin: 20px;
+            width:500px;
         }
-        #info {
-            margin-left: 120px;
+        body main section img{
+            margin-top:80px;
+            margin-left: 80px;
+            width: 300px;
+            height: 300px;
         }
-        main section img{
-            width: 400px;
-            height: 400px;
-            position: relative;
-            left: 90px;
-            top:60px;
+        #nome,#venditore {
+            margin-left: 80px;
+            font-size: 25px;
         }
-        #descrizione {
-            position: relative;
-            top: 80px;
-            left: 70px;
+        body main section label {
+            margin-left: 80px;
+            font-size: 25px;
+            margin-bottom: 70px;
+            margin-top:120px;
+            font-weight: bold;
         }
-        #nome {
-            position: relative;
-            left:120px;
-            margin-top: 90px;
-        }
-        #prezzo,#venditore {
-            position: relative;
-            left: 120px;
-            font-size: 20px;
+        input[type="text"]{
+            border: 1px solid black;
+            padding-left: 10px;
+            padding-bottom: 5px;
+            background-color: #B19770;
+            width: 260px;
+            font-size: 19px;
+            margin-left: 80px;
         }
         main section button {
             position: relative;
@@ -116,6 +98,16 @@
         main section button:hover {
             background-color: #DFBB88;
         }
+        #details {
+            margin-top: 120px;
+            margin-left: 90px;
+        }
+        #offers {
+            margin-left: 90px;
+            font-size: 21px;
+            font-weight: normal;
+            margin-top: 10px;
+        }
         footer {
             background-color: #5B533D;
             display: flex;
@@ -124,6 +116,7 @@
             margin-top: auto;
         }
     </style>
+
 </head>
 <body>
 
@@ -136,14 +129,8 @@
 
     <nav>
         <ul>
-            <%if (!loggedOn) {%>
-            <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
-            <li><a href="Dispatcher?controllerAction=Home.viewsign">Iscriviti</a></li>
-            <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
-            <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
             <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
-            <%}%>
         </ul>
     </nav>
 </header>
@@ -151,20 +138,23 @@
 <main>
     <section>
         <img src="https://via.placeholder.com/150" alt="Image 1">
+        <h1 id="nome">Nome</h1>
+        <h2 id="venditore">Venditore: </h2>
     </section>
     <section>
-        <h2 id="descrizione">Descrizione</h2>
-        <p><%=articolovendita.getDescription()%></p>
+        <label for="offer">Inserisci la tua offerta</label>
+        <input type="text" id="offer" name="offer" required >
     </section>
-    <section id="info">
-        <h1 id="nome"><%=articolovendita.getNome()%></h1>
-        <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
-        <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%></h2>
-        <button type="button">Compra</button>
+    <section>
+        <h1 id="details">Tutte le offerte</h1>
+        <h3 id="offers">$         fatta da              il        </h3>
     </section>
+
 </main>
+
 <footer>
     <p>my footer</p>
 </footer>
+
 </body>
 </html>

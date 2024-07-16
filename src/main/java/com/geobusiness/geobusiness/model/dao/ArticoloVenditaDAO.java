@@ -21,9 +21,11 @@ public interface ArticoloVenditaDAO extends ArticoloDAO{
 
     public void delete(ArticoloVendita articolo);
 
-    public Articolo findByArticoloId(Integer id);    // da riveredere
+    public ArticoloVendita findByArticoloId(Integer id);    // da riveredere
 
     public List<ArticoloVendita> findByCategoria(String categoria);        // da riveredere
+
+    public Venditore findVenditoreById(Integer id);
 
     // public List<Articolo> findBySearchString(Utente utente, String SearchString);       // da riveredere
 }

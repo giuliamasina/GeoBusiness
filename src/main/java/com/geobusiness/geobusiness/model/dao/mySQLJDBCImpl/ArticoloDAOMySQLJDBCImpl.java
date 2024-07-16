@@ -150,7 +150,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
         }
     }
 
-    @Override
+    /*@Override
     public Articolo findByArticoloId(Integer id) {
         PreparedStatement ps;
         Articolo articolo = null;
@@ -181,7 +181,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
 
         return articolo;
     }
-
+    */
     /*@Override
     public List<Articolo> findByCategoria(String categoria) {
         PreparedStatement ps;

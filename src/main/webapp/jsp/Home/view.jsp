@@ -109,7 +109,6 @@
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
 
-
     <nav>
         <ul>
             <%if (!loggedOn) {%>

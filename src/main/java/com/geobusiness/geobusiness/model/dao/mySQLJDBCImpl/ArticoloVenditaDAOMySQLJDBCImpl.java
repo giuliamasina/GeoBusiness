@@ -4,6 +4,7 @@ import com.geobusiness.geobusiness.model.dao.ArticoloVenditaDAO;
 import com.geobusiness.geobusiness.model.mo.Articolo;
 import com.geobusiness.geobusiness.model.mo.ArticoloVendita;
 import com.geobusiness.geobusiness.model.mo.Utente;
+import com.geobusiness.geobusiness.model.mo.Venditore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,8 +98,35 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
     }
 
     @Override
-    public Articolo findByArticoloId(Integer id) { // ANCORA DA FARE
-        return null;
+    public ArticoloVendita findByArticoloId(Integer id) { // ANCORA DA FARE
+        PreparedStatement ps;
+        ArticoloVendita articolovendita = null;
+
+        try {
+
+            String sql
+                    = " SELECT *"
+                    + " FROM ARTICOLO NATURAL JOIN ART_IN_VENDITA "
+                    + " WHERE "
+                    + "   ID = ? AND "
+                    + "   Deleted  = 'N' ";
+
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                articolovendita = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return articolovendita;
     }
 
     @Override
@@ -110,7 +138,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         try {
 
             String sql
-                    = "SELECT * FROM ARTICOLO JOIN ART_IN_VENDITA WHERE Categoria=?";
+                    = "SELECT * FROM ARTICOLO NATURAL JOIN ART_IN_VENDITA WHERE Categoria=?";
 
             ps = conn.prepareStatement(sql);
             ps.setString(1, categoria);
@@ -132,6 +160,35 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         return articolivendita;
     }
 
+    public Venditore findVenditoreById(Integer id){
+        PreparedStatement ps;
+        Venditore venditore = null;
+
+        try {
+
+            String sql
+                    = "SELECT V.ID, Username, Password, Deleted, Indirizzo_spediz\n" +
+                    "FROM UTENTE NATURAL JOIN VENDITORE AS V JOIN VENDE ON V.ID=Id_venditore JOIN ART_IN_VENDITA AS A ON A.ID = Id_articolo\n" +
+                    "WHERE A.ID = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                venditore = readVenditore(resultSet);
+            }
+
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return venditore;
+    }
     ArticoloVendita read(ResultSet rs) {
         ArticoloVendita articolovendita = new ArticoloVendita();
         //User user = new User();
@@ -171,5 +228,29 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         }
 
         return articolovendita;
+    }
+    Venditore readVenditore(ResultSet rs){
+        Venditore venditore = new Venditore();
+        try {
+            venditore.setId(rs.getInt("ID"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setUsername(rs.getString("Username"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setPassword(rs.getString("Password"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setDeleted(rs.getString("Deleted").equals("Y"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setIndirizzo_spedizione(rs.getString("Indirizzo_spediz"));
+        } catch (SQLException sqle) {
+        }
+        return venditore;
     }
 }
