@@ -5,7 +5,6 @@ import com.geobusiness.geobusiness.model.mo.Utente;
 public interface UtenteDAO {
 
     public Utente create(
-            // ho tolto l'id
             String Username,
             String Paswword  // non ho messo deleted
     );

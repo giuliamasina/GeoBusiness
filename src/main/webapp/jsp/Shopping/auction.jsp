@@ -6,6 +6,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
+<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloAsta" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.Date" %>
+
+<%
+    boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
+    Utente loggedUser = (Utente) request.getAttribute("loggedUser");
+    String applicationMessage = (String) request.getAttribute("applicationMessage");
+    String menuActiveLink = "Shopping";
+
+    ArticoloAsta articoloasta = (ArticoloAsta) request.getAttribute("articoloasta");
+    Venditore venditore = (Venditore) request.getAttribute("venditore");
+    List<Float> offerte = (List<Float>) request.getAttribute("offerte");
+    List<Date> date_offerte = (List<Date>) request.getAttribute(("date_offerte"));
+%>
 <html>
 <head>
     <title>Fossili</title>
@@ -77,13 +94,26 @@
             position: relative;
             top: 80px;
             left: 70px;
+            font-size: 20px;
+        }
+        main section p {
+            position: relative;
+            top: 80px;
+            left: 70px;
+            width: 380px;
         }
         #nome {
             position: relative;
-            left:120px;
-            margin-top: 90px;
+            top: 80px;
+            left: 70px;
         }
-        #prezzo,#venditore,#data {
+        #venditore {
+            position: relative;
+            margin-top: 90px;
+            left: 120px;
+            font-size: 20px;
+        }
+        #prezzo,#data {
             position: relative;
             left: 120px;
             font-size: 20px;
@@ -130,14 +160,23 @@
         <img src="https://via.placeholder.com/150" alt="Image 1">
     </section>
     <section>
+        <h1 id="nome"><%=articoloasta.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
+        <p><%=articoloasta.getDescription()%></p>
     </section>
     <section id="info">
-        <h1 id="nome">Nome</h1>
-        <h2 id="venditore">Venditore: </h2>
-        <h2 id="data">Scade il: </h2>
-        <h2 id="prezzo">Ultima offerta:  </h2>
-        <button type="button">Fai Offerta</button>
+        <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
+        <h2 id="data">Scade il: <%=articoloasta.getData_scadenza()%></h2>
+        <h2 id="prezzo">Ultima offerta:   <%=offerte.get(0)%>   <%=date_offerte.get(0)%></h2>
+        <%if (!loggedOn) {%>
+        <a>
+            <button type="button">Fai Offerta</button>
+        </a>
+        <%} else {%>
+        <a href="Dispatcher?controllerAction=Shopping.offerview&articolovendita=<%=articoloasta.getId()%>">
+            <button type="button">Fai Offerta</button>
+        </a>
+        <%}%>
     </section>
 </main>
 

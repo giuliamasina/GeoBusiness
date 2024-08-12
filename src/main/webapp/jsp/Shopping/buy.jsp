@@ -6,6 +6,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
+<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
+
+<%
+    boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
+    Utente loggedUser = (Utente) request.getAttribute("loggedUser");
+    String applicationMessage = (String) request.getAttribute("applicationMessage");
+    String menuActiveLink = "Shopping";
+
+    ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
+    Venditore venditore = (Venditore) request.getAttribute("venditore");
+    String consegna = (String) request.getAttribute("consegna");
+%>
 <html>
 <head>
     <title>Compra</title>
@@ -140,8 +154,8 @@
 <main>
     <section>
         <img src="https://via.placeholder.com/150" alt="Image 1">
-        <h1 id="nome">Nome</h1>
-        <h2 id="venditore">Venditore: </h2>
+        <h1 id="nome"><%=articolovendita.getNome()%></h1>
+        <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
     </section>
     <section>
         <h1 id="inserisci">Inserisci i dati del pagamento</h1>
@@ -155,7 +169,7 @@
     </section>
     <section>
         <h1 id="dettagli">Dettagli consegna</h1>
-        <h2 id="consegna">Ordine verrà consegnato a: </h2>
+        <h2 id="consegna">Ordine verrà consegnato a: <%=consegna%></h2>
     </section>
 </main>
 

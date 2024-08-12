@@ -256,10 +256,10 @@
             Date data=articoliasta.get(i).getData_scadenza();
             String image = articolivendita.get(i).getImmagine(); %>
         <figure>
-            <a href="Dispatcher?controllerAction=Shopping.auctionview&item=<%=articoliasta.get(i)%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
-            <a href="Dispatcher?controllerAction=Shopping.auctionview&item=<%=articoliasta.get(i)%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <figcaption><%=name%></figcaption>
             </a>
             <figcaption>Scade il:   <%=data%></figcaption>

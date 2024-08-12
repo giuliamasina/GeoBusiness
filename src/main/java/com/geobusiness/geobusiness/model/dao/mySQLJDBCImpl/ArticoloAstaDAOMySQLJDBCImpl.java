@@ -152,7 +152,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
     @Override
     public List<Float> getOffersById(Integer id){
         PreparedStatement ps;
-        List<Float> offerte = null;
+        List<Float> offerte = new ArrayList<>();
         Float offerta = null;
 
         try{
@@ -184,7 +184,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
 
     public List<Date> getDateOffersById(Integer id){
         PreparedStatement ps;
-        List<Date> date = null;
+        List<Date> date = new ArrayList<>();
         Date data = null;
 
         try{
@@ -293,6 +293,36 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         return articoloasta;
     }
 
+    public Venditore findVenditoreById(Integer id){
+        PreparedStatement ps;
+        Venditore venditore = null;
+
+        try {
+
+            String sql
+                    = "SELECT V.ID, Username, Password, Deleted, Indirizzo_spediz\n" +
+                    "FROM UTENTE NATURAL JOIN VENDITORE AS V JOIN METTE_IN_ASTA ON V.ID=Id_venditore JOIN ART_IN_ASTA AS A ON A.ID = Id_asta\n" +
+                    "WHERE A.ID = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                venditore = readVenditore(resultSet);
+            }
+
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return venditore;
+    }
+
     Compratore readCompratore(ResultSet rs){
         Compratore compratore = new Compratore();
 
@@ -318,5 +348,30 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         }
 
         return compratore;
+    }
+
+    Venditore readVenditore(ResultSet rs){
+        Venditore venditore = new Venditore();
+        try {
+            venditore.setId(rs.getInt("ID"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setUsername(rs.getString("Username"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setPassword(rs.getString("Password"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setDeleted(rs.getString("Deleted").equals("Y"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            venditore.setIndirizzo_spedizione(rs.getString("Indirizzo_spediz"));
+        } catch (SQLException sqle) {
+        }
+        return venditore;
     }
 }

@@ -68,9 +68,7 @@ public class MySQLJDBCDAOFactory extends DAOFactory {
     }
 
     @Override
-    public CompratoreDAO getCompratoreDAO() {
-        return null;
-    }
+    public CompratoreDAO getCompratoreDAO() { return new CompratoreDAOMySQLJDBCImpl(connection); }
 
     @Override
     public ArticoloDAO getArticoloDAO() {

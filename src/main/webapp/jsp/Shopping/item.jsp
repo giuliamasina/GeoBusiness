@@ -90,18 +90,31 @@
             position: relative;
             top: 80px;
             left: 70px;
+            font-size: 20px;
+        }
+        main section p {
+            position: relative;
+            top: 80px;
+            left: 70px;
+            width: 380px;
         }
         #nome {
             position: relative;
-            left:120px;
-            margin-top: 90px;
+            top: 80px;
+            left: 70px;
         }
-        #prezzo,#venditore {
+        #venditore {
+            position: relative;
+            margin-top: 90px;
+            left: 120px;
+            font-size: 20px;
+        }
+        #prezzo {
             position: relative;
             left: 120px;
             font-size: 20px;
         }
-        main section button {
+        main section a button {
             position: relative;
             top: 70px;
             left: 130px;
@@ -113,7 +126,7 @@
             cursor: pointer;
             font-size: 20px;
         }
-        main section button:hover {
+        main section a button:hover {
             background-color: #DFBB88;
         }
         footer {
@@ -153,14 +166,22 @@
         <img src="https://via.placeholder.com/150" alt="Image 1">
     </section>
     <section>
+        <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
         <p><%=articolovendita.getDescription()%></p>
     </section>
     <section id="info">
-        <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
         <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%></h2>
-        <button type="button">Compra</button>
+        <%if (!loggedOn) {%>
+        <a>
+            <button type="button">Compra</button>
+        </a>
+        <%} else {%>
+        <a href="Dispatcher?controllerAction=Shopping.buyview&articolovendita=<%=articolovendita.getId()%>">
+            <button type="button">Compra</button>
+        </a>
+        <%}%>
     </section>
 </main>
 <footer>

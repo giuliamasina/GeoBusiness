@@ -6,6 +6,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
+<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloAsta" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.Date" %>
+
+<%
+    boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
+    Utente loggedUser = (Utente) request.getAttribute("loggedUser");
+    String applicationMessage = (String) request.getAttribute("applicationMessage");
+    String menuActiveLink = "Shopping";
+
+    ArticoloAsta articoloasta = (ArticoloAsta) request.getAttribute("articoloasta");
+    Venditore venditore = (Venditore) request.getAttribute("venditore");
+    List<Float> offerte = (List<Float>) request.getAttribute("offerte");
+    List<Date> date_offerte = (List<Date>) request.getAttribute(("date_offerte"));
+
+    int i;
+%>
 <html>
 <head>
     <title>Offerta</title>
@@ -138,8 +157,8 @@
 <main>
     <section>
         <img src="https://via.placeholder.com/150" alt="Image 1">
-        <h1 id="nome">Nome</h1>
-        <h2 id="venditore">Venditore: </h2>
+        <h1 id="nome"><%=articoloasta.getNome()%></h1>
+        <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
     </section>
     <section>
         <label for="offer">Inserisci la tua offerta</label>
@@ -147,7 +166,9 @@
     </section>
     <section>
         <h1 id="details">Tutte le offerte</h1>
-        <h3 id="offers">$         fatta da              il        </h3>
+        <%for(i=0; i<offerte.size();i++){%>
+            <h3 id="offers">$ <%=offerte.get(i)%>    <%=date_offerte.get(i)%></h3>
+        <%}%>
     </section>
 
 </main>

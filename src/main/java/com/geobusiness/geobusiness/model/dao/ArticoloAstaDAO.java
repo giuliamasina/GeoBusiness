@@ -30,4 +30,6 @@ public interface ArticoloAstaDAO extends ArticoloDAO{
     public List<Compratore> getOfferingCompratoriById(Integer id);
 
     public List<Articolo> findBySearchString(Utente utente, String SearchString);       // da riveredere
+
+    public Venditore findVenditoreById(Integer id);
 }
