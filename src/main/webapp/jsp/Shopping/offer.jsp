@@ -135,6 +135,18 @@
             margin-top: auto;
         }
     </style>
+    <script>
+        function checkAndConfirm(maxoffer) {
+            var number = document.getElementById("offer").value;
+            if (number <= maxoffer) {
+                // Display a pop-up alert
+                alert("La tua offerta deve essere maggiore delle altre");
+            } else {
+                // Display a pop-up alert if the number is not lower
+                alert("Grazie per la tua offerta!");
+            }
+        }
+    </script>
 
 </head>
 <body>
@@ -162,7 +174,8 @@
     </section>
     <section>
         <label for="offer">Inserisci la tua offerta</label>
-        <input type="text" id="offer" name="offer" required >
+        <input type="number" id="offer" name="offer" required >
+        <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
     </section>
     <section>
         <h1 id="details">Tutte le offerte</h1>

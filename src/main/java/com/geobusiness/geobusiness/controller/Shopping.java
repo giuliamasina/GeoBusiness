@@ -260,12 +260,9 @@ public class Shopping {
             articolovendita = articoloVenditaDAO.findByArticoloId(Idarticolo);
             venditore = articoloVenditaDAO.findVenditoreById(Idarticolo);
             CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
-            if((loggedUser.getUsername()).equals(null)){    // DEBUG
-                compratore.setIndirizzo_consegna("bubu");
-            }else {
-                compratore = compratoreDAO.findByUsername(loggedUser.getUsername());   // trovo info compratore loggato usando username del loggeduser
-            }
+            compratore = compratoreDAO.findByUsername(loggedUser.getUsername());   // trovo info compratore loggato usando username del loggeduser
             consegna = compratore.getIndirizzo_consegna();
+
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();

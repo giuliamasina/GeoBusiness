@@ -81,7 +81,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
     private String encode(Utente loggedUser) {
 
         String encodedLoggedUser;
-        encodedLoggedUser = /*loggedUser.getId() +*/ "#" + loggedUser.getUsername();
+        encodedLoggedUser = loggedUser.getUsername();
         return encodedLoggedUser;  // ho tolto getId perchè non so come recuperarlo
 
     }
@@ -90,10 +90,10 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 
         Utente loggedUser = new Utente();
 
-        String[] values = encodedLoggedUser.split("#");
+        //String[] values = encodedLoggedUser.split("#");
 
         //loggedUser.setId(Integer.parseInt(values[0]));
-        loggedUser.setUsername(values[0]);
+        loggedUser.setUsername(encodedLoggedUser);
 
         return loggedUser;
 

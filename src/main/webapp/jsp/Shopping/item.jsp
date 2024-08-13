@@ -9,6 +9,10 @@
 <%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
 <%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
 <%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
+<%@ page import="com.geobusiness.geobusiness.model.dao.CompratoreDAO" %>
+<%@ page import="com.geobusiness.geobusiness.model.dao.DAOFactory" %>
+<%@ page import="com.geobusiness.geobusiness.services.config.Configuration" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.Compratore" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -18,6 +22,23 @@
 
     ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
+
+    int isCompratore = 0;
+    Compratore compratore = null;
+    DAOFactory daoFactory = null;
+    daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+    daoFactory.beginTransaction();
+    if(loggedOn){
+        CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+        compratore = compratoreDAO.findByUsername(loggedUser.getUsername());
+        
+        if(compratore.equals(null)){
+            isCompratore = 0;
+        }
+        else{
+            isCompratore = 1;
+        }
+    }
 %>
 <html>
 <head>
@@ -137,6 +158,14 @@
             margin-top: auto;
         }
     </style>
+    <script>
+        function notLoggedOn(){
+            alert("Devi accedere come compratore per acquistare un articolo")
+        }
+        function notCompratore(){
+            alert("Devi essere un utente compratore per acquistare un articolo")
+        }
+    </script>
 </head>
 <body>
 
@@ -175,9 +204,13 @@
         <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%></h2>
         <%if (!loggedOn) {%>
         <a>
-            <button type="button">Compra</button>
+            <button type="button" onclick="notLoggedOn()">Compra</button>
         </a>
-        <%} else {%>
+        <%} else if(isCompratore==0){%>
+        <a>
+            <button type="button" onclick="notCompratore()">Compra</button>
+        </a>
+        <%} else if(isCompratore==1){%>
         <a href="Dispatcher?controllerAction=Shopping.buyview&articolovendita=<%=articolovendita.getId()%>">
             <button type="button">Compra</button>
         </a>

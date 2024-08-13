@@ -173,7 +173,7 @@
             <button type="button">Fai Offerta</button>
         </a>
         <%} else {%>
-        <a href="Dispatcher?controllerAction=Shopping.offerview&articolovendita=<%=articoloasta.getId()%>">
+        <a href="Dispatcher?controllerAction=Shopping.offerview&articoloasta=<%=articoloasta.getId()%>">
             <button type="button">Fai Offerta</button>
         </a>
         <%}%>
