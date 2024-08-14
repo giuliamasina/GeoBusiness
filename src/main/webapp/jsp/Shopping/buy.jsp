@@ -9,6 +9,13 @@
 <%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
 <%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
 <%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
+<%@ page import="com.geobusiness.geobusiness.model.dao.DAOFactory" %>
+<%@ page import="com.geobusiness.geobusiness.model.dao.CompratoreDAO" %>
+<%@ page import="com.geobusiness.geobusiness.services.config.Configuration" %>
+<%@ page import="java.sql.Date" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.LocalDateTime" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -19,6 +26,7 @@
     ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
     String consegna = (String) request.getAttribute("consegna");
+    Integer Id_compratore = (Integer) request.getAttribute("Id_compratore");
 %>
 <html>
 <head>
@@ -132,7 +140,11 @@
             margin-top: auto;
         }
     </style>
-
+    <script>
+        function buy(){
+            alert("Grazie dell'acquisto!")
+        }
+    </script>
 </head>
 <body>
 
@@ -142,7 +154,11 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
-
+    <form name="buyForm" action="Dispatcher" method="post">
+        <input type="hidden" name="Id_articolo" value="<%=articolovendita.getId()%>"/>
+        <input type="hidden" name="Id_compratore" value="<%=Id_compratore%>"/>
+        <input type="hidden" name="controllerAction" value="Shopping.compra"/>
+    </form>
     <nav>
         <ul>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
@@ -165,7 +181,9 @@
         <input type="text" id="expire" name="expire" required>
         <label for="security">Numero di sicurezza</label>
         <input type="text" id="security" name="security" required>
-        <button type="button">Compra</button>
+        <a href="javascript:buyForm.submit()">
+            <button type="button" onclick="buy()">Compra</button>
+        </a>
     </section>
     <section>
         <h1 id="dettagli">Dettagli consegna</h1>

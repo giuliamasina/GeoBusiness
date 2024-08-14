@@ -116,7 +116,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
             int i = 1;
             ps.setString(i, articolo.getNome());
             ps.setString(i++, articolo.getCategoria());
-            ps.setBoolean(i++, articolo.getStatus());  // qui è boolean ma sul database è char. come faccio?
+            ps.setInt(i++, articolo.getStatus());  // qui è boolean ma sul database è char. come faccio?
             ps.setString(i++, articolo.getImmagine());
             ps.setString(i++, articolo.getDescription());
             ps.setInt(i++, articolo.getId());
@@ -235,7 +235,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
         } catch (SQLException sqle) {
         }
         try {
-            articolo.setStatus(rs.getString("Status").equals("Y"));
+            articolo.setStatus(rs.getInt("Status"));
         } catch (SQLException sqle) {
         }
         try {

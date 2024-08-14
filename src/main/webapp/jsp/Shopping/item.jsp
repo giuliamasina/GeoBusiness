@@ -32,7 +32,7 @@
         CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
         compratore = compratoreDAO.findByUsername(loggedUser.getUsername());
         
-        if(compratore.equals(null)){
+        if(compratore == null){
             isCompratore = 0;
         }
         else{

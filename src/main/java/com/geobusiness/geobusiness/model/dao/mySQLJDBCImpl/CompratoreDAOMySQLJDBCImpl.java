@@ -5,10 +5,7 @@ import com.geobusiness.geobusiness.model.mo.ArticoloAsta;
 import com.geobusiness.geobusiness.model.mo.Compratore;
 import com.geobusiness.geobusiness.model.mo.Utente;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
 
@@ -140,6 +137,71 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
             throw new RuntimeException(e);
         }
         return compratore;
+    }
+
+    @Override
+    public void compra(Integer id_comp, Integer id_articolo, Date data) {
+        PreparedStatement ps;
+
+        try{
+
+            String sql
+                    = " INSERT INTO COMPRA "
+                    + "   ( Id_compratore,"
+                    + "     Id_articolo,"
+                    + "      Data_acquisto"
+                    + "   ) "
+                    + " VALUES (?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setInt(i, id_comp);
+            ps.setInt(i++, id_articolo);
+            ps.setDate(i++, data);
+            ps.executeUpdate();
+
+
+            sql
+                    = "UPDATE ARTICOLO"
+                    + "SET Status=1"
+                    + "WHERE ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id_articolo);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void faofferta(Integer id_comp, Integer id_asta, Float offerta, Date data) {
+        PreparedStatement ps;
+
+        try{
+
+            String sql
+                    = " INSERT INTO FA_OFFERTA "
+                    + "   ( Id_compratore,"
+                    + "     Id_aSTA,"
+                    + "     Offerta,"
+                    + "      Data"
+                    + "   ) "
+                    + " VALUES (?,?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setInt(i, id_comp);
+            ps.setInt(i++, id_asta);
+            ps.setFloat(i++, offerta);
+            ps.setDate(i++, data);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     Compratore readCompratore(ResultSet rs){

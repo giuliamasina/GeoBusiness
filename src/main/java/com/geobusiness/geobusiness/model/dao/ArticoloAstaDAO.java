@@ -23,6 +23,8 @@ public interface ArticoloAstaDAO extends ArticoloDAO{
 
     public List<ArticoloAsta> findByCategoria(String categoria);        // da riveredere
 
+    public List<ArticoloAsta> selectAll();
+
     public List<Float> getOffersById(Integer id);
 
     public List<Date> getDateOffersById(Integer id);

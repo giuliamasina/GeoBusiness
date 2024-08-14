@@ -1,6 +1,8 @@
 package com.geobusiness.geobusiness.controller;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,8 +67,8 @@ public class Shopping {
             ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
             ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
 
-            articolivendita = articoloVenditaDAO.findByCategoria("*");
-            articoliasta = articoloAstaDAO.findByCategoria("*");
+            articolivendita = articoloVenditaDAO.selectAll();
+            articoliasta = articoloAstaDAO.selectAll();
 
             articoli.addAll(articolivendita);
             articoli.addAll(articoliasta);
@@ -234,6 +236,7 @@ public class Shopping {
         Venditore venditore = null;
         String consegna = null;
         Compratore compratore = new Compratore();
+        Integer Id_compratore = null;
         Logger logger = LogService.getApplicationLogger();
 
         try{
@@ -262,7 +265,7 @@ public class Shopping {
             CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
             compratore = compratoreDAO.findByUsername(loggedUser.getUsername());   // trovo info compratore loggato usando username del loggeduser
             consegna = compratore.getIndirizzo_consegna();
-
+            Id_compratore = compratore.getId();
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
@@ -273,6 +276,7 @@ public class Shopping {
             request.setAttribute("articolovendita",articolovendita);
             request.setAttribute("venditore",venditore);
             request.setAttribute("consegna", consegna);
+            request.setAttribute("Id_compratore", Id_compratore);
 
         }catch(Exception e){
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -362,6 +366,7 @@ public class Shopping {
         String applicationMessage = null;
 
         List<Articolo> articoli = new ArrayList<>();
+        List<ArticoloVendita> articolivendita1 = null;
         List<ArticoloVendita> articolivendita = null;
         List<ArticoloAsta> articoliasta = null;
 
@@ -393,7 +398,13 @@ public class Shopping {
             ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
 
             // filtro per categoria
-            articolivendita = articoloVenditaDAO.findByCategoria(request.getParameter("categoria"));
+            articolivendita1 = articoloVenditaDAO.findByCategoria(request.getParameter("categoria"));
+            int j;
+            for(j=0; j<articolivendita1.size(); j++){
+                if((articolivendita1.get(j).getStatus()) == 0){
+                    articolivendita.add(articolivendita1.get(j));
+                }
+            }
             articoliasta = articoloAstaDAO.findByCategoria(request.getParameter("categoria"));
 
             // filtro per prezzo
@@ -477,6 +488,128 @@ public class Shopping {
         request.setAttribute("articoliasta",articoliasta);
     }
 
+    public static void compra(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory=null;
+        DAOFactory daoFactory = null;
+        Utente loggedUser;
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+
+        Logger logger = LogService.getApplicationLogger();
+
+        try {
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory.beginTransaction();
+
+            UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+            if(sessionUserDAO!=null){
+                loggedUser = sessionUserDAO.findLoggedUtente();
+            }
+            else{
+                Utente utente = new Utente();
+                utente.setUsername("Guest");
+                loggedUser=null;
+            }
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            String a = request.getParameter("Id_compratore");
+            Integer Id_comp = Integer.parseInt(a);
+            a = request.getParameter("Id_articolo");
+            Integer Id_articolo = Integer.parseInt(a);
+            Date data_acquisto = new Date(timestamp.getTime());
+
+            CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+            compratoreDAO.compra(Id_comp, Id_articolo, data_acquisto);
+
+            daoFactory.commitTransaction();
+            sessionDAOFactory.commitTransaction();
+
+            request.setAttribute("loggedOn",loggedUser!=null);
+            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("viewUrl", "Shopping/view");
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+
+        }
+    }
+
+    public static void faiofferta(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory=null;
+        DAOFactory daoFactory = null;
+        Utente loggedUser;
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+
+        Logger logger = LogService.getApplicationLogger();
+        try {
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory.beginTransaction();
+
+            UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+            if(sessionUserDAO!=null){
+                loggedUser = sessionUserDAO.findLoggedUtente();
+            }
+            else{
+                Utente utente = new Utente();
+                utente.setUsername("Guest");
+                loggedUser=null;
+            }
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            String a = request.getParameter("Id_compratore");
+            Integer Id_comp = Integer.parseInt(a);
+            a = request.getParameter("Id_articolo");
+            Integer Id_articolo = Integer.parseInt(a);
+            Date data = new Date(timestamp.getTime());
+            a = request.getParameter("offerta");
+            Float offerta = Float.parseFloat(a);
+
+            CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+            compratoreDAO.faofferta(Id_comp, Id_articolo, offerta, data);
+
+            daoFactory.commitTransaction();
+            sessionDAOFactory.commitTransaction();
+
+            request.setAttribute("loggedOn",loggedUser!=null);
+            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("viewUrl", "Shopping/view");
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+
+        }
+    }
     public static List<ArticoloVendita> priceRange(List<ArticoloVendita> articolivendita, HttpServletRequest request){
         List<ArticoloVendita> articolivenditafinal = null;
 

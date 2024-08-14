@@ -11,6 +11,10 @@
 <%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.Compratore" %>
+<%@ page import="com.geobusiness.geobusiness.model.dao.DAOFactory" %>
+<%@ page import="com.geobusiness.geobusiness.services.config.Configuration" %>
+<%@ page import="com.geobusiness.geobusiness.model.dao.CompratoreDAO" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -22,6 +26,24 @@
     Venditore venditore = (Venditore) request.getAttribute("venditore");
     List<Float> offerte = (List<Float>) request.getAttribute("offerte");
     List<Date> date_offerte = (List<Date>) request.getAttribute(("date_offerte"));
+
+    int isCompratore = 0;
+    Compratore compratore = null;
+    DAOFactory daoFactory = null;
+    daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+    daoFactory.beginTransaction();
+    if(loggedOn){
+        CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+        compratore = compratoreDAO.findByUsername(loggedUser.getUsername());
+
+        if(compratore.equals(null)){
+            isCompratore = 0;
+        }
+        else{
+            isCompratore = 1;
+        }
+    }
+    daoFactory.commitTransaction();
 %>
 <html>
 <head>
@@ -141,6 +163,14 @@
             margin-top: auto;
         }
     </style>
+    <script>
+        function notLoggedOn(){
+            alert("Devi accedere come compratore per fare un'offerta")
+        }
+        function notCompratore(){
+            alert("Devi essere un utente compratore per fare un'offerta")
+        }
+    </script>
 </head>
 <body>
 
@@ -172,7 +202,11 @@
         <a>
             <button type="button">Fai Offerta</button>
         </a>
-        <%} else {%>
+        <%} else if(isCompratore==0){%>
+        <a>
+            <button type="button" onclick="notCompratore()">Fai Offerta</button>
+        </a>
+        <%} else if(isCompratore==1){%>
         <a href="Dispatcher?controllerAction=Shopping.offerview&articoloasta=<%=articoloasta.getId()%>">
             <button type="button">Fai Offerta</button>
         </a>

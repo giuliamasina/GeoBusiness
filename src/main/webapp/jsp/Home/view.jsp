@@ -127,10 +127,12 @@
     <section>
         <h1>Inizia il tuo museo personale</h1>
     </section>
-    <form name="goToShop" action="Dispatcher" method="post">
+    <form name="goToShopForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Shopping.view"/>
-        <button type="submit">Tutti i fossili</button>
     </form>
+    <a href="javascript:goToShopForm.submit()">
+        <button type="submit">Tutti i fossili</button>
+    </a>
     <h2>Categorie</h2>
     <section>
         <figure>

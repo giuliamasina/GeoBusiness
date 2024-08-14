@@ -25,6 +25,8 @@ public interface ArticoloVenditaDAO extends ArticoloDAO{
 
     public List<ArticoloVendita> findByCategoria(String categoria);        // da riveredere
 
+    public List<ArticoloVendita> selectAll();
+
     public Venditore findVenditoreById(Integer id);
 
     // public List<Articolo> findBySearchString(Utente utente, String SearchString);       // da riveredere

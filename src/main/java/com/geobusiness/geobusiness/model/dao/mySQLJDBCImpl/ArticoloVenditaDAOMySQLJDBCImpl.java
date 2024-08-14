@@ -160,6 +160,36 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         return articolivendita;
     }
 
+    @Override
+    public List<ArticoloVendita> selectAll() {
+        PreparedStatement ps;
+        ArrayList<ArticoloVendita> articolivendita = new ArrayList<ArticoloVendita>();
+        ArticoloVendita articolovendita;
+
+        try {
+
+            String sql
+                    = "SELECT * FROM ARTICOLO NATURAL JOIN ART_IN_VENDITA";
+
+            ps = conn.prepareStatement(sql);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                articolovendita = read(resultSet);   // leggo il risultato della query (la traduco)
+                articolivendita.add(articolovendita);      // aggiungo alla lista di articoli da restituire
+            }
+
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return articolivendita;
+    }
+
     public Venditore findVenditoreById(Integer id){
         PreparedStatement ps;
         Venditore venditore = null;
@@ -206,7 +236,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         } catch (SQLException sqle) {
         }
         try {
-            articolovendita.setStatus(rs.getString("Status").equals("Y"));
+            articolovendita.setStatus(rs.getInt("Status"));
         } catch (SQLException sqle) {
         }
         try {

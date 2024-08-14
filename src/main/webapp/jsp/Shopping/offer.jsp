@@ -22,7 +22,7 @@
     Venditore venditore = (Venditore) request.getAttribute("venditore");
     List<Float> offerte = (List<Float>) request.getAttribute("offerte");
     List<Date> date_offerte = (List<Date>) request.getAttribute(("date_offerte"));
-
+    Integer Id_compratore = (Integer) request.getAttribute("Id_compratore");
     int i;
 %>
 <html>
@@ -141,10 +141,13 @@
             if (number <= maxoffer) {
                 // Display a pop-up alert
                 alert("La tua offerta deve essere maggiore delle altre");
-            } else {
+            } else if(number > maxoffer){
                 // Display a pop-up alert if the number is not lower
                 alert("Grazie per la tua offerta!");
+                document.offerForm.offerta.value = number;
+                document.offerForm.submit();
             }
+
         }
     </script>
 
@@ -156,6 +159,12 @@
 
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
+    </form>
+    <form name="offerForm">
+        <input type="hidden" name="Id_articolo" value="<%=articoloasta.getId()%>"/>
+        <input type="hidden" name="Id_compratore" value="<%=Id_compratore%>"/>
+        <input type="hidden" name="offerta"/>
+        <input type="hidden" name="controllerAction" value="Shopping.faiofferta"/>
     </form>
 
     <nav>
@@ -175,7 +184,9 @@
     <section>
         <label for="offer">Inserisci la tua offerta</label>
         <input type="number" id="offer" name="offer" required >
-        <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
+        <a href="javascript:offerForm.submit()">
+            <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
+        </a>
     </section>
     <section>
         <h1 id="details">Tutte le offerte</h1>

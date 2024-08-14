@@ -5,7 +5,7 @@ public class Articolo {
     private Integer id;
     private String nome;
     private String categoria;
-    private boolean status;
+    private Integer status;
     private String immagine;
     private String description;
     private boolean deleted;
@@ -23,9 +23,9 @@ public class Articolo {
 
     public void setCategoria(String categoria) { this.categoria = categoria; }
 
-    public boolean getStatus() { return status; }
+    public Integer getStatus() { return status; }
 
-    public void setStatus(boolean status) { this.status = status; }
+    public void setStatus(Integer status) { this.status = status; }
 
     public String getImmagine() { return immagine; }
 

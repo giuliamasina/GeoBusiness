@@ -3,6 +3,8 @@ import com.geobusiness.geobusiness.model.mo.Compratore;
 import com.geobusiness.geobusiness.model.mo.Utente;
 import com.geobusiness.geobusiness.model.mo.Venditore;
 
+import java.sql.Date;
+
 public interface CompratoreDAO extends UtenteDAO{
 
     public Compratore create(
@@ -19,4 +21,8 @@ public interface CompratoreDAO extends UtenteDAO{
     public Compratore findByUtenteId(Integer id);     // da rivedere
 
     public Compratore findByUsername(String username);
+
+    public void compra(Integer id_comp, Integer id_articolp, Date data);
+
+    public void faofferta(Integer id_comp, Integer id_asta, Float offerta, Date data);
 }

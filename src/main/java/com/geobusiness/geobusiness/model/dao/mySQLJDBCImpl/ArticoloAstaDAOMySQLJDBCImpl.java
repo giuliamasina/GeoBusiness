@@ -150,6 +150,36 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
     }
 
     @Override
+    public List<ArticoloAsta> selectAll() {
+        PreparedStatement ps;
+        ArrayList<ArticoloAsta> articoliasta = new ArrayList<ArticoloAsta>();
+        ArticoloAsta articoloasta;
+
+        try {
+
+            String sql
+                    = "SELECT * FROM ARTICOLO NATURAL JOIN ART_IN_ASTA";
+
+            ps = conn.prepareStatement(sql);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                articoloasta = read(resultSet);   // leggo il risultato della query (la traduco)
+                articoliasta.add(articoloasta);      // aggiungo alla lista di articoli da restituire
+            }
+
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return articoliasta;
+    }
+
+    @Override
     public List<Float> getOffersById(Integer id){
         PreparedStatement ps;
         List<Float> offerte = new ArrayList<>();
@@ -269,7 +299,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         } catch (SQLException sqle) {
         }
         try {
-            articoloasta.setStatus(rs.getString("Status").equals("Y"));
+            articoloasta.setStatus(rs.getInt("Status"));
         } catch (SQLException sqle) {
         }
         try {
