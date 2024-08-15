@@ -176,11 +176,22 @@
 
 <header>
     <h1>GeoBusiness</h1>
+
+    <form name="logoutForm" action="Dispatcher" method="post">
+        <input type="hidden" name="controllerAction" value="Home.logout"/>
+    </form>
+
     <nav>
         <ul>
+            <%if (!loggedOn) {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
             <li><a href="Dispatcher?controllerAction=Home.viewsign">Iscriviti</a></li>
             <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
+            <%} else {%>
+            <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
+            <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
+            <li><a href="Dispatcher?controllerAction=Profile.view&utenteId=<%=loggedUser.getId()%>">Profilo</a></li>
+            <%}%>
         </ul>
     </nav>
 </header>

@@ -39,7 +39,8 @@ public class Shopping {
         String applicationMessage = null;
 
         List<Articolo> articoli = new ArrayList<>();
-        List<ArticoloVendita> articolivendita = null;
+        List<ArticoloVendita> articolivendita1 = null;
+        List<ArticoloVendita> articolivendita = new ArrayList<>();
         List<ArticoloAsta> articoliasta = null;
 
         Logger logger = LogService.getApplicationLogger();
@@ -67,7 +68,13 @@ public class Shopping {
             ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
             ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
 
-            articolivendita = articoloVenditaDAO.selectAll();
+            articolivendita1 = articoloVenditaDAO.selectAll();
+            int j;
+            for(j=0; j<articolivendita1.size(); j++){
+                if((articolivendita1.get(j).getStatus()) == 0){
+                    articolivendita.add(articolivendita1.get(j));
+                }
+            }
             articoliasta = articoloAstaDAO.selectAll();
 
             articoli.addAll(articolivendita);
@@ -367,7 +374,7 @@ public class Shopping {
 
         List<Articolo> articoli = new ArrayList<>();
         List<ArticoloVendita> articolivendita1 = null;
-        List<ArticoloVendita> articolivendita = null;
+        List<ArticoloVendita> articolivendita = new ArrayList<>();
         List<ArticoloAsta> articoliasta = null;
 
         List<ArticoloVendita> articolivenditafinal;

@@ -23,7 +23,7 @@
     ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
 
-    int isCompratore = 0;
+    int isCompratore = 0;   // dovrò mettere tutto questo anche nelle altre view per entrare in Profilo (bisogna sapere se ho un compratore o un venditore)
     Compratore compratore = null;
     DAOFactory daoFactory = null;
     daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
@@ -185,6 +185,7 @@
             <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
             <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
+            <li><a href="Dispatcher?controllerAction=Profile.view&utenteId=<%=loggedUser.getId()%>">Profilo</a></li>
             <%}%>
         </ul>
     </nav>

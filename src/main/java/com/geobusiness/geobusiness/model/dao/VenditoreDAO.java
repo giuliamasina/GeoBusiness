@@ -1,7 +1,7 @@
 package com.geobusiness.geobusiness.model.dao;
-import com.geobusiness.geobusiness.model.mo.Compratore;
-import com.geobusiness.geobusiness.model.mo.Venditore;
-import com.geobusiness.geobusiness.model.mo.Utente;
+import com.geobusiness.geobusiness.model.mo.*;
+
+import java.util.List;
 
 public interface VenditoreDAO extends UtenteDAO{
 
@@ -16,7 +16,11 @@ public interface VenditoreDAO extends UtenteDAO{
 
     public void delete(Venditore venditore);
 
-    public Utente findByUtenteId(Integer id);     // da rivedere
+    public Venditore findByUtenteId(Integer id);     // da rivedere
 
     public Venditore findByUsername(String username);
+
+    public List<ArticoloVendita> findArticoliInVendita(Integer id);
+
+    public List<ArticoloAsta> findArticoliInAsta(Integer id);
 }

@@ -2,10 +2,13 @@ package com.geobusiness.geobusiness.model.dao.mySQLJDBCImpl;
 
 import com.geobusiness.geobusiness.model.dao.CompratoreDAO;
 import com.geobusiness.geobusiness.model.mo.ArticoloAsta;
+import com.geobusiness.geobusiness.model.mo.ArticoloVendita;
 import com.geobusiness.geobusiness.model.mo.Compratore;
 import com.geobusiness.geobusiness.model.mo.Utente;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
 
@@ -140,6 +143,72 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     }
 
     @Override
+    public List<ArticoloVendita> findArticoliComprati(Integer id) {
+        PreparedStatement ps;
+        ArrayList<ArticoloVendita> articolivendita = new ArrayList<ArticoloVendita>();
+        ArticoloVendita articolovendita;
+
+        try {
+
+            String sql
+                    = "SELECT ID, Nome, Categoria, Status, Immagine, Descrizione, Deleted, Prezzo\n" +
+                    "FROM ARTICOLO NATURAL JOIN ART_IN_VENDITA JOIN COMPRA ON ID=Id_articolo\n" +
+                    "WHERE Id_compratore=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                articolovendita = readArticoloVendita(resultSet);   // leggo il risultato della query (la traduco)
+                articolivendita.add(articolovendita);      // aggiungo alla lista di articoli da restituire
+            }
+
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return articolivendita;
+    }
+
+    @Override
+    public List<ArticoloAsta> findOfferte(Integer id) {
+        PreparedStatement ps;
+        ArrayList<ArticoloAsta> articoliasta = new ArrayList<ArticoloAsta>();
+        ArticoloAsta articoloasta;
+
+        try {
+
+            String sql
+                    = "SELECT ID, Nome, Categoria, Status, Immagine, Descrizione, Deleted, Data_scadenza\n" +
+                    "FROM ARTICOLO NATURAL JOIN ART_IN_ASTA JOIN FA_OFFERTA ON ID=Id_asta\n" +
+                    "WHERE Id_compratore=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                articoloasta = readArticoloAsta(resultSet);   // leggo il risultato della query (la traduco)
+                articoliasta.add(articoloasta);      // aggiungo alla lista di articoli da restituire
+            }
+
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return articoliasta;
+    }
+
+    @Override
     public void compra(Integer id_comp, Integer id_articolo, Date data) {
         PreparedStatement ps;
 
@@ -229,5 +298,86 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         }
 
         return compratore;
+    }
+    ArticoloVendita readArticoloVendita(ResultSet rs) {
+        ArticoloVendita articolovendita = new ArticoloVendita();
+        //User user = new User();
+        //contact.setUser(user);
+        try {
+            articolovendita.setId(rs.getInt("ID"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articolovendita.setNome(rs.getString("Nome"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articolovendita.setCategoria(rs.getString("Categoria"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articolovendita.setStatus(rs.getInt("Status"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articolovendita.setImmagine(rs.getString("Immagine"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articolovendita.setDescription(rs.getString("Descrizione"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articolovendita.setDeleted(rs.getString("Deleted").equals("Y"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articolovendita.setPrezzo(rs.getFloat("Prezzo"));
+        }catch(SQLException sqle){
+
+        }
+
+        return articolovendita;
+    }
+
+    ArticoloAsta readArticoloAsta(ResultSet rs) {
+        ArticoloAsta articoloasta = new ArticoloAsta();
+        //User user = new User();
+        //contact.setUser(user);
+        try {
+            articoloasta.setId(rs.getInt("ID"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articoloasta.setNome(rs.getString("Nome"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articoloasta.setCategoria(rs.getString("Categoria"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articoloasta.setStatus(rs.getInt("Status"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articoloasta.setImmagine(rs.getString("Immagine"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articoloasta.setDescription(rs.getString("Descrizione"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articoloasta.setDeleted(rs.getString("Deleted").equals("Y"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            articoloasta.setData_scadenza(rs.getDate("Data_scadenza"));
+        } catch (SQLException sqle) {
+
+        }
+
+        return articoloasta;
     }
 }
