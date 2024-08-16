@@ -117,13 +117,14 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         PreparedStatement ps;
         Compratore compratore = null;
 
+
         try {
 
             String sql
                     = " SELECT * "
                     + "   FROM UTENTE NATURAL JOIN COMPRATORE"
                     + " WHERE "
-                    + "   Username = ?";
+                    + "   Username = ? AND Deleted = 'N'";
 
             ps = conn.prepareStatement(sql);   // preparo lo statement sulla connessione database con la stringa sql appena fatta
             ps.setString(1, username);     // settare le varabili nel statement

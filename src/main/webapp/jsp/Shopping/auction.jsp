@@ -190,7 +190,7 @@
             <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
             <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
-            <li><a href="Dispatcher?controllerAction=Profile.view&utenteId=<%=loggedUser.getId()%>">Profilo</a></li>
+            <li><a href="Dispatcher?controllerAction=Profile.view&username=<%=loggedUser.getUsername()%>">Profilo</a></li>
             <%}%>
         </ul>
     </nav>

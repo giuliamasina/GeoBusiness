@@ -87,7 +87,35 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
 
     @Override
     public Venditore findByUsername(String username) {
-        return null;
+        PreparedStatement ps;
+        Venditore venditore = null;
+
+
+        try {
+
+            String sql
+                    = " SELECT *"
+                    + " FROM UTENTE NATURAL JOIN VENDITORE "
+                    + " WHERE "
+                    + "   Username = ? AND "
+                    + "   Deleted  = 'N' ";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                venditore = readVenditore(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return venditore;
     }
 
     @Override

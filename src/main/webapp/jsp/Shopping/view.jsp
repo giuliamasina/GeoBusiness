@@ -13,6 +13,7 @@
 <%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
 <%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloAsta" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -21,8 +22,10 @@
     String menuActiveLink = "Shopping";
 
     List<Articolo> articoli = (List<Articolo>) request.getAttribute("articoli");
-    List<ArticoloVendita> articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
-    List<ArticoloAsta> articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
+    List<ArticoloVendita> articolivendita = new ArrayList<>();
+    articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
+    List<ArticoloAsta> articoliasta = new ArrayList<>();
+    articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
     String categoria = (String) request.getAttribute("categoria");
     Float da = (Float) request.getAttribute("da");
     Float a = (Float) request.getAttribute("a");
@@ -179,7 +182,7 @@
             <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
             <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
-            <li><a href="Dispatcher?controllerAction=Profile.view&utenteId=<%=loggedUser.getId()%>">Profilo</a></li>
+            <li><a href="Dispatcher?controllerAction=Profile.view&username=<%=loggedUser.getUsername()%>">Profilo</a></li>
             <%}%>
         </ul>
     </nav>
@@ -248,9 +251,16 @@
         </figure>
         <%}
         }else {%>
-        <p>Non sono state trovati articoli a prezzo fisso</p>
+        <p>Non sono stati trovati articoli a prezzo fisso</p>
         <%}%>
-        <% if(!articoliasta.isEmpty()){
+        <%try {
+            //articoliasta.isEmpty();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServletException(e);
+        }
+
+            if(articoliasta != null && !articoliasta.isEmpty()){
             for(i=0;i<articoliasta.size();i++){
             String name = articoliasta.get(i).getNome();
             String category = articoliasta.get(i).getCategoria();

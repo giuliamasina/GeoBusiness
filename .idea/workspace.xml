@@ -10,16 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment=" html e controller">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Profile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/VenditoreDAOMySQLJDBCImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewCompratore.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewVenditore.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Shopping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Shopping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CompratoreDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CompratoreDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/VenditoreDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/VenditoreDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Profile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/CompratoreDAOMySQLJDBCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/CompratoreDAOMySQLJDBCImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/MySQLJDBCDAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/MySQLJDBCDAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/VenditoreDAOMySQLJDBCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/VenditoreDAOMySQLJDBCImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewCompratore.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewCompratore.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewVenditore.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewVenditore.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/auction.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/auction.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/buy.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/buy.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/item.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/item.jsp" afterDir="false" />
@@ -231,7 +229,8 @@
       <workItem from="1723389862595" duration="9370000" />
       <workItem from="1723579556600" duration="6449000" />
       <workItem from="1723629174138" duration="15255000" />
-      <workItem from="1723733692115" duration="8841000" />
+      <workItem from="1723733692115" duration="9311000" />
+      <workItem from="1723829453678" duration="5180000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
@@ -361,7 +360,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723669634931</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary=" html e controller">
+      <option name="closed" value="true" />
+      <created>1723755795770</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1723755795770</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

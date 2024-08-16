@@ -13,6 +13,7 @@
 <%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloAsta" %>
 <%@ page import="com.geobusiness.geobusiness.model.mo.Compratore" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="java.util.ArrayList" %>
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
@@ -20,8 +21,10 @@
     String menuActiveLink = "Shopping";
 
     List<Articolo> articoli = (List<Articolo>) request.getAttribute("articoli");
-    List<ArticoloVendita> articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
-    List<ArticoloAsta> articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
+    List<ArticoloVendita> articolivendita = new ArrayList<>();
+    articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
+    List<ArticoloAsta> articoliasta = new ArrayList<>();
+    articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
 
     int i;
 %>
@@ -47,7 +50,7 @@
             <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
             <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
-            <li><a href="Dispatcher?controllerAction=Profile.view&utenteId=<%=loggedUser.getId()%>">Profilo</a></li>
+            <li><a href="Dispatcher?controllerAction=Profile.view&username=<%=loggedUser.getUsername()%>">Profilo</a></li>
             <%}%>
         </ul>
     </nav>

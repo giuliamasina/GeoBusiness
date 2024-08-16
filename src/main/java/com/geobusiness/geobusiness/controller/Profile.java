@@ -29,7 +29,7 @@ public class Profile {
         List<Articolo> articoli = new ArrayList<>();
         List<ArticoloVendita> articolivendita = new ArrayList<>();
         List<ArticoloAsta> articoliasta = null;
-        Integer utenteId;
+        String username;
         Compratore compratore = null;
         Venditore venditore = null;
 
@@ -58,27 +58,30 @@ public class Profile {
             ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
             CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
             VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
-            utenteId = Integer.parseInt(request.getParameter("utenteId"));
-            compratore = compratoreDAO.findByUtenteId(utenteId);
-            venditore = venditoreDAO.findByUtenteId(utenteId);
-
-            if(compratore != null && venditore == null){
-                articolivendita = compratoreDAO.findArticoliComprati(utenteId);
-                articoliasta = compratoreDAO.findOfferte(utenteId);
-                request.setAttribute("viewUrl", "Profile/viewCompratore");
-            }
-            if(venditore != null && compratore == null){
-                articolivendita = venditoreDAO.findArticoliInVendita(utenteId);
-                articoliasta = venditoreDAO.findArticoliInAsta(utenteId);
-                request.setAttribute("viewUrl", "Profile/viewVenditore");
-            }
+            username = request.getParameter("username");
+            compratore = compratoreDAO.findByUsername(username);
+            venditore = venditoreDAO.findByUsername(username);
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
 
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
-            request.setAttribute("viewUrl", "Shopping/view");
+            if(compratore != null && venditore == null){
+                articolivendita = compratoreDAO.findArticoliComprati(compratore.getId());
+                articoliasta = compratoreDAO.findOfferte(compratore.getId());
+                request.setAttribute("viewUrl", "Profile/viewCompratore");
+            } else if(venditore != null && compratore == null){
+                articolivendita = venditoreDAO.findArticoliInVendita(venditore.getId());
+                articoliasta = venditoreDAO.findArticoliInAsta(venditore.getId());
+                request.setAttribute("viewUrl", "Profile/viewVenditore");
+            } else if(venditore == null && compratore == null){
+                request.setAttribute("viewUrl", "Home/view");
+            }
+            else if(venditore != null && compratore != null){
+                request.setAttribute("viewUrl", "Shopping/view");
+            }
+            //request.setAttribute("viewUrl", "Shopping/view");
             request.setAttribute("articoli",articoli);
             request.setAttribute("articolivendita",articolivendita);
             request.setAttribute("articoliasta",articoliasta);
