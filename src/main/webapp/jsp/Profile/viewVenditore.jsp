@@ -81,38 +81,56 @@
             bottom: 90px;
         }
         main h1 {
-            font-size: 40px;
-            position:relative;
-            left: 120px;
-            top: 65px;
-            margin-bottom: 60px;
-        }
-        main form h1 {
             font-size: 22px;
             position:relative;
             left: 30px;
-            right:10px;
-            bottom:20px;
-            top:55px;
+            top: 25px;
+            right:15px;
+            bottom:55px;
+            #margin-bottom: 60px;
         }
-        main form h3 {
-            font-size: 19px;
+        main h3 {
+            font-size: 17px;
             position: relative;
-            left: 50px;
-            top: 45px;
+            left: 35px;
+            top: 20px;
+            right: 15px;
+            bottom: 25px;
+        }
+        main section h1 {
+            font-size: 22px;
+            position:relative;
+            left: 30px;
+            right:15px;
+            bottom:20px;
+            top:25px;
+        }
+        main section h3 {
+            font-size: 17px;
+            position: relative;
+            left: 35px;
+            top: 20px;
             right: 35px;
+            bottom: 25px;
         }
         main section {
             display: flex;
             flex-direction: row;
-            top:40px;
+            top:50px;
             flex-wrap: wrap;
             align-items: center;
             gap: 10px;
         }
+        main section p {
+            position: relative;
+            left: 35px;
+            top:45px;
+        }
         main section figure {
+            position: relative;
             width:300px;
             height: 340px;
+            top: 20px;
         }
         main section figure img {
             width:300px;
@@ -144,15 +162,14 @@
 </header>
 
 <main>
+    <h1>Dettagli profilo</h1>
+    <h3>Username: </h3>
+    <h3>Indirizzo di consegna: </h3>
+    <h3>Numero di fossili messi in vendita/asta: </h3>
+    <h3>Numero di fossili venduti: </h3>
+
+    <h1>Tutti i tuoi fossili in vendita</h1>
     <section>
-        <h1>Dettagli profilo:</h1>
-        <h3>Username: </h3>
-        <h3>Indirizzo di consegna: </h3>
-        <h3>Numero di fossili messi in vendita/asta: </h3>
-        <h3>Numero di fossili venduti: </h3>
-    </section>
-    <section>
-        <h1>Tutti i tuoi fossili in vendita</h1>
         <%if(!articolivendita.isEmpty()){
             for(i=0;i<articolivendita.size();i++){
                 String name = articolivendita.get(i).getNome();
@@ -174,8 +191,8 @@
         <%}%>
 
     </section>
+    <h1>Tutti i tuoi fossili in asta</h1>
     <section>
-        <h1>Tutti i tuoi fossili in asta</h1>
         <% if(!articoliasta.isEmpty()){
             for(i=0;i<articoliasta.size();i++){
                 String name = articoliasta.get(i).getNome();

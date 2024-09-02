@@ -11,18 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment=" html e controller">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Profile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/CompratoreDAOMySQLJDBCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/CompratoreDAOMySQLJDBCImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/MySQLJDBCDAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/MySQLJDBCDAOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/VenditoreDAOMySQLJDBCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/VenditoreDAOMySQLJDBCImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewCompratore.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewCompratore.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewVenditore.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewVenditore.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/auction.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/auction.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/buy.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/buy.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/item.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/item.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/offer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/offer.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Shopping/view.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,6 +221,7 @@
       <workItem from="1723629174138" duration="15255000" />
       <workItem from="1723733692115" duration="9311000" />
       <workItem from="1723829453678" duration="5180000" />
+      <workItem from="1725309713406" duration="3592000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
