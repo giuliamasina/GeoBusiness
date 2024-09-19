@@ -71,7 +71,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-
+            background-color: #444;
         }
         main {
             padding: 0;
@@ -236,6 +236,7 @@
     <section id="articoli">
         <%if(!articolivendita.isEmpty()){
             for(i=0;i<articolivendita.size();i++){
+                if (articolivendita.get(i).getStatus() == 0) {
             String name = articolivendita.get(i).getNome();
             String category = articolivendita.get(i).getCategoria();
             Float price = articolivendita.get(i).getPrezzo();
@@ -250,6 +251,7 @@
             <figcaption><%= price%></figcaption>
         </figure>
         <%}
+        }
         }else {%>
         <p>Non sono stati trovati articoli a prezzo fisso</p>
         <%}%>
@@ -262,6 +264,7 @@
 
             if(articoliasta != null && !articoliasta.isEmpty()){
             for(i=0;i<articoliasta.size();i++){
+                if (articolivendita.get(i).getStatus() == 0) {
             String name = articoliasta.get(i).getNome();
             String category = articoliasta.get(i).getCategoria();
             Date data=articoliasta.get(i).getData_scadenza();
@@ -276,6 +279,7 @@
             <figcaption>Scade il:   <%=data%></figcaption>
         </figure>
          <%}
+         }
          } else {%>
             <p>Non sono state trovate aste</p>
         <%}%>

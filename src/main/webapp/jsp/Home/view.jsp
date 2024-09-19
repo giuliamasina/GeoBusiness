@@ -23,39 +23,33 @@
     <title>GeoBusiness</title>
     <style>
         body {
-            width:100%;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            display: flex;
+            flex-direction: column;
             background-color: #CAB18C;
-            box-sizing: border-box;
+            padding: 0;
+            margin:0;
+            height: 1700px;
         }
         header {
-            top:0;
-            width: 100%;
-            height:90px;
             background-color: #5B533D;
-            color: white;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
+            height:90px;
         }
         header h1 {
-            margin: 0;
+            margin-top: 50px;
+            margin-left: 55px;
+            color: white;
         }
         nav {
-            background-color: #5B533D;
-            margin-left:30px;
+            margin-left: 900px;
+            margin-top: 49px;
         }
         nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
             display: flex;
+            list-style-type: none;
         }
         nav ul li {
-            margin: 0 10px;
+
         }
         nav ul li a {
             color: white;
@@ -66,28 +60,60 @@
             background-color: #444;
         }
         main {
-            padding: 20px;
-        }
-        section {
+            padding: 0;
+            height: 800px;
+            background-color: #CAB18C;
+            width: 100%;
             display: flex;
+            flex-direction: column;
+            position:relative;
+            top: 90px;
+            bottom: 90px;
+        }
+        main h2 {
+            position: relative;
+            top: 110px;
+            left: 175px;
+        }
+        main section h1 {
+            font-size: 40px;
+            position:relative;
+            left: 570px;
+            top: 1px;
+            margin-bottom: 60px;
+        }
+        main section {
+            display: flex;
+            flex-direction: row;
+            top:40px;
             flex-wrap: wrap;
             align-items: center;
             gap: 10px;
         }
-        figure {
+        main form {
+            position: relative;
+            top: 10px;
+            left: 850px;
+        }
+        main section figure {
             height:380px;
             width:355px;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 0;
             background-color: #CAB18C;
             flex-basis: calc(25% - 15px);
         }
-        figure img {
+        main section figure img {
             width:355px;
             height:355px;
             max-width: 100%;
-            border-radius: 5px;
+            border-radius: 0;
             margin: 5px;
+        }
+        #categorie {
+            position: relative;
+            left:95px;
+            top:100px;
         }
         footer {
             background-color: #5B533D;
@@ -130,27 +156,51 @@
     </section>
     <form name="goToShopForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Shopping.view"/>
+        <a href="javascript:goToShopForm.submit()">
+            <button type="submit">Tutti i fossili</button>
+        </a>
     </form>
-    <a href="javascript:goToShopForm.submit()">
-        <button type="submit">Tutti i fossili</button>
-    </a>
     <h2>Categorie</h2>
-    <section>
+    <section id="categorie">
         <figure>
-            <img src="https://via.placeholder.com/150" alt="Image 1">
-            <figcaption>Image 1 Title</figcaption>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ammoniti&da=&a=">
+                <img src="https://via.placeholder.com/150" alt="Image 1">
+            </a>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ammoniti&da=&a=">
+                <figcaption>Ammoniti</figcaption>
+            </a>
         </figure>
         <figure>
-            <img src="https://via.placeholder.com/150" alt="Image 2">
-            <figcaption>Image 2 Title</figcaption>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Trilobiti&da=&a=">
+                <img src="https://via.placeholder.com/150" alt="Image 1">
+            </a>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Trilobiti&da=&a=">
+                <figcaption>Trilobiti</figcaption>
+            </a>
         </figure>
         <figure>
-            <img src="https://via.placeholder.com/150" alt="Image 3">
-            <figcaption>Image 3 Title</figcaption>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ambre&da=&a=">
+                <img src="https://via.placeholder.com/150" alt="Image 1">
+            </a>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ambre&da=&a=">
+                <figcaption>Ambre</figcaption>
+            </a>
         </figure>
         <figure>
-            <img src="https://via.placeholder.com/150" alt="Image 4">
-            <figcaption>Image 4 Title</figcaption>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Pesci&da=&a=">
+                <img src="https://via.placeholder.com/150" alt="Image 1">
+            </a>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Pesci&da=&a=">
+                <figcaption>Pesci</figcaption>
+            </a>
+        </figure>
+        <figure>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Rettili&da=&a=">
+                <img src="https://via.placeholder.com/150" alt="Image 1">
+            </a>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Rettili&da=&a=">
+                <figcaption>Rettili</figcaption>
+            </a>
         </figure>
         <!-- Add more figures as needed -->
     </section>

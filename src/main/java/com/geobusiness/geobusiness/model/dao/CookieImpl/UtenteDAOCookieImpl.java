@@ -1,8 +1,10 @@
 package com.geobusiness.geobusiness.model.dao.CookieImpl;
 
+import com.geobusiness.geobusiness.model.dao.DAOFactory;
 import com.geobusiness.geobusiness.model.dao.UtenteDAO;
 import com.geobusiness.geobusiness.model.mo.Compratore;
 import com.geobusiness.geobusiness.model.mo.Utente;
+import com.geobusiness.geobusiness.services.config.Configuration;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +25,14 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
             String Paswword
     ) {
         Utente loggedUser = new Utente();
-        //loggedUser.setId(id); per adesso lo tolgo perche non so come recuperare l'id
+        DAOFactory daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+        daoFactory.beginTransaction();
+        UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
+        Utente utente = new Utente();
+        utente = utenteDAO.findByUsername(Username);
+        daoFactory.commitTransaction();
+
+        loggedUser.setId(utente.getId());
         loggedUser.setUsername(Username);
 
         Cookie cookie;
@@ -81,7 +90,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
     private String encode(Utente loggedUser) {
 
         String encodedLoggedUser;
-        encodedLoggedUser = loggedUser.getUsername();
+        encodedLoggedUser = loggedUser.getId() + "#" + loggedUser.getUsername();
         return encodedLoggedUser;  // ho tolto getId perchè non so come recuperarlo
 
     }
@@ -90,10 +99,10 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 
         Utente loggedUser = new Utente();
 
-        //String[] values = encodedLoggedUser.split("#");
+        String[] values = encodedLoggedUser.split("#");
 
-        //loggedUser.setId(Integer.parseInt(values[0]));
-        loggedUser.setUsername(encodedLoggedUser);
+        loggedUser.setId(Integer.parseInt(values[0]));
+        loggedUser.setUsername(values[1]);
 
         return loggedUser;
 

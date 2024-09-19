@@ -6,14 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.Utente" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.Articolo" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloAsta" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.*" %>
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
@@ -25,6 +21,9 @@
     articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
     List<ArticoloAsta> articoliasta = new ArrayList<>();
     articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
+    Venditore venditore = (Venditore) request.getAttribute("venditore");
+    List<Recensione> recensioni = new ArrayList<>();
+    recensioni = (List<Recensione>) request.getAttribute("recensioni");
 
     int i;
 %>
@@ -97,6 +96,23 @@
             right: 15px;
             bottom: 25px;
         }
+        main a button {
+            position: relative;
+            width: 150px;
+            height: 40px;
+            border: none;
+            border-radius: 0;
+            background-color: #D85D5D;
+            cursor: pointer;
+            font-size: 17px;
+            left: 45px;
+            top:30px;
+            bottom: 30px;
+            margin-bottom: 30px;
+        }
+        main a button:hover {
+            background-color: #BD5555;
+        }
         main section h1 {
             font-size: 22px;
             position:relative;
@@ -136,6 +152,29 @@
             width:300px;
             height: 300px;
         }
+        .venduto {
+            width:300px;
+            height: 300px;
+            filter: grayscale(40%);
+        }
+        .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;  /* Colore del testo */
+            padding: 10px;  /* Spaziatura interna del riquadro */
+            border-radius: 0; /* Smussa gli angoli del riquadro */
+            font-size: 15px;
+            #font-weight: bold;
+        }
+        .box{
+            display: inline-block; /* Posiziona gli elementi uno accanto all'altro */
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #000; /* Riquadro */
+        }
         main section figure figcaption {
             position: relative;
             top:5px;
@@ -163,10 +202,13 @@
 
 <main>
     <h1>Dettagli profilo</h1>
-    <h3>Username: </h3>
-    <h3>Indirizzo di consegna: </h3>
-    <h3>Numero di fossili messi in vendita/asta: </h3>
+    <h3>Username: <%=venditore.getUsername()%></h3>
+    <h3>Indirizzo di spedizione: <%=venditore.getIndirizzo_spedizione()%></h3>
+    <h3>Numero di fossili messi in vendita/asta: <%=articolivendita.size() + articoliasta.size()%></h3>
     <h3>Numero di fossili venduti: </h3>
+    <a>
+        <button type="button">Elimina profilo</button>
+    </a>
 
     <h1>Tutti i tuoi fossili in vendita</h1>
     <section>
@@ -177,9 +219,16 @@
                 Float price = articolivendita.get(i).getPrezzo();
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
+            <%if(articolivendita.get(i).getStatus() == 1) {%>
+            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+                <img class="venduto" src="<%=image%>">
+                <div class="text">Venduto</div>
+            </a>
+            <%} else{%>
             <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
+            <%}%>
             <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
             </a>
@@ -200,9 +249,16 @@
                 Date data=articoliasta.get(i).getData_scadenza();
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
+            <%if(articoliasta.get(i).getStatus() == 1) {%>
+            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+                <img class="venduto" src="<%=image%>">
+                <div class="text">Venduto</div>
+            </a>
+            <%} else{%>
             <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
+            <%} %>
             <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <figcaption><%=name%></figcaption>
             </a>
@@ -211,6 +267,16 @@
         <%}
         } else {%>
         <p>Non sono state trovate aste</p>
+        <%}%>
+    </section>
+    <h1>Le tue recensioni</h1>
+    <section>
+        <%for(i=0;i<recensioni.size();i++) {%>
+        <div class="box">
+            <h3><%=recensioni.get(i).getValutazione()%></h3>
+            <p><%=recensioni.get(i).getCommento()%></p>
+            <p><%=recensioni.get(i).getDataPubblicazione()%></p>
+        </div>
         <%}%>
     </section>
 </main>

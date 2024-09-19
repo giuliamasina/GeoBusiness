@@ -197,7 +197,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         try {
 
             String sql
-                    = "SELECT V.ID, Username, Password, Deleted, Indirizzo_spediz\n" +
+                    = "SELECT V.ID AS id, Username, Password, Deleted, Indirizzo_spediz\n" +
                     "FROM UTENTE NATURAL JOIN VENDITORE AS V JOIN VENDE ON V.ID=Id_venditore JOIN ART_IN_VENDITA AS A ON A.ID = Id_articolo\n" +
                     "WHERE A.ID = ?";
 
@@ -262,7 +262,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
     Venditore readVenditore(ResultSet rs){
         Venditore venditore = new Venditore();
         try {
-            venditore.setId(rs.getInt("ID"));
+            venditore.setId(rs.getInt("id"));
         } catch (SQLException sqle) {
         }
         try {

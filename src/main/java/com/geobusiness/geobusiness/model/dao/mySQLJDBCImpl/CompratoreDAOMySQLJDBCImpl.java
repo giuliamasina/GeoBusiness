@@ -232,8 +232,8 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
 
 
             sql
-                    = "UPDATE ARTICOLO"
-                    + "SET Status=1"
+                    = "UPDATE ARTICOLO "
+                    + "SET Status=1 "
                     + "WHERE ID=?";
 
             ps = conn.prepareStatement(sql);
@@ -270,6 +270,40 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean hacompratoda(Integer id_comp, Integer id_vend){
+        PreparedStatement ps;
+
+        try{
+
+            String sql
+                    = "SELECT Id_articolo "
+                    + "FROM COMPRA NATURAL JOIN VENDE "
+                    + "WHERE Id_compratore=? AND Id_venditore=?";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            System.out.println("ID_Compratore: " + id_comp);
+            System.out.println("ID_Venditore: " + id_vend);
+            ps.setInt(1, id_comp);
+            ps.setInt(2, id_vend);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            boolean exist;
+            exist = resultSet.next();
+            resultSet.close();
+
+            if (exist) {
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

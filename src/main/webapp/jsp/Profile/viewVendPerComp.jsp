@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: giuggiu
-  Date: 15/08/24
-  Time: 17:19
+  Date: 17/09/24
+  Time: 16:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,14 +14,16 @@
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
     String applicationMessage = (String) request.getAttribute("applicationMessage");
-    String menuActiveLink = "Shopping";
+    String menuActiveLink = "Profile";
 
     List<Articolo> articoli = (List<Articolo>) request.getAttribute("articoli");
     List<ArticoloVendita> articolivendita = new ArrayList<>();
     articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
     List<ArticoloAsta> articoliasta = new ArrayList<>();
     articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
-    Compratore compratore = (Compratore) request.getAttribute("compratore");
+    Venditore venditore = (Venditore) request.getAttribute("venditore");
+    Recensione recensione = (Recensione) request.getAttribute("recensione");
+    boolean has_bought = (boolean) request.getAttribute("has_bought");
     List<Recensione> recensioni = new ArrayList<>();
     recensioni = (List<Recensione>) request.getAttribute("recensioni");
 
@@ -37,7 +39,7 @@
             background-color: #CAB18C;
             padding: 0;
             margin:0;
-            height: 1500px;
+            height: 1300px;
         }
         header {
             background-color: #5B533D;
@@ -96,23 +98,6 @@
             right: 15px;
             bottom: 25px;
         }
-        main a button {
-            position: relative;
-            width: 150px;
-            height: 40px;
-            border: none;
-            border-radius: 0;
-            background-color: #D85D5D;
-            cursor: pointer;
-            font-size: 17px;
-            left: 45px;
-            top:30px;
-            bottom: 30px;
-            margin-bottom: 30px;
-        }
-        main a button:hover {
-            background-color: #BD5555;
-        }
         main section h1 {
             font-size: 22px;
             position:relative;
@@ -142,12 +127,6 @@
             left: 35px;
             top:45px;
         }
-        .box{
-            display: inline-block; /* Posiziona gli elementi uno accanto all'altro */
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #000; /* Riquadro */
-        }
         main section figure {
             position: relative;
             width:300px;
@@ -157,6 +136,29 @@
         main section figure img {
             width:300px;
             height: 300px;
+        }
+        .venduto {
+            width:300px;
+            height: 300px;
+            filter: grayscale(40%);
+        }
+        .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;  /* Colore del testo */
+            padding: 10px;  /* Spaziatura interna del riquadro */
+            border-radius: 0; /* Smussa gli angoli del riquadro */
+            font-size: 15px;
+            #font-weight: bold;
+        }
+        .box{
+            display: inline-block; /* Posiziona gli elementi uno accanto all'altro */
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #000; /* Riquadro */
         }
         main section figure figcaption {
             position: relative;
@@ -173,88 +175,132 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
+    <form name="reviewForm" action="Dispatcher" method="post">
+        <input type="hidden" name="rating"/>
+        <input type="hidden" name="comment"/>
+        <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
+        <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
+        <input type="hidden" name="controllerAction" value="Profile.pubblicaRecensione"/>
+    </form>
 
     <nav>
         <ul>
-            <%if (!loggedOn) {%>
-            <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
-            <li><a href="Dispatcher?controllerAction=Home.viewsign">Iscriviti</a></li>
-            <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
-            <%} else {%>
             <li><a href="Dispatcher?controllerAction=Home.view">Home</a></li>
             <li><a href="javascript:logoutForm.submit()">Log-out</a></li>
             <li><a href="Dispatcher?controllerAction=Profile.view&username=<%=loggedUser.getUsername()%>">Profilo</a></li>
-            <%}%>
         </ul>
     </nav>
 </header>
 
 <main>
-
     <h1>Dettagli profilo</h1>
-    <h3>Username: <%=compratore.getUsername()%></h3>
-    <h3>Indirizzo di consegna: <%=compratore.getIndirizzo_consegna()%></h3>
-    <h3>Numero di fossili comprati: <%=articolivendita.size()%></h3>
-    <a>
-        <button type="button">Elimina profilo</button>
-    </a>
+    <h3>Username: <%=venditore.getUsername()%></h3>
+    <h3>Indirizzo di spedizione: <%=venditore.getIndirizzo_spedizione()%></h3>
+    <h3>Numero di fossili messi in vendita/asta: <%=articolivendita.size() + articoliasta.size()%></h3>
+    <h3>Numero di fossili venduti: </h3>
 
-    <h1>Tutti i tuoi ordini</h1>
+    <h1>Fossili in vendita</h1>
     <section>
         <%if(!articolivendita.isEmpty()){
             for(i=0;i<articolivendita.size();i++){
                 String name = articolivendita.get(i).getNome();
                 String category = articolivendita.get(i).getCategoria();
                 Float price = articolivendita.get(i).getPrezzo();
-                String image = articolivendita.get(i).getImmagine(); %>
+                String image = articolivendita.get(i).getImmagine();
+                if(articolivendita.get(i).getStatus() == 0) {%>
         <figure>
-            <a href="Dispatcher?controllerAction=Profile.view&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
-            <a href="Dispatcher?controllerAction=Profile.view&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
             </a>
             <figcaption><%= price%></figcaption>
         </figure>
         <%}
+        }
         }else {%>
         <p>Non sono state trovati articoli a prezzo fisso</p>
         <%}%>
-    </section>
 
-    <h1>Aste a cui hai partecipato</h1>
+    </section>
+    <h1>Fossili in asta</h1>
     <section>
         <% if(!articoliasta.isEmpty()){
             for(i=0;i<articoliasta.size();i++){
                 String name = articoliasta.get(i).getNome();
                 String category = articoliasta.get(i).getCategoria();
                 Date data=articoliasta.get(i).getData_scadenza();
-                String image = articoliasta.get(i).getImmagine(); %>
+                String image = articolivendita.get(i).getImmagine();
+                if(articoliasta.get(i).getStatus() == 0) {%>
         <figure>
-            <a href="Dispatcher?controllerAction=Profile.view&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
-            <a href="Dispatcher?controllerAction=Profile.view&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <figcaption><%=name%></figcaption>
             </a>
             <figcaption>Scade il:   <%=data%></figcaption>
         </figure>
         <%}
+        }
         } else {%>
         <p>Non sono state trovate aste</p>
         <%}%>
     </section>
-    <h1>Recensioni lasciate</h1>
+    <h1>Lascia una recensione al venditore</h1>
+    <%if(has_bought) {
+        if(recensione != null) {  %>
+            <h3>Hai già lasciato una recensione</h3>
+            <h1><%=recensione.getValutazione()%></h1>
+            <p><%=recensione.getCommento()%></p>
+    <%  }else {%>
+            <form name="review" action="Dispatcher" method="post">
+                <!-- Sezione per la valutazione -->
+                <label for="rating">Valutazione (1 a 5):</label>
+                <div class="rating" id="rating">
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">1</label>
+
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">2</label>
+
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">3</label>
+
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">4</label>
+
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">5</label>
+                </div>
+                <!-- Sezione per il commento -->
+                <label for="comment">Commento:</label>
+                <textarea id="comment" name="comment" placeholder="Scrivi qui il tuo commento..."></textarea>
+                <!-- Pulsante per inviare la recensione -->
+                <a href="javascript:reviewForm.submit()">
+                    <button type="submit" class="submit-btn">Pubblica</button>
+                </a>
+            </form>
+            <a href="javascript:reviewForm.submit()">
+                <button type="button">Pubblica</button>
+            </a>
+    <%  }
+    } else {%>
+        <p>Devi prima aver ricevuto un ordine da questo venditore prima di poter lasciare una recensione</p>
+    <%}%>
+    <h1>Recensioni</h1>
     <section>
         <%for(i=0;i<recensioni.size();i++) {%>
-        <div class="box">
-            <h3><%=recensioni.get(i).getValutazione()%></h3>
-            <p><%=recensioni.get(i).getCommento()%></p>
-            <p><%=recensioni.get(i).getDataPubblicazione()%></p>
-        </div>
+            <div class="box">
+                <h3><%=recensioni.get(i).getValutazione()%></h3>
+                <p><%=recensioni.get(i).getCommento()%></p>
+                <p><%=recensioni.get(i).getDataPubblicazione()%></p>
+            </div>
         <%}%>
     </section>
 </main>
 
 </body>
 </html>
+

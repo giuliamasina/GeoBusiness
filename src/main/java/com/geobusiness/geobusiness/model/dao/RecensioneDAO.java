@@ -12,9 +12,12 @@ import java.util.List;
 public interface RecensioneDAO {
 
     public Recensione create(
-            Integer id,
+
+            Integer valutazione,
             String commento,
-            Date data_pubblicazione
+            Date data_pubblicazione,
+            Integer id_c,
+            Integer id_v
     );
 
     public void update(Recensione recensione);
@@ -23,5 +26,11 @@ public interface RecensioneDAO {
 
     public Articolo findByRecensioneId(Integer id);
 
-    public List<Recensione> findByVenditore(Venditore venditore);
+    public List<Recensione> findByVenditoreId(Integer id);
+
+    public List<Recensione> findByCompratoreId(Integer id);
+
+    public void fa_recensione(Integer id_c, Integer id_v, Integer valutazione, String commento, Date data_pubbl);
+
+    public Recensione checkIfAlreadyExists(Integer id_c, Integer id_v);
 }

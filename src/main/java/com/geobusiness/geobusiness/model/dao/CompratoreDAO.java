@@ -28,4 +28,6 @@ public interface CompratoreDAO extends UtenteDAO{
     public void compra(Integer id_comp, Integer id_articolp, Date data);
 
     public void faofferta(Integer id_comp, Integer id_asta, Float offerta, Date data);
+
+    public boolean hacompratoda(Integer id_comp, Integer id_vend);
 }

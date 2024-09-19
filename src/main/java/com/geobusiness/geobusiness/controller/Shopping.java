@@ -147,9 +147,9 @@ public class Shopping {
 
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
-            request.setAttribute("viewUrl", "Shopping/item");
             request.setAttribute("articolovendita",articolovendita);
             request.setAttribute("venditore",venditore);
+            request.setAttribute("viewUrl", "Shopping/item");
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
             try {

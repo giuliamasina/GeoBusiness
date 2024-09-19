@@ -82,7 +82,5 @@ public class MySQLJDBCDAOFactory extends DAOFactory {
     public ArticoloAstaDAO getArticoloAstaDAO() { return new ArticoloAstaDAOMySQLJDBCImpl(connection); }
 
     @Override
-    public RecensioneDAO getRecensioneDAO() {
-        return null;
-    }
+    public RecensioneDAO getRecensioneDAO() { return new RecensioneDAOMySQLJDPCImpl(connection); }
 }

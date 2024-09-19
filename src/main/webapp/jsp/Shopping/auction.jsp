@@ -135,6 +135,10 @@
             left: 120px;
             font-size: 20px;
         }
+        #username{
+            position: relative;
+            font-size: 17px;
+        }
         #prezzo,#data {
             position: relative;
             left: 120px;
@@ -180,6 +184,11 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
+    <form name="viewVendForm" action="Dispatcher" method="post">
+        <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
+        <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
+        <input type="hidden" name="controllerAction" value="Profile.viewVendPerComp">
+    </form>
 
     <nav>
         <ul>
@@ -206,7 +215,10 @@
         <p><%=articoloasta.getDescription()%></p>
     </section>
     <section id="info">
-        <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
+        <h2 id="venditore">Venditore:</h2>
+        <a href="javascript:viewVendForm.submit()">
+            <h3 id="username"><%=venditore.getUsername()%></h3>
+        </a>
         <h2 id="data">Scade il: <%=articoloasta.getData_scadenza()%></h2>
         <h2 id="prezzo">Ultima offerta:   <%=offerte.get(0)%>   <%=date_offerte.get(0)%></h2>
         <%if (!loggedOn) {%>
