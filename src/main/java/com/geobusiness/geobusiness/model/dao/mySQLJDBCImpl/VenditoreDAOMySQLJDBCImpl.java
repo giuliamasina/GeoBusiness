@@ -39,8 +39,64 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
     }
 
     @Override
-    public Venditore create(String Username, String Email, String Paswword, String Indirizzo_spedizione) {
-        return null;
+    public Venditore create(String Username, String Email, String Password, String Indirizzo_spedizione) {
+        PreparedStatement ps;
+        Venditore venditore = new Venditore();
+        //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
+
+        venditore.setUsername(Username);
+        venditore.setEmail(Email);
+        venditore.setPassword(Password);
+        venditore.setIndirizzo_spedizione(Indirizzo_spedizione);
+        venditore.setDeleted(false);
+
+        try{
+
+            String sql
+                    = " INSERT INTO UTENTE "
+                    + "   ( Username,"
+                    + "     Password,"
+                    + "     Deleted,"
+                    + "     Email"
+                    + "   ) "
+                    + " VALUES (?,?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setString(i, Username);
+            ps.setString(i++, Password);
+            ps.setString(i++, "N");
+            ps.setString(i++, Email);
+
+            ps.executeUpdate();
+
+            sql
+                    = "SELECT MAX(ID) AS max_id "
+                    + "FROM UTENTE";
+
+            ps = conn.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            Integer last_id =  resultSet.getInt("max_id");
+            venditore.setId(last_id);
+
+            sql
+                    = "INSERT INTO VENDITORE"
+                    + "    ( ID,"
+                    + "      Indirizzo_spediz";
+
+            ps = conn.prepareStatement(sql);
+            i = 1;
+            ps.setInt(i, venditore.getId());
+            ps.setString(i++, venditore.getIndirizzo_spedizione());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return venditore;
     }
 
     @Override

@@ -299,14 +299,12 @@ public class Home {
 
                 if (ruolo.equals("vendere")) {
                     VenditoreDAO utenteDAO = daoFactory.getVenditoreDAO();
-                    utenteDAO.create(username, email, password, indirizzo);
-                    Venditore venditore = utenteDAO.findByUsername(username);
+                    Venditore venditore = utenteDAO.create(username, email, password, indirizzo);
                     loggedUser = sessionUtenteDAO.create(venditore.getUsername(), venditore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
 
                 }else if(ruolo.equals("comprare")){
                     CompratoreDAO utenteDAO = daoFactory.getCompratoreDAO();
-                    utenteDAO.create(username, email, password, indirizzo);
-                    Compratore compratore = utenteDAO.findByUsername(username);
+                    Compratore compratore = utenteDAO.create(username, email, password, indirizzo);
                     loggedUser = sessionUtenteDAO.create(compratore.getUsername(), compratore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
                 }
 

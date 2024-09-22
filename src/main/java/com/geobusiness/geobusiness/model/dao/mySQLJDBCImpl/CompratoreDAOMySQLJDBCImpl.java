@@ -24,21 +24,50 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         Compratore compratore = new Compratore();
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
 
-        Integer id = findByUsername(Username).getId();   // per creare il compratore trovo l'id dell'utente che ho già creato
+        compratore.setUsername(Username);
+        compratore.setEmail(Email);
+        compratore.setPassword(Password);
         compratore.setIndirizzo_consegna(Indirizzo_consegna);
+        compratore.setDeleted(false);
 
         try{
 
             String sql
-                    = " INSERT INTO COMPRATORE "
-                    + "   ( ID,"
-                    + "     Indirizzo_cons,"
+                    = " INSERT INTO UTENTE "
+                    + "   ( Username,"
+                    + "     Password,"
+                    + "     Deleted,"
+                    + "     Email"
                     + "   ) "
-                    + " VALUES (?,?)";
+                    + " VALUES (?,?,?,?)";
 
             ps = conn.prepareStatement(sql);
             int i = 1;
-            ps.setInt(i, id);
+            ps.setString(i, Username);
+            ps.setString(i++, Password);
+            ps.setString(i++, "N");
+            ps.setString(i++, Email);
+
+            ps.executeUpdate();
+
+            sql
+                    = "SELECT MAX(ID) AS max_id "
+                    + "FROM UTENTE";
+
+            ps = conn.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            Integer last_id =  resultSet.getInt("max_id");
+            compratore.setId(last_id);
+
+            sql
+                    = "INSERT INTO COMPRATORE"
+                    + "    ( ID,"
+                    + "      Indirizzo_cons";
+
+            ps = conn.prepareStatement(sql);
+            i = 1;
+            ps.setInt(i, compratore.getId());
             ps.setString(i++, compratore.getIndirizzo_consegna());
 
             ps.executeUpdate();
