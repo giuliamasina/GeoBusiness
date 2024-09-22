@@ -192,7 +192,7 @@ public class Home {
                 applicationMessage = "Username e password errati!";
                 loggedUser=null;
             } else {
-                loggedUser = sessionUtenteDAO.create(utente.getUsername(),null); // ho tolto l'id perchè non so come ricavarlo
+                loggedUser = sessionUtenteDAO.create(utente.getUsername(), utente.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
             }
 
             daoFactory.commitTransaction();
