@@ -14,6 +14,8 @@
 <%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloAsta" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.Time" %>
+<%@ page import="java.sql.Timestamp" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -267,7 +269,7 @@
                 if (articolivendita.get(i).getStatus() == 0) {
             String name = articoliasta.get(i).getNome();
             String category = articoliasta.get(i).getCategoria();
-            Date data=articoliasta.get(i).getData_scadenza();
+            Timestamp data=articoliasta.get(i).getData_scadenza();
             String image = articolivendita.get(i).getImmagine(); %>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">

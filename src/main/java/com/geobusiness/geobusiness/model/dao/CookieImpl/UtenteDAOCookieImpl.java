@@ -22,6 +22,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
     public Utente create(
             // ho tolto l'id
             String Username,
+            String Email,
             String Paswword
     ) {
         Utente loggedUser = new Utente();
@@ -34,6 +35,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 
         loggedUser.setId(utente.getId());
         loggedUser.setUsername(Username);
+        loggedUser.setEmail(Email);
 
         Cookie cookie;
         cookie = new Cookie("loggedUser", encode(loggedUser));
@@ -90,7 +92,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
     private String encode(Utente loggedUser) {
 
         String encodedLoggedUser;
-        encodedLoggedUser = loggedUser.getId() + "#" + loggedUser.getUsername();
+        encodedLoggedUser = loggedUser.getId() + "#" + loggedUser.getUsername() + "#" + loggedUser.getEmail();
         return encodedLoggedUser;  // ho tolto getId perchè non so come recuperarlo
 
     }
@@ -103,6 +105,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 
         loggedUser.setId(Integer.parseInt(values[0]));
         loggedUser.setUsername(values[1]);
+        loggedUser.setEmail(values[2]);
 
         return loggedUser;
 

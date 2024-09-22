@@ -21,12 +21,14 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
     public Utente create(
                  // Probabilmente dovrò toglierlo, non lo uso per creare un utente, lo crea direttamente il database
             String Username,
+            String email,
             String Password
     ) {
         PreparedStatement ps;
         Utente utente = new Utente();
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
         utente.setUsername(Username);
+        utente.setEmail(email);
         utente.setPassword(Password);
 
         try{
@@ -37,12 +39,14 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
                     + " WHERE "
                     + " Deleted ='N' AND "
                     + " Username = ? AND"
-                    + " Password = ? AND";
+                    + " Password = ? AND"
+                    + " Email = ?";
 
             ps = conn.prepareStatement(sql);
             int i = 1;
             ps.setString(i, utente.getUsername());
             ps.setString(i++, utente.getPassword());
+            ps.setString(i++, utente.getEmail());
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -58,13 +62,15 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
                     = " INSERT INTO UTENTE "
                     + "   ( Username,"
                     + "     Password,"
+                    + "     Email"
                     + "   ) "
-                    + " VALUES (?,?)";
+                    + " VALUES (?,?,?)";
 
             ps = conn.prepareStatement(sql);
             i = 1;
             ps.setString(i, utente.getUsername());
             ps.setString(i++, utente.getPassword());
+            ps.setString(i++, utente.getEmail());
 
             ps.executeUpdate();
 
@@ -90,12 +96,14 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
                     + " WHERE "
                     + " Deleted ='N' AND "
                     + " Username = ? AND"
+                    + " Email = ? AND"
                     + " Password = ? AND"
                     + " ID <> ?";
 
             ps = conn.prepareStatement(sql);
             int i = 1;
             ps.setString(i, utente.getUsername());
+            ps.setString(i++, utente.getEmail());
             ps.setString(i++, utente.getPassword());
             ps.setInt(i++, utente.getId());
 
@@ -113,7 +121,8 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
                     = " UPDATE  UTENTE"
                     + " SET "
                     + "   Username = ?, "
-                    + "   Paasword = ? "
+                    + "   Paasword = ?, "
+                    + "   Email = ?"
                     + " WHERE "
                     + "   ID = ? ";
 
@@ -121,6 +130,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
             i = 1;
             ps.setString(i, utente.getUsername());
             ps.setString(i++, utente.getPassword());
+            ps.setString(i++, utente.getEmail());
             ps.setInt(i++, utente.getId());
             ps.executeUpdate();
 
@@ -230,6 +240,10 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
         }
         try {
             utente.setUsername(rs.getString("Username"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            utente.setEmail(rs.getString("Email"));
         } catch (SQLException sqle) {
         }
         try {

@@ -15,6 +15,7 @@
 <%@ page import="com.geobusiness.geobusiness.model.dao.DAOFactory" %>
 <%@ page import="com.geobusiness.geobusiness.services.config.Configuration" %>
 <%@ page import="com.geobusiness.geobusiness.model.dao.CompratoreDAO" %>
+<%@ page import="java.sql.Timestamp" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -25,7 +26,7 @@
     ArticoloAsta articoloasta = (ArticoloAsta) request.getAttribute("articoloasta");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
     List<Float> offerte = (List<Float>) request.getAttribute("offerte");
-    List<Date> date_offerte = (List<Date>) request.getAttribute(("date_offerte"));
+    List<Timestamp> date_offerte = (List<Timestamp>) request.getAttribute(("date_offerte"));
 
     int isCompratore = 0;
     Compratore compratore = null;

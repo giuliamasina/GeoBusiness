@@ -10,6 +10,7 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.geobusiness.geobusiness.model.mo.*" %>
+<%@ page import="java.sql.Timestamp" %>
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
@@ -230,7 +231,7 @@
             for(i=0;i<articoliasta.size();i++){
                 String name = articoliasta.get(i).getNome();
                 String category = articoliasta.get(i).getCategoria();
-                Date data=articoliasta.get(i).getData_scadenza();
+                Timestamp data=articoliasta.get(i).getData_scadenza();
                 String image = articolivendita.get(i).getImmagine();
                 if(articoliasta.get(i).getStatus() == 0) {%>
         <figure>
@@ -252,8 +253,6 @@
     <%if(has_bought) {
         if(recensione != null) {  %>
             <h3>Hai già lasciato una recensione</h3>
-            <h1><%=recensione.getValutazione()%></h1>
-            <p><%=recensione.getCommento()%></p>
     <%  }else {%>
             <form name="review" action="Dispatcher" method="post">
                 <!-- Sezione per la valutazione -->
@@ -282,9 +281,6 @@
                     <button type="submit" class="submit-btn">Pubblica</button>
                 </a>
             </form>
-            <a href="javascript:reviewForm.submit()">
-                <button type="button">Pubblica</button>
-            </a>
     <%  }
     } else {%>
         <p>Devi prima aver ricevuto un ordine da questo venditore prima di poter lasciare una recensione</p>
@@ -293,6 +289,9 @@
     <section>
         <%for(i=0;i<recensioni.size();i++) {%>
             <div class="box">
+                <%if(recensioni.get(i).getCompratoreId() == loggedUser.getId()) {%>
+                <p>La tua recensione</p>
+                <%}%>
                 <h3><%=recensioni.get(i).getValutazione()%></h3>
                 <p><%=recensioni.get(i).getCommento()%></p>
                 <p><%=recensioni.get(i).getDataPubblicazione()%></p>

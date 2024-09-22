@@ -12,6 +12,7 @@
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
+    boolean isVenditore = (boolean) request.getAttribute("isVenditore");
     String applicationMessage = (String) request.getAttribute("applicationMessage");
     String menuActiveLink = "Home";
 %>
@@ -152,13 +153,25 @@
 
 <main>
     <section>
-        <h1>Inizia il tuo museo personale</h1>
+        <%if(isVenditore) {%>
+            <h1>Vendi i tuoi ritrovamenti</h1>
+        <%}else {%>
+            <h1>Inizia il tuo museo personale</h1>
+        <%}%>
     </section>
     <form name="goToShopForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Shopping.view"/>
         <a href="javascript:goToShopForm.submit()">
             <button type="submit">Tutti i fossili</button>
         </a>
+        <%if(isVenditore) {%>
+            <a href="Dispatcher?controllerAction=Sell.view&Id_vend=<%=loggedUser.getId()%>&type=sell">
+                <button type="button">Nuova Vendita</button>
+            </a>
+            <a href="Dispatcher?controllerAction=Sell.view&Id_vend=<%=loggedUser.getId()%>&type=auction">
+                <button type="button">Nuova Asta</button>
+            </a>
+        <%}%>
     </form>
     <h2>Categorie</h2>
     <section id="categorie">

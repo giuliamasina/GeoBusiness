@@ -11,6 +11,7 @@
 <%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="java.sql.Timestamp" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -21,7 +22,7 @@
     ArticoloAsta articoloasta = (ArticoloAsta) request.getAttribute("articoloasta");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
     List<Float> offerte = (List<Float>) request.getAttribute("offerte");
-    List<Date> date_offerte = (List<Date>) request.getAttribute(("date_offerte"));
+    List<Timestamp> date_offerte = (List<Timestamp>) request.getAttribute(("date_offerte"));
     Integer Id_compratore = (Integer) request.getAttribute("Id_compratore");
     int i;
 %>

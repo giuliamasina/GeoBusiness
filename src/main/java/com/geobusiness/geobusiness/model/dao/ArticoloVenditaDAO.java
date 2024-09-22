@@ -4,12 +4,14 @@ import com.geobusiness.geobusiness.model.mo.ArticoloVendita;
 import com.geobusiness.geobusiness.model.mo.Compratore;
 import com.geobusiness.geobusiness.model.mo.Venditore;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface ArticoloVenditaDAO extends ArticoloDAO{
 
     public ArticoloVendita create(
-            Integer id,
+            // tolto id
             String nome,
             String categoria,
             String immagine,
@@ -28,6 +30,8 @@ public interface ArticoloVenditaDAO extends ArticoloDAO{
     public List<ArticoloVendita> selectAll();
 
     public Venditore findVenditoreById(Integer id);
+
+    public void metteInVendita(Integer Id_vend, String nome, String categoria, String immagine, String description, Float prezzo, Timestamp data_pubbl);
 
     // public List<Articolo> findBySearchString(Utente utente, String SearchString);       // da riveredere
 }

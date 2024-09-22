@@ -16,41 +16,67 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         this.conn = conn;
     }
     @Override
-    public ArticoloAsta create(Integer id,
+    public ArticoloAsta create(//Integer id,
                                String nome,
                                String categoria,
                                String immagine,
                                String description,
-                               Date Data_scadenza
+                               Timestamp Data_scadenza
     ) {
         PreparedStatement ps;
         ArticoloAsta articoloasta = new ArticoloAsta();
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
         articoloasta.setNome(nome);
         articoloasta.setCategoria(categoria);
+        articoloasta.setStatus(0);
         articoloasta.setImmagine(immagine);
         articoloasta.setDescription(description);
+        articoloasta.setDeleted(false);
         articoloasta.setData_scadenza(Data_scadenza);
 
         try{
 
             String sql
-                    = " INSERT INTO ART_IN_ASTA "
+                    = " INSERT INTO ARTICOLO "
                     + "   ( Nome,"
                     + "     Categoria,"
+                    + "     Status,"
                     + "     Immagine,"
                     + "      Descrizione,"
-                    + "      Data_scadenza"
+                    + "      Deleted"
                     + "   ) "
-                    + " VALUES (?,?,?,?,?)";
+                    + " VALUES (?,?,?,?,?,?)";
 
             ps = conn.prepareStatement(sql);
             int i = 1;
             ps.setString(i, articoloasta.getNome());
             ps.setString(i++, articoloasta.getCategoria());
+            ps.setInt(i++, 0);
             ps.setString(i++, articoloasta.getImmagine());
             ps.setString(i++, articoloasta.getDescription());
-            ps.setDate(i++, articoloasta.getData_scadenza());
+            ps.setString(i++, "N");
+
+            ps.executeUpdate();
+
+            sql
+                    = "SELECT MAX(ID) AS max_id "
+                    + "FROM ARTICOLO";
+
+            ps = conn.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            Integer last_id_item =  resultSet.getInt("max_id");
+            articoloasta.setId(last_id_item);
+
+            sql
+                    = "INSERT INTO ART_IN_ASTA"
+                    + "    ( ID,"
+                    + "      Data_scadenza";
+
+            ps = conn.prepareStatement(sql);
+            i = 1;
+            ps.setInt(i, articoloasta.getId());
+            ps.setTimestamp(i++, articoloasta.getData_scadenza());
 
             ps.executeUpdate();
 
@@ -212,10 +238,10 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         return offerte;
     }
 
-    public List<Date> getDateOffersById(Integer id){
+    public List<Timestamp> getDateOffersById(Integer id){
         PreparedStatement ps;
-        List<Date> date = new ArrayList<>();
-        Date data = null;
+        List<Timestamp> date = new ArrayList<>();
+        Timestamp data = null;
 
         try{
             String sql
@@ -228,7 +254,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
 
             while (resultSet.next()) {
                 try {
-                    data = resultSet.getDate("Data");
+                    data = resultSet.getTimestamp("Data");
                 }catch (SQLException sqle) {
                 }
                 date.add(data);
@@ -315,7 +341,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         } catch (SQLException sqle) {
         }
         try {
-            articoloasta.setData_scadenza(rs.getDate("Data_scadenza"));
+            articoloasta.setData_scadenza(rs.getTimestamp("Data_scadenza"));
         } catch (SQLException sqle) {
 
         }
@@ -351,6 +377,39 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         }
 
         return venditore;
+    }
+
+    @Override
+    public void metteInAsta(Integer Id_vend, String nome, String categoria, String immagine, String description, Timestamp data_scad, Timestamp data_pubbl) {
+        PreparedStatement ps;
+        ArticoloAsta articoloasta = null;
+
+        try{
+
+            articoloasta = create(nome, categoria, immagine, description, data_scad);
+
+            String sql
+                    = "INSERT INTO METTE_IN_ASTA"
+                    + "   (Id_venditore,"
+                    + "    Id_asta,"
+                    + "    Data_pubbl"
+                    + "     )"
+                    + "VALUES (?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setInt(i, Id_vend);
+            ps.setInt(i++, articoloasta.getId());
+            ps.setTimestamp(i++, data_pubbl);
+
+            ps.executeUpdate();
+
+            //resultSet.close();  (non so se serve)
+            ps.close();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     Compratore readCompratore(ResultSet rs){

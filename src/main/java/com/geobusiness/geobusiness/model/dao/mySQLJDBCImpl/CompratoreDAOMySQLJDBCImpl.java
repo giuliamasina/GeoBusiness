@@ -19,7 +19,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         this.conn = conn;
     }
     @Override
-    public Compratore create(String Username, String Password, String Indirizzo_consegna) {
+    public Compratore create(String Username, String Email, String Password, String Indirizzo_consegna) {
         PreparedStatement ps;
         Compratore compratore = new Compratore();
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
@@ -61,7 +61,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     }
 
     @Override
-    public Utente create(String Username, String Paswword) {
+    public Utente create(String Username, String Email, String Paswword) {
         return null;
     }
 
@@ -210,7 +210,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     }
 
     @Override
-    public void compra(Integer id_comp, Integer id_articolo, Date data) {
+    public void compra(Integer id_comp, Integer id_articolo, Timestamp data) {
         PreparedStatement ps;
 
         try{
@@ -227,7 +227,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
             int i = 1;
             ps.setInt(i, id_comp);
             ps.setInt(i++, id_articolo);
-            ps.setDate(i++, data);
+            ps.setTimestamp(i++, data);
             ps.executeUpdate();
 
 
@@ -247,7 +247,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     }
 
     @Override
-    public void faofferta(Integer id_comp, Integer id_asta, Float offerta, Date data) {
+    public void faofferta(Integer id_comp, Integer id_asta, Float offerta, Timestamp data) {
         PreparedStatement ps;
 
         try{
@@ -266,7 +266,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
             ps.setInt(i, id_comp);
             ps.setInt(i++, id_asta);
             ps.setFloat(i++, offerta);
-            ps.setDate(i++, data);
+            ps.setTimestamp(i++, data);
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -317,6 +317,10 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         }
         try {
             compratore.setUsername(rs.getString("Username"));
+        } catch (SQLException sqle) {
+        }
+        try {
+            compratore.setEmail(rs.getString("Email"));
         } catch (SQLException sqle) {
         }
         try {
@@ -408,7 +412,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         } catch (SQLException sqle) {
         }
         try {
-            articoloasta.setData_scadenza(rs.getDate("Data_scadenza"));
+            articoloasta.setData_scadenza(rs.getTimestamp("Data_scadenza"));
         } catch (SQLException sqle) {
 
         }

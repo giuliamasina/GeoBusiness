@@ -10,6 +10,7 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.geobusiness.geobusiness.model.mo.*" %>
+<%@ page import="java.sql.Timestamp" %>
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
@@ -246,7 +247,7 @@
             for(i=0;i<articoliasta.size();i++){
                 String name = articoliasta.get(i).getNome();
                 String category = articoliasta.get(i).getCategoria();
-                Date data=articoliasta.get(i).getData_scadenza();
+                Timestamp data=articoliasta.get(i).getData_scadenza();
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
             <%if(articoliasta.get(i).getStatus() == 1) {%>

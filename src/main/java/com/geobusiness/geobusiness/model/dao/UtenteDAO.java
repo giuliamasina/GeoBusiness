@@ -6,6 +6,7 @@ public interface UtenteDAO {
 
     public Utente create(
             String Username,
+            String Email,
             String Paswword  // non ho messo deleted
     );
 

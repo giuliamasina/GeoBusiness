@@ -1,13 +1,14 @@
 package com.geobusiness.geobusiness.model.mo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Recensione {
 
     private Integer id;
     private Integer valutazione;
     private String commento;
-    private Date Data_pubblicazione;
+    private Timestamp Data_pubblicazione;
     private Integer id_venditore;
     private Integer id_compratore;
 
@@ -23,9 +24,9 @@ public class Recensione {
 
     public void setCommento(String commento) { this.commento = commento; }
 
-    public Date getDataPubblicazione() { return Data_pubblicazione; }
+    public Timestamp getDataPubblicazione() { return Data_pubblicazione; }
 
-    public void setDataPubblicazione(Date Data_pubblicazione) {
+    public void setDataPubblicazione(Timestamp Data_pubblicazione) {
         this.Data_pubblicazione = Data_pubblicazione;
     }
 

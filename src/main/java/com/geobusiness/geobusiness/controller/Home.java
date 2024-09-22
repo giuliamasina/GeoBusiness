@@ -26,7 +26,9 @@ public class Home {
 
     public static void view(HttpServletRequest request, HttpServletResponse response){
         DAOFactory sessionDAOFactory= null;
+        DAOFactory daoFactory = null;
         Utente loggedUser;
+        Venditore venditore = null;
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -38,9 +40,17 @@ public class Home {
             sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
             sessionDAOFactory.beginTransaction();
 
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+
             UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
             if(sessionUserDAO!=null){
                 loggedUser = sessionUserDAO.findLoggedUtente();
+                if(loggedUser != null) {
+                    daoFactory.beginTransaction();
+                    VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
+                    venditore = venditoreDAO.findByUsername(loggedUser.getUsername());
+                    daoFactory.commitTransaction();
+                }
             }
             else{
                 Utente utente = new Utente();
@@ -50,6 +60,11 @@ public class Home {
 
             sessionDAOFactory.commitTransaction();
 
+            if(venditore!=null){
+                request.setAttribute("isVenditore", true);
+            } else if (venditore == null) {
+                request.setAttribute("isVenditore", false);
+            }
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("viewUrl", "Home/view");
@@ -168,7 +183,9 @@ public class Home {
             String password = request.getParameter("password");
 
             UtenteDAO userDAO = daoFactory.getUtenteDAO();
+            VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
             Utente utente = userDAO.findByUsername(username);
+            Venditore venditore = venditoreDAO.findByUtenteId(utente.getId());
 
             if (utente == null || !utente.getPassword().equals(password)) {
                 sessionUtenteDAO.delete(null);
@@ -181,6 +198,12 @@ public class Home {
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
 
+            // devo farlo anche per il signin
+            if(venditore!=null){
+                request.setAttribute("isVenditore", true);
+            } else if (venditore == null) {
+                request.setAttribute("isVenditore", false);
+            }
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("applicationMessage", applicationMessage);
@@ -221,6 +244,7 @@ public class Home {
 
             sessionDAOFactory.commitTransaction();
 
+            request.setAttribute("isVenditore",false);
             request.setAttribute("loggedOn",false);
             request.setAttribute("loggedUser", null);
             request.setAttribute("viewUrl", "Home/view");
@@ -263,6 +287,7 @@ public class Home {
             daoFactory.beginTransaction();
 
             String username = request.getParameter("username");
+            String email = request.getParameter("email");
             String password = request.getParameter("password");
             String ruolo = request.getParameter("ruolo");
             String indirizzo = request.getParameter("indirizzo");  // ANCORA DA METTERE NEL FORM
@@ -274,15 +299,15 @@ public class Home {
 
                 if (ruolo.equals("vendere")) {
                     VenditoreDAO utenteDAO = daoFactory.getVenditoreDAO();
-                    utenteDAO.create(username, password, indirizzo);
+                    utenteDAO.create(username, email, password, indirizzo);
                     Venditore venditore = utenteDAO.findByUsername(username);
-                    loggedUser = sessionUtenteDAO.create(venditore.getUsername(),null); // ho tolto l'id perchè non so come ricavarlo
+                    loggedUser = sessionUtenteDAO.create(venditore.getUsername(), venditore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
 
                 }else if(ruolo.equals("comprare")){
                     CompratoreDAO utenteDAO = daoFactory.getCompratoreDAO();
-                    utenteDAO.create(username, password, indirizzo);
+                    utenteDAO.create(username, email, password, indirizzo);
                     Compratore compratore = utenteDAO.findByUsername(username);
-                    loggedUser = sessionUtenteDAO.create(compratore.getUsername(),null); // ho tolto l'id perchè non so come ricavarlo
+                    loggedUser = sessionUtenteDAO.create(compratore.getUsername(), compratore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
                 }
 
             }

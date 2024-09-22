@@ -6,12 +6,9 @@ import com.geobusiness.geobusiness.model.mo.ArticoloVendita;
 import com.geobusiness.geobusiness.model.mo.Utente;
 import com.geobusiness.geobusiness.model.mo.Venditore;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.ResultSet;
 
 public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
 
@@ -42,7 +39,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
     }
 
     @Override
-    public ArticoloVendita create(Integer id,
+    public ArticoloVendita create(// tolto id, si crea quando faccio la query
                                   String nome,
                                   String categoria,
                                   String immagine,
@@ -54,28 +51,54 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
         articolovendita.setNome(nome);
         articolovendita.setCategoria(categoria);
+        articolovendita.setStatus(0);
         articolovendita.setImmagine(immagine);
         articolovendita.setDescription(description);
+        articolovendita.setDeleted(false);
         articolovendita.setPrezzo(prezzo);
 
         try{
 
             String sql
-                    = " INSERT INTO ART_IN_VENDITA "
+                    = " INSERT INTO ARTICOLO "
                     + "   ( Nome,"
                     + "     Categoria,"
+                    + "     Status,"
                     + "     Immagine,"
                     + "      Descrizione,"
-                    + "      Prezzo"
+                    + "      Deleted"
                     + "   ) "
-                    + " VALUES (?,?,?,?,?)";
+                    + " VALUES (?,?,?,?,?,?)";
 
             ps = conn.prepareStatement(sql);
             int i = 1;
             ps.setString(i, articolovendita.getNome());
             ps.setString(i++, articolovendita.getCategoria());
+            ps.setInt(i++, 0);
             ps.setString(i++, articolovendita.getImmagine());
             ps.setString(i++, articolovendita.getDescription());
+            ps.setString(i++, "N");
+
+            ps.executeUpdate();
+
+            sql
+                    = "SELECT MAX(ID) AS max_id "
+                    + "FROM ARTICOLO";
+
+            ps = conn.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            Integer last_id_item =  resultSet.getInt("max_id");
+            articolovendita.setId(last_id_item);
+
+            sql
+                    = "INSERT INTO ART_IN_VENDITA"
+                    + "    ( ID,"
+                    + "      Prezzo";
+
+            ps = conn.prepareStatement(sql);
+            i = 1;
+            ps.setInt(i, articolovendita.getId());
             ps.setFloat(i++, articolovendita.getPrezzo());
 
             ps.executeUpdate();
@@ -219,6 +242,40 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
 
         return venditore;
     }
+
+    @Override
+    public void metteInVendita(Integer Id_vend, String nome, String categoria, String immagine, String description, Float prezzo, Timestamp data_pubbl) {
+        PreparedStatement ps;
+        ArticoloVendita articolovendita = null;
+
+        try{
+
+            articolovendita = create(nome, categoria, immagine, description, prezzo);
+
+            String sql
+                    = "INSERT INTO VENDE"
+                    + "   (Id_venditore,"
+                    + "    Id_articolo,"
+                    + "    data_pubbl"
+                    + "     )"
+                    + "VALUES (?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setInt(i, Id_vend);
+            ps.setInt(i++, articolovendita.getId());
+            ps.setTimestamp(i++, data_pubbl);
+
+            ps.executeUpdate();
+
+            //resultSet.close();  (non so se serve)
+            ps.close();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     ArticoloVendita read(ResultSet rs) {
         ArticoloVendita articolovendita = new ArticoloVendita();
         //User user = new User();

@@ -19,7 +19,7 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
     }
 
     @Override
-    public Utente create(String Username, String Paswword) {
+    public Utente create(String Username, String Email, String Paswword) {
         return null;
     }
 
@@ -39,7 +39,7 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
     }
 
     @Override
-    public Venditore create(String Username, String Paswword, String Indirizzo_spedizione) {
+    public Venditore create(String Username, String Email, String Paswword, String Indirizzo_spedizione) {
         return null;
     }
 
@@ -196,6 +196,10 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
         } catch (SQLException sqle) {
         }
         try {
+            venditore.setEmail(rs.getString("Email"));
+        } catch (SQLException sqle) {
+        }
+        try {
             venditore.setPassword(rs.getString("Password"));
         } catch (SQLException sqle) {
         }
@@ -285,7 +289,7 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
         } catch (SQLException sqle) {
         }
         try {
-            articoloasta.setData_scadenza(rs.getDate("Data_scadenza"));
+            articoloasta.setData_scadenza(rs.getTimestamp("Data_scadenza"));
         } catch (SQLException sqle) {
 
         }

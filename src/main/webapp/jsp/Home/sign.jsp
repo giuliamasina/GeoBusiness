@@ -182,6 +182,10 @@
         <h1>Crea il tuo Account</h1>
         <h2>Hai già un account? Fai il <a href="Dispatcher?controllerAction=Home.viewlogin">Login</a></h2>
         <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
         </div>

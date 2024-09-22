@@ -7,6 +7,7 @@ import com.geobusiness.geobusiness.model.mo.Venditore;
 import com.geobusiness.geobusiness.model.mo.Compratore;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface RecensioneDAO {
@@ -15,7 +16,7 @@ public interface RecensioneDAO {
 
             Integer valutazione,
             String commento,
-            Date data_pubblicazione,
+            Timestamp data_pubblicazione,
             Integer id_c,
             Integer id_v
     );
@@ -30,7 +31,7 @@ public interface RecensioneDAO {
 
     public List<Recensione> findByCompratoreId(Integer id);
 
-    public void fa_recensione(Integer id_c, Integer id_v, Integer valutazione, String commento, Date data_pubbl);
+    public void fa_recensione(Integer id_c, Integer id_v, Integer valutazione, String commento, Timestamp data_pubbl);
 
     public Recensione checkIfAlreadyExists(Integer id_c, Integer id_v);
 }

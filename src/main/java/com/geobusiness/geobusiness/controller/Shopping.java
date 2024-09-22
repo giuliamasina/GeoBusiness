@@ -176,7 +176,7 @@ public class Shopping {
         ArticoloAsta articoloasta = null;
         Venditore venditore = null;
         List<Float> offerte = new ArrayList<>();
-        List<Date> date_offerte = new ArrayList<>();
+        List<Timestamp> date_offerte = new ArrayList<>();
         Logger logger = LogService.getApplicationLogger();
 
         try{
@@ -311,7 +311,7 @@ public class Shopping {
         ArticoloAsta articoloasta = null;
         Venditore venditore = null;
         List<Float> offerte = new ArrayList<>();
-        List<Date> date_offerte = new ArrayList<>();
+        List<Timestamp> date_offerte = new ArrayList<>();
         Logger logger = LogService.getApplicationLogger();
 
         try{
@@ -499,7 +499,6 @@ public class Shopping {
         DAOFactory sessionDAOFactory=null;
         DAOFactory daoFactory = null;
         Utente loggedUser;
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -527,7 +526,7 @@ public class Shopping {
             Integer Id_comp = Integer.parseInt(a);
             a = request.getParameter("Id_articolo");
             Integer Id_articolo = Integer.parseInt(a);
-            Date data_acquisto = new Date(timestamp.getTime());
+            Timestamp data_acquisto = Timestamp.valueOf(LocalDateTime.now());
 
             CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
             compratoreDAO.compra(Id_comp, Id_articolo, data_acquisto);
@@ -560,7 +559,6 @@ public class Shopping {
         DAOFactory sessionDAOFactory=null;
         DAOFactory daoFactory = null;
         Utente loggedUser;
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 
         Logger logger = LogService.getApplicationLogger();
         try {
@@ -587,7 +585,7 @@ public class Shopping {
             Integer Id_comp = Integer.parseInt(a);
             a = request.getParameter("Id_articolo");
             Integer Id_articolo = Integer.parseInt(a);
-            Date data = new Date(timestamp.getTime());
+            Timestamp data = Timestamp.valueOf(LocalDateTime.now());
             a = request.getParameter("offerta");
             Float offerta = Float.parseFloat(a);
 
@@ -654,7 +652,7 @@ public class Shopping {
         List<Float> offerteda = null;
         List<Float> offertea;
         List<Float> offertefinal;
-        List<Date> date;
+        List<Timestamp> date;
         List<Compratore> compratori;
         for(i=0;i<articoliasta.size();i++){
             id = articoliasta.get(i).getId();

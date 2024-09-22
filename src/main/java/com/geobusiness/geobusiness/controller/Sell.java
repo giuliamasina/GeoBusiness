@@ -8,8 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +20,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Profile {
+public class Sell {
 
-    private Profile(){
+    private Sell(){
 
     }
 
@@ -28,16 +31,10 @@ public class Profile {
         DAOFactory daoFactory = null;
         Utente loggedUser;
         String applicationMessage = null;
-
-        List<Articolo> articoli = new ArrayList<>();
-        List<ArticoloVendita> articolivendita = new ArrayList<>();
-        List<ArticoloAsta> articoliasta = new ArrayList<>();
-        List<Recensione> recensioni = new ArrayList<>();
-        String username;
-        Compratore compratore = null;
         Venditore venditore = null;
 
         Logger logger = LogService.getApplicationLogger();
+
         try{
 
             Map sessionFactoryParameters=new HashMap<String,Object>();
@@ -58,44 +55,22 @@ public class Profile {
             daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
             daoFactory.beginTransaction();
 
-            ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
-            ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
-            CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
-            RecensioneDAO recensioneDAO = daoFactory.getRecensioneDAO();
             VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
-            username = request.getParameter("username");
-            compratore = compratoreDAO.findByUsername(username);
-            venditore = venditoreDAO.findByUsername(username);
+            Integer Id_vend = Integer.parseInt(request.getParameter("Id_vend"));
+            venditore = venditoreDAO.findByUtenteId(Id_vend);
 
-            request.setAttribute("loggedOn",loggedUser!=null);
-            request.setAttribute("loggedUser", loggedUser);
-            if(compratore != null && venditore == null){
-                articolivendita = compratoreDAO.findArticoliComprati(compratore.getId());
-                articoliasta = compratoreDAO.findOfferte(compratore.getId());
-                recensioni = recensioneDAO.findByCompratoreId(compratore.getId());
-                request.setAttribute("compratore",compratore);
-                request.setAttribute("recensioni",recensioni);
-                request.setAttribute("viewUrl", "Profile/viewCompratore");
-            } else if(venditore != null && compratore == null){
-                articolivendita = venditoreDAO.findArticoliInVendita(venditore.getId());
-                articoliasta = venditoreDAO.findArticoliInAsta(venditore.getId());
-                recensioni = recensioneDAO.findByVenditoreId(venditore.getId());
-                request.setAttribute("venditore", venditore);
-                request.setAttribute("recensioni",recensioni);
-                request.setAttribute("viewUrl", "Profile/viewVenditore");
-            } else if(venditore == null && compratore == null){
-                request.setAttribute("viewUrl", "Home/view");
-            }
-            else if(venditore != null && compratore != null){
-                request.setAttribute("viewUrl", "Shopping/view");
-            }
-            //request.setAttribute("viewUrl", "Shopping/view");
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
 
-            request.setAttribute("articoli",articoli);
-            request.setAttribute("articolivendita",articolivendita);
-            request.setAttribute("articoliasta",articoliasta);
+            String type = request.getParameter("type");
+            if(type.equals("sell")){
+                request.setAttribute("viewUrl", "Sell/sellitem");
+            } else if (type.equals("auction")) {
+                request.setAttribute("viewUrl", "Sell/sellAuction");
+            }
+            request.setAttribute("loggedOn",loggedUser!=null);
+            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("venditore",venditore);
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -113,25 +88,17 @@ public class Profile {
         }
     }
 
-    public static void viewVendPerComp(HttpServletRequest request, HttpServletResponse response){
+    public static void sell(HttpServletRequest request, HttpServletResponse response){
         DAOFactory sessionDAOFactory= null;
         DAOFactory daoFactory = null;
         Utente loggedUser;
         String applicationMessage = null;
-
-        List<Articolo> articoli = new ArrayList<>();
-        List<ArticoloVendita> articolivendita = new ArrayList<>();
-        List<ArticoloAsta> articoliasta = new ArrayList<>();
-        List<Recensione> recensioni = new ArrayList<>();
-        Integer id_c;
-        Integer id_v;
-        Compratore compratore = null;
         Venditore venditore = null;
-        Recensione recensione = null;
-        boolean has_bought;
 
         Logger logger = LogService.getApplicationLogger();
+
         try{
+
             Map sessionFactoryParameters=new HashMap<String,Object>();
             sessionFactoryParameters.put("request",request);
             sessionFactoryParameters.put("response",response);
@@ -150,34 +117,22 @@ public class Profile {
             daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
             daoFactory.beginTransaction();
 
-            CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
-            RecensioneDAO recensioneDAO = daoFactory.getRecensioneDAO();
-            VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
-            // devo cercare di passare sia l'id del compratore sia quello del venditore
-            id_v = Integer.parseInt(request.getParameter("Id_venditore"));
-            id_c = Integer.parseInt(request.getParameter("Id_compratore"));
-            compratore = compratoreDAO.findByUtenteId(id_c);
-            venditore = venditoreDAO.findByUtenteId(id_v);
+            ArticoloVenditaDAO articolovenditaDAO = daoFactory.getArticoloVenditaDAO();
+            Integer Id_vend = Integer.parseInt(request.getParameter("Id_vend"));
+            String nome = request.getParameter("nome");
+            String categoria = request.getParameter("categoria");
+            String immagine = request.getParameter("immagine");
+            String description = request.getParameter("descrizione");
+            Float prezzo = Float.parseFloat(request.getParameter("prezzo"));
+            Timestamp data_pubbl = Timestamp.valueOf(LocalDateTime.now());
 
-            articolivendita = venditoreDAO.findArticoliInVendita(venditore.getId());
-            articoliasta = venditoreDAO.findArticoliInAsta(venditore.getId());
-            recensioni = recensioneDAO.findByVenditoreId(venditore.getId());
-            has_bought = compratoreDAO.hacompratoda(compratore.getId(),venditore.getId());
-            recensione = recensioneDAO.checkIfAlreadyExists(compratore.getId(),venditore.getId());
+            articolovenditaDAO.metteInVendita(Id_vend, nome, categoria, immagine, description, prezzo, data_pubbl);
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
-
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
-            request.setAttribute("venditore", venditore);
-            request.setAttribute("recensione",recensione);
-            request.setAttribute("articoli",articoli);
-            request.setAttribute("articolivendita",articolivendita);
-            request.setAttribute("articoliasta",articoliasta);
-            request.setAttribute("has_bought",has_bought);
-            request.setAttribute("recensioni", recensioni);
-            request.setAttribute("viewUrl", "Profile/viewVendPerComp");
+            request.setAttribute("viewUrl", "Home/view");
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -193,12 +148,15 @@ public class Profile {
             } catch (Throwable t) {
             }
         }
+
     }
 
-    public static void pubblicaRecensione(HttpServletRequest request, HttpServletResponse response){
-        DAOFactory sessionDAOFactory=null;
+    public static void publicAuction(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory= null;
         DAOFactory daoFactory = null;
         Utente loggedUser;
+        String applicationMessage = null;
+        Venditore venditore = null;
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -222,29 +180,30 @@ public class Profile {
             daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
             daoFactory.beginTransaction();
 
-            String a = request.getParameter("Id_compratore");
-            Integer Id_comp = Integer.parseInt(a);
-            a = request.getParameter("Id_venditore");
-            Integer Id_vend = Integer.parseInt(a);
-            a = request.getParameter("rating");
-            Integer valutazione = Integer.parseInt(a);
-            String commento = request.getParameter("comment");
+            ArticoloAstaDAO articoloastaDAO = daoFactory.getArticoloAstaDAO();
+            Integer Id_vend = Integer.parseInt(request.getParameter("Id_vend"));
+            String nome = request.getParameter("nome");
+            String categoria = request.getParameter("categoria");
+            String immagine = request.getParameter("immagine");
+            String description = request.getParameter("description");
+            //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            //java.util.Date utilDate = format.parse(request.getParameter("data_scad"));
+            //Date data_scad = new Date(utilDate.getTime());  // non so se sta roba è giusta
+            // 1. Definiamo il formato di input: 'YYYY-MM-DDTHH:MM'
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            // 2. Parse la stringa nel tipo LocalDateTime
+            LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("data_scad"), inputFormatter);
+            // 3. Convertire LocalDateTime in java.sql.Timestamp
+            Timestamp data_scad = Timestamp.valueOf(dateTime);
             Timestamp data_pubbl = Timestamp.valueOf(LocalDateTime.now());
 
-            RecensioneDAO recensioneDAO = daoFactory.getRecensioneDAO();
-            recensioneDAO.fa_recensione(Id_comp,Id_vend,valutazione,commento,data_pubbl);
+            articoloastaDAO.metteInAsta(Id_vend, nome, categoria, immagine, description, data_scad, data_pubbl);
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
-
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
-            //request.setAttribute("Id_compratore",request.getParameter("Id_compratore"));
-            //request.setAttribute("Id_venditore",request.getParameter("Id_venditore"));
-            viewVendPerComp(request, response);
-            // NON È FINITO, PER FAR RIAPRIRE viewVendPerComp DEVO RIPASSARE I PARAMETRI CHE GLI SERVONO E NON SO COME FARE
-            //request.setAttribute("viewUrl", "Profile/viewVendPerComp");
-
+            request.setAttribute("viewUrl", "Home/view");
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -259,7 +218,6 @@ public class Profile {
                 if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
             } catch (Throwable t) {
             }
-
         }
     }
 }

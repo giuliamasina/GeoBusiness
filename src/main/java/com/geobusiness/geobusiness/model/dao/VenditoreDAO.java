@@ -8,6 +8,7 @@ public interface VenditoreDAO extends UtenteDAO{
     public Venditore create(
             // ho tolto l'id
             String Username,
+            String email,
             String Paswword,  // non ho messo deleted
             String Indirizzo_spedizione
     );

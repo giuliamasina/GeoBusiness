@@ -19,7 +19,7 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
             // id creato direttamente nel database
             Integer valutazione,
             String commento,
-            Date data_pubblicazione,
+            Timestamp data_pubblicazione,
             Integer id_c,
             Integer id_v
     ) {
@@ -46,7 +46,7 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
             int i = 1;
             ps.setInt(i, valutazione);
             ps.setString(i++, commento);
-            ps.setDate(i++, data_pubblicazione);
+            ps.setTimestamp(i++, data_pubblicazione);
 
             ps.executeUpdate();
 
@@ -151,7 +151,7 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
         return recensioni;
     }
 
-    public void fa_recensione(Integer id_c, Integer id_v, Integer valutazione, String commento, Date data_pubbl){
+    public void fa_recensione(Integer id_c, Integer id_v, Integer valutazione, String commento, Timestamp data_pubbl){
         PreparedStatement ps;
         Recensione recensione;
 
@@ -201,7 +201,7 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
 
             ps.executeUpdate();
 
-            resultSet.close();
+            //resultSet.close();
             ps.close();
 
         }catch (SQLException e) {
@@ -256,7 +256,7 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
         } catch (SQLException sqle) {
         }
         try {
-            recensione.setDataPubblicazione(rs.getDate("Data_pubbl"));
+            recensione.setDataPubblicazione(rs.getTimestamp("Data_pubbl"));
         } catch (SQLException sqle) {
         }
         try {

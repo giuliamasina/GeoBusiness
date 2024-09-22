@@ -1,18 +1,19 @@
 package com.geobusiness.geobusiness.model.mo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ArticoloAsta extends Articolo{
 
-    private Date Data_scadenza;
+    private Timestamp Data_scadenza;
 
     private Venditore venditore;
 
     private Compratore[] compratori;  // Offerte dei compratori
 
-    public Date getData_scadenza() { return Data_scadenza; }
+    public Timestamp getData_scadenza() { return Data_scadenza; }
 
-    public void setData_scadenza(Date Data_scadenza) { this.Data_scadenza = Data_scadenza; }
+    public void setData_scadenza(Timestamp Data_scadenza) { this.Data_scadenza = Data_scadenza; }
 
     public Venditore getVenditore() { return venditore; }
 

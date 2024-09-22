@@ -2,6 +2,7 @@ package com.geobusiness.geobusiness.model.dao;
 import com.geobusiness.geobusiness.model.mo.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface CompratoreDAO extends UtenteDAO{
@@ -9,6 +10,7 @@ public interface CompratoreDAO extends UtenteDAO{
     public Compratore create(
             //Integer id,
             String Username,
+            String email,
             String Paswword,  // non ho messo deleted
             String Indirizzo_consegna
     );
@@ -25,9 +27,9 @@ public interface CompratoreDAO extends UtenteDAO{
 
     public List<ArticoloAsta> findOfferte(Integer id);
 
-    public void compra(Integer id_comp, Integer id_articolp, Date data);
+    public void compra(Integer id_comp, Integer id_articolp, Timestamp data);
 
-    public void faofferta(Integer id_comp, Integer id_asta, Float offerta, Date data);
+    public void faofferta(Integer id_comp, Integer id_asta, Float offerta, Timestamp data);
 
     public boolean hacompratoda(Integer id_comp, Integer id_vend);
 }
