@@ -29,7 +29,7 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
     }
 
     @Override
-    public void delete(Utente utente) {
+    public void delete(Integer utente_id) {
 
     }
 
@@ -42,6 +42,7 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
     public Venditore create(String Username, String Email, String Password, String Indirizzo_spedizione) {
         PreparedStatement ps;
         Venditore venditore = new Venditore();
+        ResultSet resultSet = null;
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
 
         venditore.setUsername(Username);
@@ -59,38 +60,51 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
                     + "     Deleted,"
                     + "     Email"
                     + "   ) "
-                    + " VALUES (?,?,?,?)";
+                    + " VALUES (?,?,'N',?)";
 
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
-            ps.setString(i, Username);
-            ps.setString(i++, Password);
-            ps.setString(i++, "N");
-            ps.setString(i++, Email);
+            ps.setString(1, Username);
+            ps.setString(2, Password);
+            //ps.setString(i++, "N");
+            ps.setString(3, Email);
 
             ps.executeUpdate();
 
-            sql
+            /*sql
                     = "SELECT MAX(ID) AS max_id "
                     + "FROM UTENTE";
 
             ps = conn.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
 
-            Integer last_id =  resultSet.getInt("max_id");
-            venditore.setId(last_id);
+            if(resultSet.next()){
+                Integer last_id =  resultSet.getInt("max_id");
+                venditore.setId(last_id);
+            }*/
+
+            resultSet = ps.getGeneratedKeys();
+            if (resultSet.next()) {
+                int last_id = resultSet.getInt(1);  // Recupera l'ultimo ID generato
+                venditore.setId(last_id);
+            }
 
             sql
                     = "INSERT INTO VENDITORE"
                     + "    ( ID,"
-                    + "      Indirizzo_spediz";
+                    + "      Indirizzo_spediz"
+                    + "   )"
+                    + " VALUES (?,?)";
 
             ps = conn.prepareStatement(sql);
             i = 1;
-            ps.setInt(i, venditore.getId());
-            ps.setString(i++, venditore.getIndirizzo_spedizione());
+            ps.setInt(1, venditore.getId());
+            ps.setString(2, venditore.getIndirizzo_spedizione());
 
             ps.executeUpdate();
+
+            ps.close();
+            resultSet.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -105,8 +119,62 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
     }
 
     @Override
-    public void delete(Venditore venditore) {
+    public void deleteVend(Integer venditore_id) {
+        PreparedStatement ps;
+        ArrayList<Integer> id_articoli = new ArrayList<>();
+        Integer id_articolo;
 
+        try {
+
+            String sql
+                    = " UPDATE UTENTE "
+                    + " SET Deleted='Y' "
+                    + " WHERE "
+                    + " ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, venditore_id);
+            ps.executeUpdate();
+            //ps.close();
+
+            // per adesso non elimino la riga anche in VENDITORE
+
+            // adesso devo eliminare anche gli articoli che questo venditore ha messo in asta o in vendita
+
+            sql
+                    = "SELECT Id_articolo "
+                    + "FROM VENDE "
+                    + "WHERE Id_venditore=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, venditore_id);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()){
+                id_articolo = resultSet.getInt("Id_articolo");
+                id_articoli.add(id_articolo);
+            }
+
+            int j;
+            for(j=0;j<id_articoli.size();j++){
+
+                sql
+                        = " UPDATE ARTICOLO "
+                        + " SET Deleted='Y' "
+                        + " WHERE "
+                        + " ID=?";
+
+                ps = conn.prepareStatement(sql);
+                ps.setLong(1, id_articoli.get(j));
+                ps.executeUpdate();
+                ps.close();
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

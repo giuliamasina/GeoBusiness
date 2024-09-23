@@ -174,6 +174,10 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
+    <form name="deleteProfileForm" action="Dispatcher" method="post">
+        <input type="hidden" name="ID" value="<%=compratore.getId()%>">
+        <input type="hidden" name="controllerAction" value="Profile.deleteProfile">
+    </form>
 
     <nav>
         <ul>
@@ -196,7 +200,7 @@
     <h3>Username: <%=compratore.getUsername()%></h3>
     <h3>Indirizzo di consegna: <%=compratore.getIndirizzo_consegna()%></h3>
     <h3>Numero di fossili comprati: <%=articolivendita.size()%></h3>
-    <a>
+    <a href="javascript:deleteProfileForm.submit()">
         <button type="button">Elimina profilo</button>
     </a>
 
@@ -209,12 +213,9 @@
                 Float price = articolivendita.get(i).getPrezzo();
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
-            <a href="Dispatcher?controllerAction=Profile.view&articolovendita=<%=articolivendita.get(i).getId()%>">
-                <img src="<%=image%>">
-            </a>
-            <a href="Dispatcher?controllerAction=Profile.view&articolovendita=<%=articolivendita.get(i).getId()%>">
-                <figcaption><%= name%></figcaption>
-            </a>
+            <!-- ho tolto il link -->
+            <img src="<%=image%>">
+            <figcaption><%= name%></figcaption>
             <figcaption><%= price%></figcaption>
         </figure>
         <%}
@@ -232,10 +233,10 @@
                 Timestamp data=articoliasta.get(i).getData_scadenza();
                 String image = articoliasta.get(i).getImmagine(); %>
         <figure>
-            <a href="Dispatcher?controllerAction=Profile.view&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
-            <a href="Dispatcher?controllerAction=Profile.view&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <figcaption><%=name%></figcaption>
             </a>
             <figcaption>Scade il:   <%=data%></figcaption>

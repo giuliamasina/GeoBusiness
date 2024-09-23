@@ -190,6 +190,10 @@
         <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.viewVendPerComp">
     </form>
+    <form name="deleteItemForm" action="Dispatcher" method="post">
+        <input type="hidden" name="Id_articolo" value="<%=articoloasta.getId()%>">
+        <input type="hidden" name="controllerAction" value="Profile.deleteItem">
+    </form>
 
     <nav>
         <ul>
@@ -214,6 +218,11 @@
         <h1 id="nome"><%=articoloasta.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
         <p><%=articoloasta.getDescription()%></p>
+        <%if(venditore.getId() == loggedUser.getId()) {%>
+            <a >
+                <button type="button">Elimina</button>
+            </a>
+        <%}%>
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>

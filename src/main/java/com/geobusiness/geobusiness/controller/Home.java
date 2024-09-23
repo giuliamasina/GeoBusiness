@@ -290,17 +290,27 @@ public class Home {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String ruolo = request.getParameter("ruolo");
-            String indirizzo = request.getParameter("indirizzo");  // ANCORA DA METTERE NEL FORM
+            String indirizzo = request.getParameter("address");  // ANCORA DA METTERE NEL FORM
+
+            System.out.println(username);
+            System.out.println(email);
+            System.out.println(indirizzo);
+            System.out.println(ruolo);
 
             UtenteDAO userDAO = daoFactory.getUtenteDAO();
-            Utente utente = userDAO.findByUsername(username);
+            Utente utente = null;
+            utente = userDAO.findByUsername(username);
 
             if(utente==null) {
 
                 if (ruolo.equals("vendere")) {
                     VenditoreDAO utenteDAO = daoFactory.getVenditoreDAO();
-                    Venditore venditore = utenteDAO.create(username, email, password, indirizzo);
+                    Venditore venditore = null;
+                    venditore = utenteDAO.create(username, email, password, indirizzo);
                     loggedUser = sessionUtenteDAO.create(venditore.getUsername(), venditore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
+                    if(venditore == null){
+                        System.out.println("e' null");
+                    }
 
                 }else if(ruolo.equals("comprare")){
                     CompratoreDAO utenteDAO = daoFactory.getCompratoreDAO();

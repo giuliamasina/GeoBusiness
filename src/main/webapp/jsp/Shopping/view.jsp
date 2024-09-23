@@ -174,6 +174,13 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
+    <form name="filterForm" action="Dispatcher" method="post">
+        <input type="hidden" name="categoria" />
+        <input type="hidden" name="da"/>
+        <input type="hidden" name="a"/>
+        <input type="hidden" name="tipoarticolo"/>
+        <input type="hidden" name="controllerAction" value="Shopping.filterview"/>
+    </form>
 
     <nav>
         <ul>
@@ -193,15 +200,7 @@
 <main>
     <h1>Tutti i fossili</h1>
 
-    <form name="filter" action="Dispatcher" method="post">
-        <input type="hidden" name="categoria" />
-        <input type="hidden" name="da"/>
-        <input type="hidden" name="a"/>
-        <input type="hidden" name="tipoarticolo"/>
-        <input type="hidden" name="controllerAction" value="Shopping.filterview"/>
-    </form>
-
-    <form name="filterForm" action="Dispatcher" method="post">
+    <form name="filterFor" action="Dispatcher" method="post">
             <h1>Filtri:</h1>
             <div class="form-group-select">
                 <div class="inline">
@@ -231,14 +230,16 @@
                 <label for="a">a</label>
                 <input type="number" id="a" name="a">
             </div>
-            <input type="hidden" name="controllerAction" value="Shopping.filterview"/>
-            <button type="submit">Cerca</button>
+            <!-- <input type="hidden" name="controllerAction" value="Shopping.filterview"/>  -->
+            <a href="javascript:filterForm.submit()">
+                <button type="submit">Cerca</button>
+            </a>
     </form>
 
     <section id="articoli">
         <%if(!articolivendita.isEmpty()){
             for(i=0;i<articolivendita.size();i++){
-                if (articolivendita.get(i).getStatus() == 0) {
+                if (articolivendita.get(i).getStatus() == 0 && !articolivendita.get(i).isDeleted()) {
             String name = articolivendita.get(i).getNome();
             String category = articolivendita.get(i).getCategoria();
             Float price = articolivendita.get(i).getPrezzo();
@@ -266,7 +267,7 @@
 
             if(articoliasta != null && !articoliasta.isEmpty()){
             for(i=0;i<articoliasta.size();i++){
-                if (articolivendita.get(i).getStatus() == 0) {
+                if (articoliasta.get(i).getStatus() == 0 && !articoliasta.get(i).isDeleted()) {
             String name = articoliasta.get(i).getNome();
             String category = articoliasta.get(i).getCategoria();
             Timestamp data=articoliasta.get(i).getData_scadenza();

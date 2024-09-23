@@ -55,7 +55,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
     }
 
     @Override
-    public void delete(Utente utente) {
+    public void delete(Integer utente_id) {
         Cookie cookie;
         cookie = new Cookie("loggedUser", "");
         cookie.setMaxAge(0);

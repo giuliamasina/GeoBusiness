@@ -17,7 +17,7 @@ public interface CompratoreDAO extends UtenteDAO{
 
     public void update(Compratore compratore);
 
-    public void delete(Compratore compratore);
+    public void deleteComp(Integer compratore_id);
 
     public Compratore findByUtenteId(Integer id);     // da rivedere
 

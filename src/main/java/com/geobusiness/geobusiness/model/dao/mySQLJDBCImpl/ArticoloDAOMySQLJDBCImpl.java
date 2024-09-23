@@ -129,7 +129,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
     }
 
     @Override
-    public void delete(Articolo articolo) {
+    public void delete(Integer articolo_id) {
         PreparedStatement ps;
 
         try {
@@ -141,7 +141,7 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
                     + " ID=?";
 
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, articolo.getId());
+            ps.setLong(1, articolo_id);
             ps.executeUpdate();
             ps.close();
 

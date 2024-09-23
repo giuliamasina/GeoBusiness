@@ -208,12 +208,12 @@
                 String category = articolivendita.get(i).getCategoria();
                 Float price = articolivendita.get(i).getPrezzo();
                 String image = articolivendita.get(i).getImmagine();
-                if(articolivendita.get(i).getStatus() == 0) {%>
+                if(articolivendita.get(i).getStatus() == 0  && !articolivendita.get(i).isDeleted()) {%>
         <figure>
-            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
-            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
             </a>
             <figcaption><%= price%></figcaption>
@@ -233,12 +233,12 @@
                 String category = articoliasta.get(i).getCategoria();
                 Timestamp data=articoliasta.get(i).getData_scadenza();
                 String image = articolivendita.get(i).getImmagine();
-                if(articoliasta.get(i).getStatus() == 0) {%>
+                if(articoliasta.get(i).getStatus() == 0 && !articoliasta.get(i).isDeleted()) {%>
         <figure>
-            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
-            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <figcaption><%=name%></figcaption>
             </a>
             <figcaption>Scade il:   <%=data%></figcaption>

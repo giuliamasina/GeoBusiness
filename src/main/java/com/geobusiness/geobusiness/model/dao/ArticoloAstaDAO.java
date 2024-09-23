@@ -16,9 +16,9 @@ public interface ArticoloAstaDAO extends ArticoloDAO{
             Timestamp Data_scadenza
     );
 
-    public void update(ArticoloVendita articolo);
+    public void update(ArticoloAsta articolo);
 
-    public void delete(ArticoloVendita articolo);
+    public void deleteAsta(Integer articolo_id);
 
     public ArticoloAsta findByArticoloId(Integer id);    // da riveredere
 

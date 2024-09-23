@@ -15,7 +15,7 @@ public interface VenditoreDAO extends UtenteDAO{
 
     public void update(Venditore venditore);
 
-    public void delete(Venditore venditore);
+    public void deleteVend(Integer venditore_id);
 
     public Venditore findByUtenteId(Integer id);     // da rivedere
 

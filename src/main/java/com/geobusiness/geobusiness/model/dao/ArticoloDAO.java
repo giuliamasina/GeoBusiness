@@ -16,7 +16,7 @@ public interface ArticoloDAO {
 
     public void update(Articolo articolo);
 
-    public void delete(Articolo articolo);
+    public void delete(Integer articolo_id);
 
     //public Articolo findByArticoloId(Integer id);
 

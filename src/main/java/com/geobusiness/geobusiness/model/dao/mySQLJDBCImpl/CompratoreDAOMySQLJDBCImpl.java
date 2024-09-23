@@ -39,13 +39,13 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
                     + "     Deleted,"
                     + "     Email"
                     + "   ) "
-                    + " VALUES (?,?,?,?)";
+                    + " VALUES (?,?,'N',?)";
 
             ps = conn.prepareStatement(sql);
             int i = 1;
             ps.setString(i, Username);
             ps.setString(i++, Password);
-            ps.setString(i++, "N");
+            //ps.setString(i++, "N");
             ps.setString(i++, Email);
 
             ps.executeUpdate();
@@ -57,13 +57,17 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
             ps = conn.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
 
-            Integer last_id =  resultSet.getInt("max_id");
-            compratore.setId(last_id);
+            if(resultSet.next()){
+                Integer last_id =  resultSet.getInt("max_id");
+                compratore.setId(last_id);
+            }
 
             sql
                     = "INSERT INTO COMPRATORE"
                     + "    ( ID,"
-                    + "      Indirizzo_cons";
+                    + "      Indirizzo_cons"
+                    + "    ) "
+                    + " VALUES (?,?)";
 
             ps = conn.prepareStatement(sql);
             i = 1;
@@ -85,8 +89,27 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     }
 
     @Override
-    public void delete(Compratore compratore) {
+    public void deleteComp(Integer compratore_id) {
+        PreparedStatement ps;
 
+        try {
+
+            String sql
+                    = " UPDATE UTENTE "
+                    + " SET Deleted='Y' "
+                    + " WHERE "
+                    + " ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, compratore_id);
+            ps.executeUpdate();
+            ps.close();
+
+            // per adesso non elimino la riga anche in COMPRATORE
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -100,7 +123,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     }
 
     @Override
-    public void delete(Utente utente) {
+    public void delete(Integer utente_id) {
 
     }
 
@@ -258,6 +281,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
             ps.setInt(i++, id_articolo);
             ps.setTimestamp(i++, data);
             ps.executeUpdate();
+            ps.close();
 
 
             sql

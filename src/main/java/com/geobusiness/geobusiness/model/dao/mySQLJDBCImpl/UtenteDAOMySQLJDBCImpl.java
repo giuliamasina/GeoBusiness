@@ -141,7 +141,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
     }
 
     @Override
-    public void delete(Utente utente) {
+    public void delete(Integer utente_id) {
         PreparedStatement ps;
 
         try {
@@ -153,7 +153,7 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
                     + " ID=?";
 
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, utente.getId());
+            ps.setLong(1, utente_id);
             ps.executeUpdate();
             ps.close();
 

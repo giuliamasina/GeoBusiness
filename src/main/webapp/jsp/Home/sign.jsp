@@ -162,6 +162,18 @@
             margin-top: auto;
         }
     </style>
+    <script>
+        function signin(){
+            f = document.signForm;
+            f2 = document.sign;
+            f.email.value = f2.email.value;
+            f.username.value = f2.username.value;
+            f.password.value = f2.password.value;
+            f.address.value = f2.address.value;
+            f.ruolo.value = f2.ruolo.value;
+            f.submit()
+        }
+    </script>
 </head>
 <body>
 
@@ -174,11 +186,19 @@
             <li><a href="Dispatcher?controllerAction=Home.viewlogin">Log-in</a></li>
         </ul>
     </nav>
+    <form name="signForm" action="Dispatcher" method="post">
+        <input type="hidden" name="email">
+        <input type="hidden" name="username">
+        <input type="hidden" name="password">
+        <input type="hidden" name="address">
+        <input type="hidden" name="ruolo">
+        <input type="hidden" name="controllerAction" value="Home.signin">
+    </form>
 </header>
 
 <main>
     <img src="https://via.placeholder.com/150" alt="Image 1">
-    <form action="Dispatcher" method="post">
+    <form name="sign" onsubmit="signin(); return false;">
         <h1>Crea il tuo Account</h1>
         <h2>Hai già un account? Fai il <a href="Dispatcher?controllerAction=Home.viewlogin">Login</a></h2>
         <div class="form-group">

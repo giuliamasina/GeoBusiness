@@ -21,7 +21,7 @@ public interface ArticoloVenditaDAO extends ArticoloDAO{
 
     public void update(ArticoloVendita articolo);
 
-    public void delete(ArticoloVendita articolo);
+    public void deleteArtVend(Integer articolo_id);
 
     public ArticoloVendita findByArticoloId(Integer id);    // da riveredere
 

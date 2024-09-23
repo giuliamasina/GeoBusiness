@@ -88,13 +88,30 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
     }
 
     @Override
-    public void update(ArticoloVendita articolo) {
+    public void update(ArticoloAsta articolo) {
 
     }
 
     @Override
-    public void delete(ArticoloVendita articolo) {
+    public void deleteAsta(Integer articolo_id) {
+        PreparedStatement ps;
 
+        try {
+
+            String sql
+                    = " UPDATE ARTICOLO "
+                    + " SET Deleted='Y' "
+                    + " WHERE "
+                    + " ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, articolo_id);
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -108,7 +125,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
     }
 
     @Override
-    public void delete(Articolo articolo) {
+    public void delete(Integer articolo_id) {
 
     }
 

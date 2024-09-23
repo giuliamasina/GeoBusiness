@@ -12,7 +12,7 @@ public interface UtenteDAO {
 
     public void update(Utente utente);
 
-    public void delete(Utente utente);
+    public void delete(Integer utente_id);
 
     public Utente findLoggedUtente();     // coockie
 

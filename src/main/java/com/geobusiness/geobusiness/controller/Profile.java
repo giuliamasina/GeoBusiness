@@ -262,4 +262,125 @@ public class Profile {
 
         }
     }
+
+    public static void deleteItem(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory=null;
+        DAOFactory daoFactory = null;
+        Utente loggedUser;
+
+        Logger logger = LogService.getApplicationLogger();
+
+        try{
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory.beginTransaction();
+
+            UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+            if(sessionUserDAO!=null){
+                loggedUser = sessionUserDAO.findLoggedUtente();
+            }
+            else{
+                Utente utente = new Utente();
+                utente.setUsername("Guest");
+                loggedUser=null;
+            }
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            ArticoloDAO articoloDAO = daoFactory.getArticoloDAO();
+            articoloDAO.delete(Integer.parseInt(request.getParameter("Id_articolo")));
+
+            daoFactory.commitTransaction();
+            sessionDAOFactory.commitTransaction();
+
+            request.setAttribute("loggedOn",loggedUser!=null);
+            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("viewUrl", "Profile/viewVenditore");
+
+        }catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+
+        }
+    }
+
+    public static void deleteProfile(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory=null;
+        DAOFactory daoFactory = null;
+        Utente loggedUser;
+
+        Logger logger = LogService.getApplicationLogger();
+
+        try{
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory.beginTransaction();
+
+            UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+            if(sessionUserDAO!=null){
+                loggedUser = sessionUserDAO.findLoggedUtente();
+            }
+            else{
+                Utente utente = new Utente();
+                utente.setUsername("Guest");
+                loggedUser=null;
+            }
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            Integer id_utente = Integer.parseInt(request.getParameter("ID"));
+            VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
+            Venditore venditore = null;
+            venditore = venditoreDAO.findByUtenteId(id_utente);
+
+            if(venditore == null){
+                UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
+                utenteDAO.delete(id_utente);
+            }
+            else{
+                venditoreDAO.deleteVend(id_utente);
+            }
+
+            sessionUserDAO.delete(null);
+
+            daoFactory.commitTransaction();
+            sessionDAOFactory.commitTransaction();
+
+            request.setAttribute("isVenditore",false);
+            request.setAttribute("loggedOn",false);
+            request.setAttribute("loggedUser", null);
+            request.setAttribute("viewUrl", "Home/view");
+
+        }catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+
+        }
+    }
 }

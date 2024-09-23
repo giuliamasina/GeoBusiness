@@ -191,6 +191,10 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
+    <form name="deleteProfileForm" action="Dispatcher" method="post">
+        <input type="hidden" name="ID" value="<%=venditore.getId()%>">
+        <input type="hidden" name="controllerAction" value="Profile.deleteProfile">
+    </form>
 
     <nav>
         <ul>
@@ -207,7 +211,7 @@
     <h3>Indirizzo di spedizione: <%=venditore.getIndirizzo_spedizione()%></h3>
     <h3>Numero di fossili messi in vendita/asta: <%=articolivendita.size() + articoliasta.size()%></h3>
     <h3>Numero di fossili venduti: </h3>
-    <a>
+    <a href="javascript:deleteProfileForm.submit()">
         <button type="button">Elimina profilo</button>
     </a>
 
@@ -215,27 +219,29 @@
     <section>
         <%if(!articolivendita.isEmpty()){
             for(i=0;i<articolivendita.size();i++){
+                if (!articolivendita.get(i).isDeleted()) {
                 String name = articolivendita.get(i).getNome();
                 String category = articolivendita.get(i).getCategoria();
                 Float price = articolivendita.get(i).getPrezzo();
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
             <%if(articolivendita.get(i).getStatus() == 1) {%>
-            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <img class="venduto" src="<%=image%>">
                 <div class="text">Venduto</div>
             </a>
             <%} else{%>
-            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
             <%}%>
-            <a href="Dispatcher?controllerAction=Profile.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
             </a>
             <figcaption><%= price%></figcaption>
         </figure>
         <%}
+        }
         }else {%>
         <p>Non sono state trovati articoli a prezzo fisso</p>
         <%}%>
@@ -245,27 +251,29 @@
     <section>
         <% if(!articoliasta.isEmpty()){
             for(i=0;i<articoliasta.size();i++){
+                if (!articoliasta.get(i).isDeleted()) {
                 String name = articoliasta.get(i).getNome();
                 String category = articoliasta.get(i).getCategoria();
                 Timestamp data=articoliasta.get(i).getData_scadenza();
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
             <%if(articoliasta.get(i).getStatus() == 1) {%>
-            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img class="venduto" src="<%=image%>">
                 <div class="text">Venduto</div>
             </a>
             <%} else{%>
-            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img src="<%=image%>">
             </a>
             <%} %>
-            <a href="Dispatcher?controllerAction=Profile.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <figcaption><%=name%></figcaption>
             </a>
             <figcaption>Scade il:   <%=data%></figcaption>
         </figure>
         <%}
+        }
         } else {%>
         <p>Non sono state trovate aste</p>
         <%}%>

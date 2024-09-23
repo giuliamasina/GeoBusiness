@@ -184,6 +184,10 @@
         <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.viewVendPerComp">
     </form>
+    <form name="deleteItemForm" action="Dispatcher" method="post">
+        <input type="hidden" name="Id_articolo" value="<%=articolovendita.getId()%>">
+        <input type="hidden" name="controllerAction" value="Profile.deleteItem">
+    </form>
 
     <nav>
         <ul>
@@ -208,6 +212,11 @@
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
         <p><%=articolovendita.getDescription()%></p>
+        <%if(venditore.getId() == loggedUser.getId()) {%>
+        <a >
+            <button type="button">Elimina</button>
+        </a>
+        <%}%>
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>

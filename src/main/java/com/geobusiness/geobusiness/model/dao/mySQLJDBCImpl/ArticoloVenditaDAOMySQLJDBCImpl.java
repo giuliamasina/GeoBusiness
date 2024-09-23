@@ -29,7 +29,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
     }
 
     @Override
-    public void delete(Articolo articolo) {
+    public void delete(Integer articolo_id) {
 
     }
 
@@ -116,8 +116,25 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
     }
 
     @Override
-    public void delete(ArticoloVendita articolo) {  // ANCORA DA FARE
+    public void deleteArtVend(Integer articolo_id) {  // ANCORA DA FARE
+        PreparedStatement ps;
 
+        try {
+
+            String sql
+                    = " UPDATE ARTICOLO "
+                    + " SET Deleted='Y' "
+                    + " WHERE "
+                    + " ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, articolo_id);
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
