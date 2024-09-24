@@ -22,6 +22,7 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     public Compratore create(String Username, String Email, String Password, String Indirizzo_consegna) {
         PreparedStatement ps;
         Compratore compratore = new Compratore();
+        ResultSet resultSet = null;
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
 
         compratore.setUsername(Username);
@@ -41,16 +42,16 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
                     + "   ) "
                     + " VALUES (?,?,'N',?)";
 
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
-            ps.setString(i, Username);
-            ps.setString(i++, Password);
+            ps.setString(1, Username);
+            ps.setString(2, Password);
             //ps.setString(i++, "N");
-            ps.setString(i++, Email);
+            ps.setString(3, Email);
 
             ps.executeUpdate();
 
-            sql
+            /*sql
                     = "SELECT MAX(ID) AS max_id "
                     + "FROM UTENTE";
 
@@ -59,6 +60,14 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
 
             if(resultSet.next()){
                 Integer last_id =  resultSet.getInt("max_id");
+                compratore.setId(last_id);
+            }
+
+             */
+
+            resultSet = ps.getGeneratedKeys();
+            if (resultSet.next()) {
+                int last_id = resultSet.getInt(1);  // Recupera l'ultimo ID generato
                 compratore.setId(last_id);
             }
 
@@ -71,10 +80,13 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
 
             ps = conn.prepareStatement(sql);
             i = 1;
-            ps.setInt(i, compratore.getId());
-            ps.setString(i++, compratore.getIndirizzo_consegna());
+            ps.setInt(1, compratore.getId());
+            ps.setString(2, compratore.getIndirizzo_consegna());
 
             ps.executeUpdate();
+
+            ps.close();
+            resultSet.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

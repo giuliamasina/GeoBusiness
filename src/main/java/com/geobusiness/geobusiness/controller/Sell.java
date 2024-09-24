@@ -102,6 +102,8 @@ public class Sell {
         String applicationMessage = null;
         Venditore venditore = null;
 
+        System.out.println("Sell.sell action invoked!");
+
         Logger logger = LogService.getApplicationLogger();
 
         try{
@@ -132,6 +134,10 @@ public class Sell {
             String description = request.getParameter("descrizione");
             Float prezzo = Float.parseFloat(request.getParameter("prezzo"));
             Timestamp data_pubbl = Timestamp.valueOf(LocalDateTime.now());
+
+            System.out.println(nome);
+            System.out.println(categoria);
+            System.out.println(prezzo);
 
             // Ricevi il file immagine dal form
             Part filePart = request.getPart("immagine"); // Ottieni il file dalla richiesta

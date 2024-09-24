@@ -23,6 +23,11 @@ public class Dispatcher extends HttpServlet {
 
             String controllerAction=request.getParameter("controllerAction");
 
+            if(controllerAction == null) {System.out.println("non viene ricevuto il controllerAction");
+            }else{
+                System.out.println("controllerAction ricevuto");
+            }
+
             if (controllerAction==null) controllerAction="Home.view";
 
             String[] splittedAction=controllerAction.split("\\.");

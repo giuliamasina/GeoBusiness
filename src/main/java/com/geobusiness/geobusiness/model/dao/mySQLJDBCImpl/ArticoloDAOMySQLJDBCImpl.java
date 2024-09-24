@@ -49,12 +49,14 @@ public class ArticoloDAOMySQLJDBCImpl implements ArticoloDAO {
 
             ps = conn.prepareStatement(sql);
             int i = 1;
-            ps.setString(i, articolo.getNome());
-            ps.setString(i++, articolo.getCategoria());
-            ps.setString(i++, articolo.getImmagine());
-            ps.setString(i++, articolo.getDescription());
+            ps.setString(1, articolo.getNome());
+            ps.setString(2, articolo.getCategoria());
+            ps.setString(3, articolo.getImmagine());
+            ps.setString(4, articolo.getDescription());
 
             ps.executeUpdate();
+
+            ps.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

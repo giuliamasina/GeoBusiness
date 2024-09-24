@@ -292,29 +292,36 @@ public class Home {
             String ruolo = request.getParameter("ruolo");
             String indirizzo = request.getParameter("address");  // ANCORA DA METTERE NEL FORM
 
-            System.out.println(username);
-            System.out.println(email);
-            System.out.println(indirizzo);
-            System.out.println(ruolo);
-
             UtenteDAO userDAO = daoFactory.getUtenteDAO();
-            Utente utente = null;
+            Utente utente = new Utente();
             utente = userDAO.findByUsername(username);
 
-            if(utente==null) {
+            if(utente == null) System.out.println("utente è null");
+            if(utente != null) System.out.println("utente non è null");
+            System.out.println("nome utente trovato: "+ utente.getUsername());
+
+            if(utente.getUsername()==null) {
 
                 if (ruolo.equals("vendere")) {
                     VenditoreDAO utenteDAO = daoFactory.getVenditoreDAO();
+                    request.setAttribute("isVenditore", true);
                     Venditore venditore = null;
                     venditore = utenteDAO.create(username, email, password, indirizzo);
                     loggedUser = sessionUtenteDAO.create(venditore.getUsername(), venditore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
-                    if(venditore == null){
-                        System.out.println("e' null");
-                    }
 
                 }else if(ruolo.equals("comprare")){
                     CompratoreDAO utenteDAO = daoFactory.getCompratoreDAO();
-                    Compratore compratore = utenteDAO.create(username, email, password, indirizzo);
+                    Compratore compratore = null;
+                    request.setAttribute("isVenditore", false);
+                    compratore = utenteDAO.create(username, email, password, indirizzo);
+                    if(compratore.getUsername() == null){
+                        System.out.println("username venditore creato: " + compratore.getUsername());
+                    }
+                    if(compratore == null){
+                        System.out.println("e' null");
+                    }else{
+                        System.out.println("compratore c'e'");
+                    }
                     loggedUser = sessionUtenteDAO.create(compratore.getUsername(), compratore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
                 }
 
@@ -323,6 +330,7 @@ public class Home {
                 sessionUtenteDAO.delete(null);
                 applicationMessage = "Username già in utilizzo";
                 loggedUser=null;
+                request.setAttribute("isVenditore", false);
             }
 
             daoFactory.commitTransaction();

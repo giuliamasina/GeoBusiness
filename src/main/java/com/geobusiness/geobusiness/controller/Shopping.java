@@ -380,6 +380,11 @@ public class Shopping {
         List<ArticoloVendita> articolivenditafinal;
         List<ArticoloAsta> articoliastafinal;
 
+        System.out.println(request.getParameter("categoria"));
+        System.out.println(request.getParameter("da"));
+        System.out.println(request.getParameter("a"));
+        System.out.println(request.getParameter("tipoarticolo"));
+
         Logger logger = LogService.getApplicationLogger();
 
         try{

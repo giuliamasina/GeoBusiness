@@ -115,7 +115,7 @@
         }
     </style>
     <script>
-        function sell(){
+        /*function sell(){
             f = document.sellForm;
             f2 = document.sell;
             f.nome.value = f2.nome.value;
@@ -124,6 +124,12 @@
             f.descrizione.value = f2.descrizione.value;
             f.prezzo.value = f2.prezzo.value;
             f.submit();
+        }
+
+         */
+        function check(){
+            f = document.sellForm;
+            console.log("controllerAction: " + f.controllerAction.value);
         }
     </script>
 </head>
@@ -135,7 +141,7 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
-    <form name="sellForm" action="Dispatcher" method="post">
+    <!--<form name="sellForm" action="Dispatcher" method="post">
         <input type="hidden" name="Id_vend" value="<%=loggedUser.getId()%>">
         <input type="hidden" name="nome"/>
         <input type="hidden" name="categoria"/>
@@ -143,7 +149,7 @@
         <input type="hidden" name="descrizione"/>
         <input type="hidden" name="prezzo"/>
         <input type="hidden" name="controllerAction" value="Sell.sell"/>
-    </form>
+    </form> -->
 
     <nav>
         <ul>
@@ -158,7 +164,10 @@
 
     <h1>Inserisci il tuo prodotto in vendita</h1>
 
-    <form name="sell" onsubmit="sell(); return false;" enctype="multipart/form-data">
+    <form name="sellForm" onsubmit="return check()" action="Dispatcher" method="post" enctype="multipart/form-data">
+        <!-- ID e controllerAction -->
+        <input type="hidden" name="Id_vend" value="<%=loggedUser.getId()%>">
+
         <!-- Nome del prodotto -->
         <label for="nome">Nome del prodotto:</label>
         <input type="text" id="nome" name="nome" placeholder="Inserisci il nome del prodotto" required>
@@ -186,6 +195,8 @@
         <!-- Prezzo del prodotto -->
         <label for="prezzo">Prezzo (€):</label>
         <input type="number" id="prezzo" name="prezzo" placeholder="Inserisci il prezzo del prodotto" step="0.01" required>
+
+        <input type="hidden" name="controllerAction" value="Sell.sell"/>
 
         <!-- Pulsante di invio -->
         <button type="submit">Vendi</button>

@@ -48,6 +48,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
     ) {
         PreparedStatement ps;
         ArticoloVendita articolovendita = new ArticoloVendita();
+        ResultSet resultSet = null;
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
         articolovendita.setNome(nome);
         articolovendita.setCategoria(categoria);
@@ -68,20 +69,20 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
                     + "      Descrizione,"
                     + "      Deleted"
                     + "   ) "
-                    + " VALUES (?,?,?,?,?,?)";
+                    + " VALUES (?,?,?,?,?,'N')";
 
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
-            ps.setString(i, articolovendita.getNome());
-            ps.setString(i++, articolovendita.getCategoria());
-            ps.setInt(i++, 0);
-            ps.setString(i++, articolovendita.getImmagine());
-            ps.setString(i++, articolovendita.getDescription());
-            ps.setString(i++, "N");
+            ps.setString(1, articolovendita.getNome());
+            ps.setString(2, articolovendita.getCategoria());
+            ps.setInt(3, 0);
+            ps.setString(4, articolovendita.getImmagine());
+            ps.setString(5, articolovendita.getDescription());
+            //ps.setString(6, "N");
 
             ps.executeUpdate();
 
-            sql
+            /*sql
                     = "SELECT MAX(ID) AS max_id "
                     + "FROM ARTICOLO";
 
@@ -91,6 +92,14 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
             Integer last_id_item =  resultSet.getInt("max_id");
             articolovendita.setId(last_id_item);
 
+             */
+
+            resultSet = ps.getGeneratedKeys();
+            if (resultSet.next()) {
+                int last_id_item = resultSet.getInt(1);  // Recupera l'ultimo ID generato
+                articolovendita.setId(last_id_item);
+            }
+
             sql
                     = "INSERT INTO ART_IN_VENDITA"
                     + "    ( ID,"
@@ -98,10 +107,13 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
 
             ps = conn.prepareStatement(sql);
             i = 1;
-            ps.setInt(i, articolovendita.getId());
-            ps.setFloat(i++, articolovendita.getPrezzo());
+            ps.setInt(1, articolovendita.getId());
+            ps.setFloat(2, articolovendita.getPrezzo());
 
             ps.executeUpdate();
+
+            ps.close();
+            resultSet.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -279,9 +291,9 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
 
             ps = conn.prepareStatement(sql);
             int i = 1;
-            ps.setInt(i, Id_vend);
-            ps.setInt(i++, articolovendita.getId());
-            ps.setTimestamp(i++, data_pubbl);
+            ps.setInt(1, Id_vend);
+            ps.setInt(2, articolovendita.getId());
+            ps.setTimestamp(3, data_pubbl);
 
             ps.executeUpdate();
 

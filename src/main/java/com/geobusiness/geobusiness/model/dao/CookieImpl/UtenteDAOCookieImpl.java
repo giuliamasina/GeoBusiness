@@ -29,8 +29,10 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
         DAOFactory daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
         daoFactory.beginTransaction();
         UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
-        Utente utente = new Utente();
+        Utente utente = null;
         utente = utenteDAO.findByUsername(Username);
+        System.out.println("username utente: "+ "  " + Username);
+        System.out.println("id utente: "+ "  " + utente.getId());
         daoFactory.commitTransaction();
 
         loggedUser.setId(utente.getId());
@@ -103,7 +105,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 
         String[] values = encodedLoggedUser.split("#");
 
-        loggedUser.setId(Integer.parseInt(values[0]));
+        loggedUser.setId(Integer.parseInt(values[0])); loggedUser.setId(128);
         loggedUser.setUsername(values[1]);
         loggedUser.setEmail(values[2]);
 

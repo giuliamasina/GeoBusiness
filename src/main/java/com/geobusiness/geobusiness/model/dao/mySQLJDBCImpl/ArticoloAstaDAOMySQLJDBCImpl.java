@@ -25,6 +25,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
     ) {
         PreparedStatement ps;
         ArticoloAsta articoloasta = new ArticoloAsta();
+        ResultSet resultSet = null;
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
         articoloasta.setNome(nome);
         articoloasta.setCategoria(categoria);
@@ -45,28 +46,33 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
                     + "      Descrizione,"
                     + "      Deleted"
                     + "   ) "
-                    + " VALUES (?,?,?,?,?,?)";
+                    + " VALUES (?,?,?,?,?,'N')";
 
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
-            ps.setString(i, articoloasta.getNome());
-            ps.setString(i++, articoloasta.getCategoria());
-            ps.setInt(i++, 0);
-            ps.setString(i++, articoloasta.getImmagine());
-            ps.setString(i++, articoloasta.getDescription());
-            ps.setString(i++, "N");
+            ps.setString(1, articoloasta.getNome());
+            ps.setString(2, articoloasta.getCategoria());
+            ps.setInt(3, 0);
+            ps.setString(4, articoloasta.getImmagine());
+            ps.setString(5, articoloasta.getDescription());
+            //ps.setString(6, "N");
 
             ps.executeUpdate();
 
-            sql
+            /*sql
                     = "SELECT MAX(ID) AS max_id "
                     + "FROM ARTICOLO";
 
             ps = conn.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
+            ResultSet resultSet = ps.executeQuery(); // questo è sbagliato devo mettere resultset.next()
 
-            Integer last_id_item =  resultSet.getInt("max_id");
-            articoloasta.setId(last_id_item);
+             */
+
+            resultSet = ps.getGeneratedKeys();
+            if (resultSet.next()) {
+                int last_id_item = resultSet.getInt(1);  // Recupera l'ultimo ID generato
+                articoloasta.setId(last_id_item);
+            }
 
             sql
                     = "INSERT INTO ART_IN_ASTA"
@@ -75,10 +81,13 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
 
             ps = conn.prepareStatement(sql);
             i = 1;
-            ps.setInt(i, articoloasta.getId());
-            ps.setTimestamp(i++, articoloasta.getData_scadenza());
+            ps.setInt(1, articoloasta.getId());
+            ps.setTimestamp(2, articoloasta.getData_scadenza());
 
             ps.executeUpdate();
+
+            ps.close();
+            resultSet.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
