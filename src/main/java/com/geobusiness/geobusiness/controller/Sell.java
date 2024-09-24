@@ -4,9 +4,15 @@ import com.geobusiness.geobusiness.model.dao.*;
 import com.geobusiness.geobusiness.model.mo.*;
 import com.geobusiness.geobusiness.services.config.Configuration;
 import com.geobusiness.geobusiness.services.logservice.LogService;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -20,6 +26,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@MultipartConfig
 public class Sell {
 
     private Sell(){
@@ -121,12 +128,27 @@ public class Sell {
             Integer Id_vend = Integer.parseInt(request.getParameter("Id_vend"));
             String nome = request.getParameter("nome");
             String categoria = request.getParameter("categoria");
-            String immagine = request.getParameter("immagine");
+            //String immagine = request.getParameter("immagine");
             String description = request.getParameter("descrizione");
             Float prezzo = Float.parseFloat(request.getParameter("prezzo"));
             Timestamp data_pubbl = Timestamp.valueOf(LocalDateTime.now());
 
-            articolovenditaDAO.metteInVendita(Id_vend, nome, categoria, immagine, description, prezzo, data_pubbl);
+            // Ricevi il file immagine dal form
+            Part filePart = request.getPart("immagine"); // Ottieni il file dalla richiesta
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Nome file
+            String uploadPath = request.getServletContext().getRealPath("") + File.separator + "images/uploads"; // Cartella uploads
+            System.out.println(uploadPath);
+
+            // Salva il file nella cartella uploads
+            String filePath = uploadPath + File.separator + fileName;
+            try (InputStream fileContent = filePart.getInputStream()) {
+                Files.copy(fileContent, Paths.get(filePath));
+            }
+
+            // Salva solo il percorso relativo nel database
+            String relativeFilePath = "images/uploads/" + fileName;
+
+            articolovenditaDAO.metteInVendita(Id_vend, nome, categoria, relativeFilePath, description, prezzo, data_pubbl);
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();

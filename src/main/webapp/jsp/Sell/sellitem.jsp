@@ -114,6 +114,18 @@
             background-color: #403a2b;
         }
     </style>
+    <script>
+        function sell(){
+            f = document.sellForm;
+            f2 = document.sell;
+            f.nome.value = f2.nome.value;
+            f.categoria.value = f2.categoria.value;
+            f.immagine.value = f2.immagine.value;
+            f.descrizione.value = f2.descrizione.value;
+            f.prezzo.value = f2.prezzo.value;
+            f.submit();
+        }
+    </script>
 </head>
 <body>
 
@@ -146,7 +158,7 @@
 
     <h1>Inserisci il tuo prodotto in vendita</h1>
 
-    <form name="sell" action="Dispatcher" method="post">
+    <form name="sell" onsubmit="sell(); return false;" enctype="multipart/form-data">
         <!-- Nome del prodotto -->
         <label for="nome">Nome del prodotto:</label>
         <input type="text" id="nome" name="nome" placeholder="Inserisci il nome del prodotto" required>
@@ -164,7 +176,7 @@
 
         <!-- URL dell'immagine -->
         <label for="immagine">URL dell'immagine:</label>
-        <input type="text" id="immagine" name="immagine" placeholder="Inserisci l'URL dell'immagine" required>
+        <input type="file" id="immagine" name="immagine" placeholder="Inserisci l'URL dell'immagine" required>
 
         <!-- Descrizione del prodotto -->
         <label for="descrizione">Descrizione del prodotto:</label>
@@ -176,9 +188,7 @@
         <input type="number" id="prezzo" name="prezzo" placeholder="Inserisci il prezzo del prodotto" step="0.01" required>
 
         <!-- Pulsante di invio -->
-        <a href="javascript:sellForm.submit()">
-            <button type="submit">Vendi</button>
-        </a>
+        <button type="submit">Vendi</button>
     </form>
 
 </main>

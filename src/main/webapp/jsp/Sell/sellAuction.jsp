@@ -71,6 +71,18 @@
             bottom: 90px;
         }
     </style>
+    <script>
+        function sell(){
+            f = document.auctionForm;
+            f2 = document.auction;
+            f.nome.value = f2.nome.value;
+            f.categoria.value = f2.categoria.value;
+            f.immagine.value = f2.immagine.value;
+            f.descrizione.value = f2.descrizione.value;
+            f.data_scad.value = f2.data_scad.value;
+            f.submit();
+        }
+    </script>
 </head>
 <body>
 
@@ -103,7 +115,7 @@
 
     <h1>Inserisci il tuo prodotto in vendita</h1>
 
-    <form name="auction" action="Dispatcher" method="post">
+    <form name="auction" onsubmit="sell(); return false;">
         <!-- Nome del prodotto -->
         <label for="nome">Nome del prodotto:</label>
         <input type="text" id="nome" name="nome" placeholder="Inserisci il nome del prodotto" required>
@@ -134,9 +146,7 @@
         <input type="datetime-local" id="data_scad" name="data_scad" required>
 
         <!-- Pulsante di invio -->
-        <a href="javascript:auctionForm.submit()">
-            <button type="submit">Vendi</button>
-        </a>
+        <button type="submit">Vendi</button>
     </form>
 
 </main>

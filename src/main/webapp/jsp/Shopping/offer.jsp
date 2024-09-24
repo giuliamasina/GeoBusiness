@@ -186,9 +186,7 @@
     <section>
         <label for="offer">Inserisci la tua offerta</label>
         <input type="number" id="offer" name="offer" required >
-        <a href="javascript:offerForm.submit()">
-            <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
-        </a>
+        <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
     </section>
     <section>
         <h1 id="details">Tutte le offerte</h1>

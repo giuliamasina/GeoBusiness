@@ -163,7 +163,15 @@
         }
     </style>
     <script language="JavaScript">
-
+        function filter(){
+            f = document.filterForm;
+            f2 = document.filter;
+            f.categoria.value = f2.categoria.value;
+            f.da.value = f2.da.value;
+            f.a.value = f2.a.value;
+            f.tipoarticolo.value = f2.tipoarticolo.value;
+            f.submit();
+        }
     </script>
 </head>
 <body>
@@ -200,7 +208,7 @@
 <main>
     <h1>Tutti i fossili</h1>
 
-    <form name="filterFor" action="Dispatcher" method="post">
+    <form name="filter" onsubmit="filter(); return false;">
             <h1>Filtri:</h1>
             <div class="form-group-select">
                 <div class="inline">
@@ -231,9 +239,7 @@
                 <input type="number" id="a" name="a">
             </div>
             <!-- <input type="hidden" name="controllerAction" value="Shopping.filterview"/>  -->
-            <a href="javascript:filterForm.submit()">
-                <button type="submit">Cerca</button>
-            </a>
+            <button type="submit">Cerca</button>
     </form>
 
     <section id="articoli">

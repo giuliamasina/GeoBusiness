@@ -171,7 +171,7 @@
             f.password.value = f2.password.value;
             f.address.value = f2.address.value;
             f.ruolo.value = f2.ruolo.value;
-            f.submit()
+            f.submit();
         }
     </script>
 </head>
