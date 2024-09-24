@@ -350,6 +350,7 @@ public class Shopping {
             request.setAttribute("venditore",venditore);
             request.setAttribute("offerte", offerte);
             request.setAttribute("date_offerte", date_offerte);
+            //request.setAttribute("Id_compratore",);
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -505,6 +506,11 @@ public class Shopping {
         DAOFactory daoFactory = null;
         Utente loggedUser;
 
+        List<Articolo> articoli = new ArrayList<>();
+        List<ArticoloVendita> articolivendita1 = null;
+        List<ArticoloVendita> articolivendita = new ArrayList<>();
+        List<ArticoloAsta> articoliasta = null;
+
         Logger logger = LogService.getApplicationLogger();
 
         try {
@@ -537,11 +543,33 @@ public class Shopping {
             compratoreDAO.compra(Id_comp, Id_articolo, data_acquisto);
 
             daoFactory.commitTransaction();
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
+            ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
+
+            articolivendita1 = articoloVenditaDAO.selectAll();
+            int j;
+            for(j=0; j<articolivendita1.size(); j++){
+                if((articolivendita1.get(j).getStatus()) == 0){
+                    articolivendita.add(articolivendita1.get(j));
+                }
+            }
+            articoliasta = articoloAstaDAO.selectAll();
+
+            articoli.addAll(articolivendita);
+            articoli.addAll(articoliasta);
+
+            daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
 
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("viewUrl", "Shopping/view");
+            request.setAttribute("articoli",articoli);
+            request.setAttribute("articolivendita",articolivendita);
+            request.setAttribute("articoliasta",articoliasta);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -564,6 +592,11 @@ public class Shopping {
         DAOFactory sessionDAOFactory=null;
         DAOFactory daoFactory = null;
         Utente loggedUser;
+
+        List<Articolo> articoli = new ArrayList<>();
+        List<ArticoloVendita> articolivendita1 = null;
+        List<ArticoloVendita> articolivendita = new ArrayList<>();
+        List<ArticoloAsta> articoliasta = null;
 
         Logger logger = LogService.getApplicationLogger();
         try {
@@ -598,11 +631,33 @@ public class Shopping {
             compratoreDAO.faofferta(Id_comp, Id_articolo, offerta, data);
 
             daoFactory.commitTransaction();
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
+            ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
+
+            articolivendita1 = articoloVenditaDAO.selectAll();
+            int j;
+            for(j=0; j<articolivendita1.size(); j++){
+                if((articolivendita1.get(j).getStatus()) == 0){
+                    articolivendita.add(articolivendita1.get(j));
+                }
+            }
+            articoliasta = articoloAstaDAO.selectAll();
+
+            articoli.addAll(articolivendita);
+            articoli.addAll(articoliasta);
+
+            daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
 
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("viewUrl", "Shopping/view");
+            request.setAttribute("articoli",articoli);
+            request.setAttribute("articolivendita",articolivendita);
+            request.setAttribute("articoliasta",articoliasta);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);

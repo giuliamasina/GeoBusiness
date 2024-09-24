@@ -203,12 +203,13 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
     public Utente findByUsername(String username) {
 
         PreparedStatement ps;
+        ResultSet resultSet = null;
         Utente user = null;
 
         try {
 
             String sql
-                    = " SELECT * "
+                    = " SELECT ID, Username, Password, Deleted, Email "
                     + "   FROM UTENTE "
                     + " WHERE "
                     + "   Username = ?";
@@ -216,11 +217,13 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
             ps = conn.prepareStatement(sql);   // preparo lo statement sulla connessione database con la stringa sql appena fatta
             ps.setString(1, username);     // settare le varabili nel statement
 
-            ResultSet resultSet = ps.executeQuery();
+            resultSet = ps.executeQuery();
 
             if (resultSet.next()) {      // se ritorna più cose (per esempio voglio trovare per categoria e quindi seleziono più righe) al posto di if metto while
+                System.out.println("User found: " + resultSet.getString("Username"));
                 user = read(resultSet);   // e qui metterei una list, esempio: List<utente> ...
             }
+            //System.out.println(user.getId());
             resultSet.close();
             ps.close();
 

@@ -1,9 +1,12 @@
 package com.geobusiness.geobusiness.model.dao.CookieImpl;
 
+import com.geobusiness.geobusiness.model.dao.CompratoreDAO;
 import com.geobusiness.geobusiness.model.dao.DAOFactory;
 import com.geobusiness.geobusiness.model.dao.UtenteDAO;
+import com.geobusiness.geobusiness.model.dao.VenditoreDAO;
 import com.geobusiness.geobusiness.model.mo.Compratore;
 import com.geobusiness.geobusiness.model.mo.Utente;
+import com.geobusiness.geobusiness.model.mo.Venditore;
 import com.geobusiness.geobusiness.services.config.Configuration;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,14 +31,26 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
         Utente loggedUser = new Utente();
         DAOFactory daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
         daoFactory.beginTransaction();
-        UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
+        /*UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
         Utente utente = null;
         utente = utenteDAO.findByUsername(Username);
         System.out.println("username utente: "+ "  " + Username);
-        System.out.println("id utente: "+ "  " + utente.getId());
+        System.out.println("id utente: "+ "  " + utente.getId()); */
+        CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+        VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
+        Compratore compratore = null;
+        Venditore venditore = null;
+        venditore = venditoreDAO.findByUsername(Username);
+        compratore = compratoreDAO.findByUsername(Username);
         daoFactory.commitTransaction();
 
-        loggedUser.setId(utente.getId());
+        if(venditore != null && compratore == null){
+            loggedUser.setId(venditore.getId());
+        }else if(compratore != null && venditore == null){
+            loggedUser.setId(compratore.getId());
+        }
+        //loggedUser.setId(utente.getId());
+        System.out.println("l'id dell'utente: "+loggedUser.getId());
         loggedUser.setUsername(Username);
         loggedUser.setEmail(Email);
 
@@ -105,7 +120,8 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
 
         String[] values = encodedLoggedUser.split("#");
 
-        loggedUser.setId(Integer.parseInt(values[0])); loggedUser.setId(128);
+        loggedUser.setId(Integer.parseInt(values[0]));
+        //loggedUser.setId(133);
         loggedUser.setUsername(values[1]);
         loggedUser.setEmail(values[2]);
 

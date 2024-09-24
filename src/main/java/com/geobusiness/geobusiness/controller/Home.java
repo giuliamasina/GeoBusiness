@@ -298,16 +298,20 @@ public class Home {
 
             if(utente == null) System.out.println("utente è null");
             if(utente != null) System.out.println("utente non è null");
-            System.out.println("nome utente trovato: "+ utente.getUsername());
+            //System.out.println("nome utente trovato: "+ utente.getUsername());
 
-            if(utente.getUsername()==null) {
+            if(utente==null) {
 
                 if (ruolo.equals("vendere")) {
                     VenditoreDAO utenteDAO = daoFactory.getVenditoreDAO();
                     request.setAttribute("isVenditore", true);
                     Venditore venditore = null;
                     venditore = utenteDAO.create(username, email, password, indirizzo);
+                    daoFactory.commitTransaction();
+                    daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+                    daoFactory.beginTransaction();
                     loggedUser = sessionUtenteDAO.create(venditore.getUsername(), venditore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
+                    //logon(request,response);
 
                 }else if(ruolo.equals("comprare")){
                     CompratoreDAO utenteDAO = daoFactory.getCompratoreDAO();
@@ -322,7 +326,11 @@ public class Home {
                     }else{
                         System.out.println("compratore c'e'");
                     }
+                    daoFactory.commitTransaction();
+                    daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+                    daoFactory.beginTransaction();
                     loggedUser = sessionUtenteDAO.create(compratore.getUsername(), compratore.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
+                    //logon(request, response);
                 }
 
             }
@@ -331,6 +339,7 @@ public class Home {
                 applicationMessage = "Username già in utilizzo";
                 loggedUser=null;
                 request.setAttribute("isVenditore", false);
+                request.setAttribute("viewUrl", "Home/view");
             }
 
             daoFactory.commitTransaction();

@@ -23,7 +23,7 @@
     Venditore venditore = (Venditore) request.getAttribute("venditore");
     List<Float> offerte = (List<Float>) request.getAttribute("offerte");
     List<Timestamp> date_offerte = (List<Timestamp>) request.getAttribute(("date_offerte"));
-    Integer Id_compratore = (Integer) request.getAttribute("Id_compratore");
+    //Integer Id_compratore = (Integer) request.getAttribute("Id_compratore");
     int i;
 %>
 <html>
@@ -163,7 +163,7 @@
     </form>
     <form name="offerForm">
         <input type="hidden" name="Id_articolo" value="<%=articoloasta.getId()%>"/>
-        <input type="hidden" name="Id_compratore" value="<%=Id_compratore%>"/>
+        <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>"/>
         <input type="hidden" name="offerta"/>
         <input type="hidden" name="controllerAction" value="Shopping.faiofferta"/>
     </form>

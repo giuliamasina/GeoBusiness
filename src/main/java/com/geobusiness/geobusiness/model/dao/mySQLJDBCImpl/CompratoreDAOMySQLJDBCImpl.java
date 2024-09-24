@@ -289,9 +289,9 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
 
             ps = conn.prepareStatement(sql);
             int i = 1;
-            ps.setInt(i, id_comp);
-            ps.setInt(i++, id_articolo);
-            ps.setTimestamp(i++, data);
+            ps.setInt(1, id_comp);
+            ps.setInt(2, id_articolo);
+            ps.setTimestamp(3, data);
             ps.executeUpdate();
             ps.close();
 
@@ -328,10 +328,10 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
 
             ps = conn.prepareStatement(sql);
             int i = 1;
-            ps.setInt(i, id_comp);
-            ps.setInt(i++, id_asta);
-            ps.setFloat(i++, offerta);
-            ps.setTimestamp(i++, data);
+            ps.setInt(1, id_comp);
+            ps.setInt(2, id_asta);
+            ps.setFloat(3, offerta);
+            ps.setTimestamp(4, data);
             ps.executeUpdate();
 
         } catch (SQLException e) {
