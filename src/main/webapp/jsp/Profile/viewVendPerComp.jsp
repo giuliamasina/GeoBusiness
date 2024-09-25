@@ -232,7 +232,7 @@
                 String name = articoliasta.get(i).getNome();
                 String category = articoliasta.get(i).getCategoria();
                 Timestamp data=articoliasta.get(i).getData_scadenza();
-                String image = articolivendita.get(i).getImmagine();
+                String image = articoliasta.get(i).getImmagine();
                 if(articoliasta.get(i).getStatus() == 0 && !articoliasta.get(i).isDeleted()) {%>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">

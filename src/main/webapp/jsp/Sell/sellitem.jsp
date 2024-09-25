@@ -175,7 +175,7 @@
         <!-- Categoria del prodotto -->
         <label for="categoria">Categoria del prodotto:</label>
         <select id="categoria" name="categoria" required>
-            <option value="nessuna">Nessuna</option>
+            <!-- <option value="nessuna">Nessuna</option> -->
             <option value="Ammoniti">Ammoniti</option>
             <option value="Trilobiti">Trilobiti</option>
             <option value="Ambre">Ambre</option>
@@ -184,7 +184,7 @@
         </select>
 
         <!-- URL dell'immagine -->
-        <label for="immagine">URL dell'immagine:</label>
+        <label for="immagine">Immagine:</label>
         <input type="file" id="immagine" name="immagine" placeholder="Inserisci l'URL dell'immagine" required>
 
         <!-- Descrizione del prodotto -->

@@ -77,7 +77,9 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
             sql
                     = "INSERT INTO ART_IN_ASTA"
                     + "    ( ID,"
-                    + "      Data_scadenza";
+                    + "      Data_scadenza"
+                    + "    )"
+                    + " VALUES (?,?)";
 
             ps = conn.prepareStatement(sql);
             i = 1;
@@ -210,7 +212,7 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
         try {
 
             String sql
-                    = "SELECT * FROM ARTICOLO NATURAL JOIN ART_IN_ASTA";
+                    = "SELECT ID, Nome, Categoria, Status, Immagine, Descrizione, Deleted, Data_scadenza FROM ARTICOLO NATURAL JOIN ART_IN_ASTA";
 
             ps = conn.prepareStatement(sql);
 
@@ -424,9 +426,9 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
 
             ps = conn.prepareStatement(sql);
             int i = 1;
-            ps.setInt(i, Id_vend);
-            ps.setInt(i++, articoloasta.getId());
-            ps.setTimestamp(i++, data_pubbl);
+            ps.setInt(1, Id_vend);
+            ps.setInt(2, articoloasta.getId());
+            ps.setTimestamp(3, data_pubbl);
 
             ps.executeUpdate();
 

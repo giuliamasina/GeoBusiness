@@ -142,9 +142,11 @@ public class Sell {
             // Ricevi il file immagine dal form
             Part filePart = request.getPart("immagine"); // Ottieni il file dalla richiesta
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Nome file
-            String uploadPath = request.getServletContext().getRealPath("") + File.separator + "images/uploads"; // Cartella uploads
+            //String uploadPath = request.getServletContext().getRealPath("") + File.separator + "images/uploads"; // Cartella uploads
+            String uploadPath = "/home/giuggiu/GeoBusiness/src/main/webapp/images";
             System.out.println(uploadPath);
 
+            // ATTENZIONE se l'immagine viene salvata su uploads ma non viene aggiunto l'articolo sul database allora devo eliminare l'immagine su uploads
             // Salva il file nella cartella uploads
             String filePath = uploadPath + File.separator + fileName;
             try (InputStream fileContent = filePart.getInputStream()) {
@@ -152,7 +154,7 @@ public class Sell {
             }
 
             // Salva solo il percorso relativo nel database
-            String relativeFilePath = "images/uploads/" + fileName;
+            String relativeFilePath = "images/" + fileName;
 
             articolovenditaDAO.metteInVendita(Id_vend, nome, categoria, relativeFilePath, description, prezzo, data_pubbl);
 
@@ -161,6 +163,7 @@ public class Sell {
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("viewUrl", "Home/view");
+            request.setAttribute("isVenditore",true);
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
@@ -212,7 +215,7 @@ public class Sell {
             Integer Id_vend = Integer.parseInt(request.getParameter("Id_vend"));
             String nome = request.getParameter("nome");
             String categoria = request.getParameter("categoria");
-            String immagine = request.getParameter("immagine");
+            //String immagine = request.getParameter("immagine");
             String description = request.getParameter("description");
             //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             //java.util.Date utilDate = format.parse(request.getParameter("data_scad"));
@@ -225,13 +228,31 @@ public class Sell {
             Timestamp data_scad = Timestamp.valueOf(dateTime);
             Timestamp data_pubbl = Timestamp.valueOf(LocalDateTime.now());
 
-            articoloastaDAO.metteInAsta(Id_vend, nome, categoria, immagine, description, data_scad, data_pubbl);
+            // Ricevi il file immagine dal form
+            Part filePart = request.getPart("immagine"); // Ottieni il file dalla richiesta
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Nome file
+            //String uploadPath = request.getServletContext().getRealPath("") + File.separator + "images/uploads"; // Cartella uploads
+            String uploadPath = "/home/giuggiu/GeoBusiness/src/main/webapp/images";
+            System.out.println(uploadPath);
+
+            // ATTENZIONE se l'immagine viene salvata su uploads ma non viene aggiunto l'articolo sul database allora devo eliminare l'immagine su uploads
+            // Salva il file nella cartella uploads
+            String filePath = uploadPath + File.separator + fileName;
+            try (InputStream fileContent = filePart.getInputStream()) {
+                Files.copy(fileContent, Paths.get(filePath));
+            }
+
+            // Salva solo il percorso relativo nel database
+            String relativeFilePath = "images/" + fileName;
+
+            articoloastaDAO.metteInAsta(Id_vend, nome, categoria, relativeFilePath, description, data_scad, data_pubbl);
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("viewUrl", "Home/view");
+            request.setAttribute("isVenditore",true);
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);

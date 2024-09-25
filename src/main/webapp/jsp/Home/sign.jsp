@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String applicationMessage = (String) request.getAttribute("applicationMessage");
+%>
 <html>
 <head>
     <title>Iscriviti</title>
@@ -163,6 +166,7 @@
         }
     </style>
     <script>
+
         function signin(){
             f = document.signForm;
             f2 = document.sign;
@@ -196,6 +200,11 @@
     </form>
 </header>
 
+<%if(applicationMessage != null) {%>
+<div class="alert alert-warning" role="alert">
+    <p><%=applicationMessage%></p>
+</div>
+<%}%>
 <main>
     <img src="https://via.placeholder.com/150" alt="Image 1">
     <form name="sign" onsubmit="signin(); return false;">

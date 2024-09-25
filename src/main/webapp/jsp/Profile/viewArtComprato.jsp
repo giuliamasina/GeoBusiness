@@ -1,19 +1,13 @@
-<%--
+<%@ page import="com.geobusiness.geobusiness.model.mo.Utente" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
+<%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %><%--
   Created by IntelliJ IDEA.
   User: giuggiu
-  Date: 14/07/24
-  Time: 23:56
+  Date: 25/09/24
+  Time: 22:36
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="com.geobusiness.geobusiness.model.mo.Utente"%>
-<%@ page import="com.geobusiness.geobusiness.model.mo.ArticoloVendita" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.Venditore" %>
-<%@ page import="com.geobusiness.geobusiness.model.dao.CompratoreDAO" %>
-<%@ page import="com.geobusiness.geobusiness.model.dao.DAOFactory" %>
-<%@ page import="com.geobusiness.geobusiness.services.config.Configuration" %>
-<%@ page import="com.geobusiness.geobusiness.model.mo.Compratore" %>
-
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
@@ -22,24 +16,6 @@
 
     ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
-
-    int isCompratore = 0;   // dovrò mettere tutto questo anche nelle altre view per entrare in Profilo (bisogna sapere se ho un compratore o un venditore)
-    Compratore compratore = null;
-    DAOFactory daoFactory = null;
-    daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
-    daoFactory.beginTransaction();
-    if(loggedOn){
-        CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
-        compratore = compratoreDAO.findByUsername(loggedUser.getUsername());
-        
-        if(compratore == null){
-            isCompratore = 0;
-        }
-        else{
-            isCompratore = 1;
-        }
-    }
-    daoFactory.commitTransaction();
 %>
 <html>
 <head>
@@ -163,14 +139,6 @@
             margin-top: auto;
         }
     </style>
-    <script>
-        function notLoggedOn(){
-            alert("Devi accedere come compratore per acquistare un articolo")
-        }
-        function notCompratore(){
-            alert("Devi essere un utente compratore per acquistare un articolo")
-        }
-    </script>
 </head>
 <body>
 
@@ -184,10 +152,6 @@
         <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
         <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.viewVendPerComp">
-    </form>
-    <form name="deleteItemForm" action="Dispatcher" method="post">
-        <input type="hidden" name="Id_articolo" value="<%=articolovendita.getId()%>">
-        <input type="hidden" name="controllerAction" value="Profile.deleteItem">
     </form>
 
     <nav>
@@ -213,11 +177,6 @@
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
         <p><%=articolovendita.getDescription()%></p>
-        <%if(venditore.getId() == loggedUser.getId()) {%>
-        <a >
-            <button type="button">Elimina</button>
-        </a>
-        <%}%>
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>
@@ -225,23 +184,11 @@
             <h3 id="username"><%=venditore.getUsername()%></h3>
         </a>
         <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%></h2>
-        <%if (!loggedOn) {%>
-        <a>
-            <button type="button" onclick="notLoggedOn()">Compra</button>
+        <a href="javascript:viewVendForm.submit()">
+            <button>Lascia una recensione al venditore</button>
         </a>
-        <%} else if(isCompratore==0){%>
-        <a>
-            <button type="button" onclick="notCompratore()">Compra</button>
-        </a>
-        <%} else if(isCompratore==1){%>
-        <a href="Dispatcher?controllerAction=Shopping.buyview&articolovendita=<%=articolovendita.getId()%>">
-            <button type="button">Compra</button>
-        </a>
-        <%}%>
     </section>
 </main>
-<footer>
-    <p>my footer</p>
-</footer>
+
 </body>
 </html>

@@ -208,6 +208,11 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
     }
 
     @Override
+    public Utente findByEmail(String Email) {
+        return null;
+    }
+
+    @Override
     public List<ArticoloVendita> findArticoliComprati(Integer id) {
         PreparedStatement ps;
         ArrayList<ArticoloVendita> articolivendita = new ArrayList<ArticoloVendita>();

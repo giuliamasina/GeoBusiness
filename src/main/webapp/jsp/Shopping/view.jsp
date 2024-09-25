@@ -28,10 +28,10 @@
     articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
     List<ArticoloAsta> articoliasta = new ArrayList<>();
     articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
-    String categoria = (String) request.getAttribute("categoria");
-    Float da = (Float) request.getAttribute("da");
-    Float a = (Float) request.getAttribute("a");
-    String tipoarticolo = (String) request.getAttribute("tipoarticolo");
+    //String categoria = (String) request.getAttribute("categoria");
+    //Float da = (Float) request.getAttribute("da");
+    //Float a = (Float) request.getAttribute("a");
+    //String tipoarticolo = (String) request.getAttribute("tipoarticolo");
     int i;
 %>
 <html>
@@ -162,7 +162,7 @@
             left: 10px;
         }
     </style>
-    <script language="JavaScript">
+    <script>
         function filter(){
             f = document.filterForm;
             f2 = document.filter;
@@ -208,7 +208,7 @@
 <main>
     <h1>Tutti i fossili</h1>
 
-    <form name="filter" onsubmit="filter(); return false;">
+    <form name="filter" action="javascript:filter()">
             <h1>Filtri:</h1>
             <div class="form-group-select">
                 <div class="inline">
@@ -243,7 +243,7 @@
     </form>
 
     <section id="articoli">
-        <%if(!articolivendita.isEmpty()){
+        <%if(articolivendita != null && !articolivendita.isEmpty()){
             for(i=0;i<articolivendita.size();i++){
                 if (articolivendita.get(i).getStatus() == 0 && !articolivendita.get(i).isDeleted()) {
             String name = articolivendita.get(i).getNome();
@@ -277,7 +277,7 @@
             String name = articoliasta.get(i).getNome();
             String category = articoliasta.get(i).getCategoria();
             Timestamp data=articoliasta.get(i).getData_scadenza();
-            String image = articolivendita.get(i).getImmagine(); %>
+            String image = articoliasta.get(i).getImmagine(); %>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <img src="<%=image%>">

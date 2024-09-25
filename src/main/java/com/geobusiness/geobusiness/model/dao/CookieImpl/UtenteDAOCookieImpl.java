@@ -106,6 +106,11 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public Utente findByEmail(String Email) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     private String encode(Utente loggedUser) {
 
         String encodedLoggedUser;
@@ -121,7 +126,7 @@ public class UtenteDAOCookieImpl implements UtenteDAO {
         String[] values = encodedLoggedUser.split("#");
 
         loggedUser.setId(Integer.parseInt(values[0]));
-        //loggedUser.setId(133);
+        //loggedUser.setId(101);
         loggedUser.setUsername(values[1]);
         loggedUser.setEmail(values[2]);
 

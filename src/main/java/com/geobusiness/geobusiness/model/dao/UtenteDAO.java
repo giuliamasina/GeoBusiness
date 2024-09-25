@@ -19,4 +19,6 @@ public interface UtenteDAO {
     public Utente findByUtenteId(Integer id);    // sql impl
 
     public Utente findByUsername(String username);
+
+    public Utente findByEmail(String Email);
 }

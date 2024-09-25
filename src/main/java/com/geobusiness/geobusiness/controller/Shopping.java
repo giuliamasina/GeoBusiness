@@ -374,17 +374,12 @@ public class Shopping {
         String applicationMessage = null;
 
         List<Articolo> articoli = new ArrayList<>();
-        List<ArticoloVendita> articolivendita1 = null;
+        List<ArticoloVendita> articolivendita1 = new ArrayList<>();
         List<ArticoloVendita> articolivendita = new ArrayList<>();
-        List<ArticoloAsta> articoliasta = null;
+        List<ArticoloAsta> articoliasta = new ArrayList<>();
 
-        List<ArticoloVendita> articolivenditafinal;
-        List<ArticoloAsta> articoliastafinal;
-
-        System.out.println(request.getParameter("categoria"));
-        System.out.println(request.getParameter("da"));
-        System.out.println(request.getParameter("a"));
-        System.out.println(request.getParameter("tipoarticolo"));
+        List<ArticoloVendita> articolivenditafinal = new ArrayList<>();
+        List<ArticoloAsta> articoliastafinal = new ArrayList<>();
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -411,14 +406,21 @@ public class Shopping {
             ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
 
             // filtro per categoria
-            articolivendita1 = articoloVenditaDAO.findByCategoria(request.getParameter("categoria"));
-            int j;
-            for(j=0; j<articolivendita1.size(); j++){
-                if((articolivendita1.get(j).getStatus()) == 0){
-                    articolivendita.add(articolivendita1.get(j));
+            if(!request.getParameter("categoria").equals("nessuna") && !request.getParameter("categoria").isEmpty()) {
+                articolivendita1 = articoloVenditaDAO.findByCategoria(request.getParameter("categoria"));
+                int j;
+                for (j = 0; j < articolivendita1.size(); j++) {
+                    if ((articolivendita1.get(j).getStatus()) == 0) {
+                        articolivendita.add(articolivendita1.get(j));
+                    }
                 }
+                articoliasta = articoloAstaDAO.findByCategoria(request.getParameter("categoria"));
+            }else{
+                articolivendita = articoloVenditaDAO.selectAll();
+                articoliasta = articoloAstaDAO.selectAll();
             }
-            articoliasta = articoloAstaDAO.findByCategoria(request.getParameter("categoria"));
+
+            //System.out.println(articolivendita.get(0).getNome());
 
             // filtro per prezzo
             if(request.getParameter("da").isEmpty() && request.getParameter("a").isEmpty()){
@@ -429,8 +431,10 @@ public class Shopping {
                 articoliastafinal = maxOfferRange(daoFactory, articoliasta, request);
             }
 
+            //System.out.println(articolivenditafinal.get(0).getNome());
+
             // filtro per tipo articolo
-            if(request.getParameter("tipoarticolo") == null){
+            if(request.getParameter("tipoarticolo") == null){  // potrei dover mettere .isEmpty() e non == null
                 articoli.addAll(articolivenditafinal);
                 articoli.addAll(articoliastafinal);
             } else if(request.getParameter("tipoarticolo").equals("fisso")){
@@ -676,17 +680,17 @@ public class Shopping {
         }
     }
     public static List<ArticoloVendita> priceRange(List<ArticoloVendita> articolivendita, HttpServletRequest request){
-        List<ArticoloVendita> articolivenditafinal = null;
+        List<ArticoloVendita> articolivenditafinal = new ArrayList<>();
 
         Float da=0f, a=13000.0f;
 
-        if(!request.getParameter("da").isEmpty() && !request.getParameter("da").isEmpty()){
+        if(!request.getParameter("da").isEmpty() && !request.getParameter("a").isEmpty()){
             da = Float.parseFloat(request.getParameter("da"));
             a = Float.parseFloat(request.getParameter("a"));
-        }else if(!request.getParameter("da").isEmpty() && request.getParameter("da").isEmpty()){
+        }else if(!request.getParameter("da").isEmpty() && request.getParameter("a").isEmpty()){
             da = Float.parseFloat(request.getParameter("da"));
             a = 13000.0f;
-        }else if(request.getParameter("da").isEmpty() && !request.getParameter("da").isEmpty()){
+        }else if(request.getParameter("da").isEmpty() && !request.getParameter("a").isEmpty()){
             da = 0.0f;
             a = Float.parseFloat(request.getParameter("a"));
         }
@@ -702,13 +706,13 @@ public class Shopping {
     }
     public static List<ArticoloAsta> maxOfferRange(DAOFactory daoFactory, List<ArticoloAsta> articoliasta, HttpServletRequest request){
 
-        List<ArticoloAsta> articoliastada = null;
-        List<ArticoloAsta> articoliastaa = null;
+        List<ArticoloAsta> articoliastada = new ArrayList<>();
+        List<ArticoloAsta> articoliastaa = new ArrayList<>();
         ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
         int i, j;
         int id;
         Float da, a;
-        List<Float> offerte;
+        List<Float> offerte = new ArrayList<>();
         List<Float> offerteda = null;
         List<Float> offertea;
         List<Float> offertefinal;
@@ -739,8 +743,8 @@ public class Shopping {
                 articoliastada.add(articoliasta.get(i));
             }
             if(!(request.getParameter("a").isEmpty())){
-                da = Float.parseFloat(request.getParameter("a"));
-                if(offerte.get(0) >= da) articoliastaa.add(articoliasta.get(i));
+                a = Float.parseFloat(request.getParameter("a"));
+                if(offerte.get(0) >= a) articoliastaa.add(articoliasta.get(i));
             }else{
                 articoliastaa.add(articoliasta.get(i));
             }

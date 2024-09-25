@@ -103,7 +103,9 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
             sql
                     = "INSERT INTO ART_IN_VENDITA"
                     + "    ( ID,"
-                    + "      Prezzo";
+                    + "      Prezzo"
+                    + "    )"
+                    + " VALUES (?,?)";
 
             ps = conn.prepareStatement(sql);
             i = 1;
@@ -221,7 +223,7 @@ public class ArticoloVenditaDAOMySQLJDBCImpl implements ArticoloVenditaDAO {
         try {
 
             String sql
-                    = "SELECT * FROM ARTICOLO NATURAL JOIN ART_IN_VENDITA";
+                    = "SELECT ID, Nome, Categoria, Status, Immagine, Descrizione, Deleted, Prezzo FROM ARTICOLO NATURAL JOIN ART_IN_VENDITA";
 
             ps = conn.prepareStatement(sql);
 

@@ -70,9 +70,50 @@
             top: 90px;
             bottom: 90px;
         }
+        main h1 {
+            text-align: center;
+        }
+        main form {
+            background-color: #c9b89d;
+            padding: 40px;
+            border-radius: 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            width: 100%;
+            margin: auto;
+        }
+        main form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            background-color: #5B533D; /* Button background color */
+            color: white;              /* Text color */
+            border: none;              /* No border */
+            padding: 12px 24px;        /* Button padding */
+            font-size: 16px;           /* Font size */
+            font-weight: bold;         /* Bold text */
+            border-radius: 0;        /* Rounded corners */
+            cursor: pointer;           /* Pointer cursor on hover */
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #403a2b;
+        }
     </style>
     <script>
-        function sell(){
+        /*function sell(){
             f = document.auctionForm;
             f2 = document.auction;
             f.nome.value = f2.nome.value;
@@ -81,6 +122,10 @@
             f.descrizione.value = f2.descrizione.value;
             f.data_scad.value = f2.data_scad.value;
             f.submit();
+        } */
+        function check(){
+            f = document.auctionForm;
+            console.log("controllerAction: " + f.controllerAction.value);
         }
     </script>
 </head>
@@ -92,7 +137,7 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
-    <form name="auctionForm" action="Dispatcher" method="post">
+    <!-- <form name="auctionForm" action="Dispatcher" method="post">
         <input type="hidden" name="Id_vend" value="<%=loggedUser.getId()%>">
         <input type="hidden" name="nome"/>
         <input type="hidden" name="categoria"/>
@@ -100,7 +145,7 @@
         <input type="hidden" name="descrizione"/>
         <input type="hidden" name="data_scad"/>
         <input type="hidden" name="controllerAction" value="Sell.sell"/>
-    </form>
+    </form> -->
 
     <nav>
         <ul>
@@ -113,9 +158,12 @@
 
 <main>
 
-    <h1>Inserisci il tuo prodotto in vendita</h1>
+    <h1>Inserisci il tuo prodotto per un'asta</h1>
 
-    <form name="auction" onsubmit="sell(); return false;">
+    <form name="auctionForm" onsubmit="return check()" action="Dispatcher" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="Id_vend" value="<%=loggedUser.getId()%>">
+
         <!-- Nome del prodotto -->
         <label for="nome">Nome del prodotto:</label>
         <input type="text" id="nome" name="nome" placeholder="Inserisci il nome del prodotto" required>
@@ -123,7 +171,7 @@
         <!-- Categoria del prodotto -->
         <label for="categoria">Categoria del prodotto:</label>
         <select id="categoria" name="categoria" required>
-            <option value="nessuna">Nessuna</option>
+            <!-- <option value="nessuna">Nessuna</option>  -->
             <option value="Ammoniti">Ammoniti</option>
             <option value="Trilobiti">Trilobiti</option>
             <option value="Ambre">Ambre</option>
@@ -132,8 +180,8 @@
         </select>
 
         <!-- URL dell'immagine -->
-        <label for="immagine">URL dell'immagine:</label>
-        <input type="text" id="immagine" name="immagine" placeholder="Inserisci l'URL dell'immagine" required>
+        <label for="immagine">Immagine:</label>
+        <input type="file" id="immagine" name="immagine" placeholder="Inserisci l'URL dell'immagine" required>
 
         <!-- Descrizione del prodotto -->
         <label for="descrizione">Descrizione del prodotto:</label>
@@ -145,8 +193,10 @@
         <label for="data_scad">Scegli data e ora:</label>
         <input type="datetime-local" id="data_scad" name="data_scad" required>
 
+        <input type="hidden" name="controllerAction" value="Sell.publicAuction"/>
+
         <!-- Pulsante di invio -->
-        <button type="submit">Vendi</button>
+        <button type="submit">Pubblica</button>
     </form>
 
 </main>

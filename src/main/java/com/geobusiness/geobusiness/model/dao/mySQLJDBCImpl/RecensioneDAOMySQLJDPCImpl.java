@@ -25,6 +25,7 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
     ) {
         PreparedStatement ps;
         Recensione recensione = new Recensione();
+        ResultSet resultSet = null;
         //utente.setId(id);  // PROBABILMENTE NON SERVE, SUL DATABASE C'È AUTO_INCREMENT
         recensione.setValutazione(valutazione);
         recensione.setCommento(commento);
@@ -42,15 +43,15 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
                     + "   ) "
                     + " VALUES (?,?,?)";
 
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
-            ps.setInt(i, valutazione);
-            ps.setString(i++, commento);
-            ps.setTimestamp(i++, data_pubblicazione);
+            ps.setInt(1, valutazione);
+            ps.setString(2, commento);
+            ps.setTimestamp(3, data_pubblicazione);
 
             ps.executeUpdate();
 
-            sql
+            /*sql
                     = "SELECT MAX(ID_recensione) AS max_id "
                     + "FROM RECENSIONE";
 
@@ -60,6 +61,14 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
             Integer last_id_review =  resultSet.getInt("max_id");
 
             recensione.setId(last_id_review);
+
+             */
+
+            resultSet = ps.getGeneratedKeys();
+            if (resultSet.next()) {
+                int last_id = resultSet.getInt(1);  // Recupera l'ultimo ID generato
+                recensione.setId(last_id);
+            }
 
             // per aggiornare FA_RECENSIONE lo faccio in un metodo a parte
             // perchè create serve solo a creare la recensione stessa, anche il controllo
@@ -164,9 +173,9 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
                     + " ID_Venditore = ?";
 
             ps = conn.prepareStatement(sql);
-            int i = 1;
-            ps.setInt(i, id_c);
-            ps.setInt(i++, id_v);
+            //int i = 1;
+            ps.setInt(1, id_c);
+            ps.setInt(2, id_v);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -190,14 +199,14 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
                     + "     ID_Venditore,"
                     + "     ID_Compratore"
                     + "   ) "
-                    + " VALUES (?,?,?)";
+                    + "  VALUES (?,?,?) ";
 
             ps = conn.prepareStatement(sql);
-            i = 1;
+            //i = 1;
 
-            ps.setInt(i, last_id_review);
-            ps.setInt(i++, id_v);
-            ps.setInt(i++, id_c);
+            ps.setInt(1, last_id_review);
+            ps.setInt(2, id_v);
+            ps.setInt(3, id_c);
 
             ps.executeUpdate();
 
@@ -211,7 +220,7 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
 
     public Recensione checkIfAlreadyExists(Integer id_c, Integer id_v){
         PreparedStatement ps;
-        Recensione recensione;
+        Recensione recensione = null;
 
         try{
             String sql
@@ -228,11 +237,12 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
+            if (resultSet.next()) {
+                recensione = readRecensione(resultSet);   // leggo il risultato della query (la traduco)
+            }
 
-            recensione = readRecensione(resultSet);   // leggo il risultato della query (la traduco)
-                    // aggiungo alla lista di articoli da restituire
-
-
+            resultSet.close();
+            ps.close();
 
         }catch (SQLException e) {
             throw new RuntimeException(e);

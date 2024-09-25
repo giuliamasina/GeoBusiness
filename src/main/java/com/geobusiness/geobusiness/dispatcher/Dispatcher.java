@@ -1,5 +1,6 @@
 package com.geobusiness.geobusiness.dispatcher;
 
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.geobusiness.geobusiness.services.logservice.LogService;
 
 @WebServlet(name = "Dispatcher", urlPatterns = {"/Dispatcher"})
+@MultipartConfig
 public class Dispatcher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

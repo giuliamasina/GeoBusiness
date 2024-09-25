@@ -195,6 +195,67 @@ public class Profile {
         }
     }
 
+    public static void viewArtComprato(HttpServletRequest request, HttpServletResponse response){
+        DAOFactory sessionDAOFactory= null;
+        DAOFactory daoFactory = null;
+        Utente loggedUser;
+        String applicationMessage = null;
+
+        Integer Idarticolo = null;
+        ArticoloVendita articolovendita = null;
+        Venditore venditore = null;
+        Logger logger = LogService.getApplicationLogger();
+
+        try{
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory.beginTransaction();
+
+            UtenteDAO sessionUserDAO = sessionDAOFactory.getUtenteDAO();
+            if(sessionUserDAO!=null){
+                loggedUser = sessionUserDAO.findLoggedUtente();
+            }
+            else{
+                Utente utente = new Utente();
+                utente.setUsername("Guest");
+                loggedUser=null;
+            }
+            daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            Idarticolo = Integer.parseInt(request.getParameter("articolovendita"));
+            ArticoloVenditaDAO articoloVenditaDAO = daoFactory.getArticoloVenditaDAO();
+            articolovendita = articoloVenditaDAO.findByArticoloId(Idarticolo);
+            venditore = articoloVenditaDAO.findVenditoreById(Idarticolo);
+
+            daoFactory.commitTransaction();
+            sessionDAOFactory.commitTransaction();
+
+            request.setAttribute("loggedOn",loggedUser!=null);
+            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("articolovendita",articolovendita);
+            request.setAttribute("venditore",venditore);
+            request.setAttribute("viewUrl", "Profile/viewArtComprato");
+        }catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+
+        }
+    }
+
     public static void pubblicaRecensione(HttpServletRequest request, HttpServletResponse response){
         DAOFactory sessionDAOFactory=null;
         DAOFactory daoFactory = null;

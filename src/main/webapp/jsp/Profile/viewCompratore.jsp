@@ -213,9 +213,12 @@
                 Float price = articolivendita.get(i).getPrezzo();
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
-            <!-- ho tolto il link -->
-            <img src="<%=image%>">
-            <figcaption><%= name%></figcaption>
+            <a href="Dispatcher?controllerAction=Profile.viewArtComprato&articolovendita=<%=articolivendita.get(i).getId()%>">
+                <img src="<%=image%>">
+            </a>
+            <a href="Dispatcher?controllerAction=Profile.viewArtComprato&articolovendita=<%=articolivendita.get(i).getId()%>">
+                <figcaption><%= name%></figcaption>
+            </a>
             <figcaption><%= price%></figcaption>
         </figure>
         <%}

@@ -243,6 +243,11 @@ public class VenditoreDAOMySQLJDBCImpl implements VenditoreDAO {
     }
 
     @Override
+    public Utente findByEmail(String Email) {
+        return null;
+    }
+
+    @Override
     public List<ArticoloVendita> findArticoliInVendita(Integer id) {
         PreparedStatement ps;
         ArrayList<ArticoloVendita> articolivendita = new ArrayList<ArticoloVendita>();

@@ -234,6 +234,40 @@ public class UtenteDAOMySQLJDBCImpl implements UtenteDAO {
         return user;
     }
 
+    @Override
+    public Utente findByEmail(String Email) {
+        PreparedStatement ps;
+        ResultSet resultSet = null;
+        Utente user = null;
+
+        try {
+
+            String sql
+                    = " SELECT ID, Username, Password, Deleted, Email "
+                    + "   FROM UTENTE "
+                    + " WHERE "
+                    + "   Email = ?";
+
+            ps = conn.prepareStatement(sql);   // preparo lo statement sulla connessione database con la stringa sql appena fatta
+            ps.setString(1, Email);     // settare le varabili nel statement
+
+            resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {      // se ritorna più cose (per esempio voglio trovare per categoria e quindi seleziono più righe) al posto di if metto while
+                System.out.println("Email found: " + resultSet.getString("Email"));
+                user = read(resultSet);   // e qui metterei una list, esempio: List<utente> ...
+            }
+            //System.out.println(user.getId());
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return user;
+    }
+
     Utente read(ResultSet rs) {
 
         Utente utente = new Utente();
