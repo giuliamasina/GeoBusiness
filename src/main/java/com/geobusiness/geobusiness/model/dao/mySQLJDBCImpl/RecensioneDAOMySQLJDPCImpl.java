@@ -70,6 +70,9 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
                 recensione.setId(last_id);
             }
 
+            ps.close();
+            resultSet.close();
+
             // per aggiornare FA_RECENSIONE lo faccio in un metodo a parte
             // perchè create serve solo a creare la recensione stessa, anche il controllo
             // si fa prima di aver fatto create
@@ -164,8 +167,9 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
         PreparedStatement ps;
         Recensione recensione;
 
+
         try{
-            String sql
+            /*String sql
                     = " SELECT ID_R "
                     + " FROM FA_RECENSIONE "
                     + " WHERE "
@@ -179,6 +183,8 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
+            ps.close();
+
             boolean exist;
             exist = resultSet.next();
             resultSet.close();
@@ -187,13 +193,15 @@ public class RecensioneDAOMySQLJDPCImpl implements RecensioneDAO {
                 //throw new DuplicatedObjectException("ContactDAOJDBCImpl.create: Tentativo di inserimento di un contatto già esistente.");
             }
 
+             */
+
             // creo la recensione
             recensione = create(valutazione, commento, data_pubbl, id_c,id_v);
 
             Integer last_id_review = recensione.getId();
 
             // specifico quale compratore e quale venditore (FA_RECENSIONE)
-            sql
+            String sql
                     = " INSERT INTO FA_RECENSIONE "
                     + "    ( ID_R,"
                     + "     ID_Venditore,"

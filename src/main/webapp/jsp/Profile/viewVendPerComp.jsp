@@ -176,13 +176,13 @@
     <form name="logoutForm" action="Dispatcher" method="post">
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
-    <form name="reviewForm" action="Dispatcher" method="post">
+    <!--<form name="reviewForm" action="Dispatcher" method="post">
         <input type="hidden" name="rating"/>
         <input type="hidden" name="comment"/>
         <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
         <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.pubblicaRecensione"/>
-    </form>
+    </form> -->
 
     <nav>
         <ul>
@@ -275,11 +275,14 @@
                 </div>
                 <!-- Sezione per il commento -->
                 <label for="comment">Commento:</label>
-                <textarea id="comment" name="comment" placeholder="Scrivi qui il tuo commento..."></textarea>
+                <textarea id="comment" name="comment" rows="4" placeholder="Scrivi qui il tuo commento..." maxlength="250"></textarea>
+
+                <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
+                <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
+                <input type="hidden" name="controllerAction" value="Profile.pubblicaRecensione"/>
+
                 <!-- Pulsante per inviare la recensione -->
-                <a href="javascript:reviewForm.submit()">
-                    <button type="submit" class="submit-btn">Pubblica</button>
-                </a>
+                <button type="submit" class="submit-btn">Pubblica</button>
             </form>
     <%  }
     } else {%>
