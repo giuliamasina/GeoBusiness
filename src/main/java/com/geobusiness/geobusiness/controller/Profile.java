@@ -352,13 +352,30 @@ public class Profile {
             daoFactory.beginTransaction();
 
             ArticoloDAO articoloDAO = daoFactory.getArticoloDAO();
+            VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
+            RecensioneDAO recensioneDAO = daoFactory.getRecensioneDAO();
             articoloDAO.delete(Integer.parseInt(request.getParameter("Id_articolo")));
+            Venditore venditore = null;
+            List<Articolo> articoli = new ArrayList<>();
+            List<ArticoloVendita> articolivendita = new ArrayList<>();
+            List<ArticoloAsta> articoliasta = new ArrayList<>();
+            List<Recensione> recensioni = new ArrayList<>();
+            venditore = venditoreDAO.findByUtenteId(Integer.parseInt(request.getParameter("Id_venditore")));
+            articolivendita = venditoreDAO.findArticoliInVendita(venditore.getId());
+            articoliasta = venditoreDAO.findArticoliInAsta(venditore.getId());
+            recensioni = recensioneDAO.findByVenditoreId(venditore.getId());
+
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
 
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("venditore",venditore);
+            request.setAttribute("articoli",articoli);
+            request.setAttribute("articolivendita",articolivendita);
+            request.setAttribute("articoliasta",articoliasta);
+            request.setAttribute("recensioni",recensioni);
             request.setAttribute("viewUrl", "Profile/viewVenditore");
 
         }catch (Exception e) {
@@ -382,6 +399,7 @@ public class Profile {
         DAOFactory sessionDAOFactory=null;
         DAOFactory daoFactory = null;
         Utente loggedUser;
+
 
         Logger logger = LogService.getApplicationLogger();
 

@@ -37,7 +37,7 @@
         CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
         compratore = compratoreDAO.findByUsername(loggedUser.getUsername());
 
-        if(compratore.equals(null)){
+        if(compratore == null){
             isCompratore = 0;
         }
         else{
@@ -95,8 +95,14 @@
             display: flex;
             flex-direction: row;
             position:relative;
-            top: 90px;
+            top: 1px;  /* prima 90 */
             bottom: 90px;
+        }
+        #tuo {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 0;
+            padding: 20px;
         }
         main section {
             display: flex;
@@ -186,11 +192,16 @@
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
     <form name="viewVendForm" action="Dispatcher" method="post">
+        <%if(!loggedOn) {%>
+        <input type="hidden" name="Id_compratore">
+        <%} else {%>
         <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
+        <%}%>
         <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.viewVendPerComp">
     </form>
     <form name="deleteItemForm" action="Dispatcher" method="post">
+        <input type="hidden" name="Id_venditore" value="<%=loggedUser.getId()%>">
         <input type="hidden" name="Id_articolo" value="<%=articoloasta.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.deleteItem">
     </form>
@@ -210,6 +221,12 @@
     </nav>
 </header>
 
+<%if(loggedOn) {%>
+<%if(venditore.getId() == loggedUser.getId()) {%>
+    <h2 id="tuo">Questo articolo è tuo</h2>
+    <%}
+} %>
+
 <main>
     <section>
         <img src="https://via.placeholder.com/150" alt="Image 1">
@@ -217,12 +234,18 @@
     <section>
         <h1 id="nome"><%=articoloasta.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
-        <p><%=articoloasta.getDescription()%></p>
-        <%if(venditore.getId() == loggedUser.getId()) {%>
-            <a >
-                <button type="button">Elimina</button>
-            </a>
+        <%if(articoloasta.getDescription() == null) {%>
+            <p><%=articoloasta.getDescription()%></p>
+        <%} else{  %>
+            <p>Nessuna descrizione disponibile</p>
         <%}%>
+        <%if(loggedOn) {%>
+            <%if(venditore.getId() == loggedUser.getId()) {%>
+                <a href="javascript:deleteItemForm.submit()">
+                    <button type="button">Elimina</button>
+                </a>
+        <%}
+        }%>
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>
@@ -230,10 +253,14 @@
             <h3 id="username"><%=venditore.getUsername()%></h3>
         </a>
         <h2 id="data">Scade il: <%=articoloasta.getData_scadenza()%></h2>
+        <% if (offerte != null && !offerte.isEmpty() && date_offerte != null && !date_offerte.isEmpty()) { %>
         <h2 id="prezzo">Ultima offerta:   <%=offerte.get(0)%>   <%=date_offerte.get(0)%></h2>
+        <%} else {%>
+        <h2 id="prezzo">Nessuna offerta fatta</h2>
+        <%}%>
         <%if (!loggedOn) {%>
         <a>
-            <button type="button">Fai Offerta</button>
+            <button type="button" onclick="notLoggedOn()">Fai Offerta</button>
         </a>
         <%} else if(isCompratore==0){%>
         <a>

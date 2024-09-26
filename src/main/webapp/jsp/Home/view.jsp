@@ -192,11 +192,11 @@
             </a>
         </figure>
         <figure>
-            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ambre&da=&a=">
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Piante&da=&a=">
                 <img src="https://via.placeholder.com/150" alt="Image 1">
             </a>
-            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ambre&da=&a=">
-                <figcaption>Ambre</figcaption>
+            <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Piante&da=&a=">
+                <figcaption>Piante</figcaption>
             </a>
         </figure>
         <figure>

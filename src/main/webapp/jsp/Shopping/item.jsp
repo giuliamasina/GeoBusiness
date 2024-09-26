@@ -90,8 +90,14 @@
             display: flex;
             flex-direction: row;
             position:relative;
-            top: 90px;
+            top: 1px;
             bottom: 90px;
+        }
+        #tuo {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 0;
+            padding: 20px;
         }
         main section {
             display: flex;
@@ -181,11 +187,16 @@
         <input type="hidden" name="controllerAction" value="Home.logout"/>
     </form>
     <form name="viewVendForm" action="Dispatcher" method="post">
+        <%if(!loggedOn) {%>
+        <input type="hidden" name="Id_compratore">
+        <%} else {%>
         <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
+        <%}%>
         <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.viewVendPerComp">
     </form>
     <form name="deleteItemForm" action="Dispatcher" method="post">
+        <input type="hidden" name="Id_venditore" value="<%=loggedUser.getId()%>">
         <input type="hidden" name="Id_articolo" value="<%=articolovendita.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.deleteItem">
     </form>
@@ -205,6 +216,12 @@
     </nav>
 </header>
 
+<%if(loggedOn) {%>
+<%if(venditore.getId() == loggedUser.getId()) {%>
+    <h2 id="tuo">Questo articolo è tuo</h2>
+<%}
+} %>
+
 <main>
     <section>
         <img src="https://via.placeholder.com/150" alt="Image 1">
@@ -212,12 +229,18 @@
     <section>
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
-        <p><%=articolovendita.getDescription()%></p>
-        <%if(venditore.getId() == loggedUser.getId()) {%>
-        <a >
-            <button type="button">Elimina</button>
-        </a>
+        <%if(articolovendita.getDescription() == null) {%>
+            <p><%=articolovendita.getDescription()%></p>
+        <%} else{  %>
+            <p>Nessuna descrizione disponibile</p>
         <%}%>
+        <%if(loggedOn) {%>
+            <%if(venditore.getId() == loggedUser.getId()) {%>
+            <a href="javascript:deleteItemForm.submit()">
+                <button type="button">Elimina</button>
+            </a>
+        <%}
+        }%>
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>

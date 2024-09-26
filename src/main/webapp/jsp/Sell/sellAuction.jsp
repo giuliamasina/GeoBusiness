@@ -174,7 +174,7 @@
             <!-- <option value="nessuna">Nessuna</option>  -->
             <option value="Ammoniti">Ammoniti</option>
             <option value="Trilobiti">Trilobiti</option>
-            <option value="Ambre">Ambre</option>
+            <option value="Piante">Piante</option>
             <option value="Pesci">Pesci</option>
             <option value="Rettili">Rettili</option>
         </select>
