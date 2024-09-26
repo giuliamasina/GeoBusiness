@@ -74,11 +74,13 @@
         main h2 {
             position: relative;
             top: 110px;
-            left: 175px;
+            left: 20px;  /*prima era 175*/
+            margin-left: 170px;
+            margin-top: 100px;
         }
         main section h1 {
             font-size: 40px;
-            position:relative;
+            position:absolute;
             left: 570px;
             top: 1px;
             margin-bottom: 60px;
@@ -92,9 +94,24 @@
             gap: 10px;
         }
         main form {
-            position: relative;
+            position: absolute;  /*prima era relative*/
             top: 10px;
             left: 850px;
+            margin-top: 80px;  /*prima non c'era*/
+            align-items: center;
+        }
+        main form a button{
+            background-color: #5B533D; /* Button background color */
+            color: white;              /* Text color */
+            border: none;              /* No border */
+            padding: 12px 24px;        /* Button padding */
+            font-size: 16px;           /* Font size */
+            font-weight: bold;         /* Bold text */
+            border-radius: 0;        /* Rounded corners */
+            cursor: pointer;
+        }
+        main form a button:hover{
+            background-color: #403a2b;
         }
         main section figure {
             height:380px;
@@ -115,6 +132,7 @@
             position: relative;
             left:95px;
             top:100px;
+            margin-top: 90px;
         }
         footer {
             background-color: #5B533D;
@@ -177,7 +195,7 @@
     <section id="categorie">
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ammoniti&da=&a=">
-                <img src="https://via.placeholder.com/150" alt="Image 1">
+                <img src="images/Ammoniti.jpg" alt="Image 1">
             </a>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Ammoniti&da=&a=">
                 <figcaption>Ammoniti</figcaption>
@@ -185,7 +203,7 @@
         </figure>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Trilobiti&da=&a=">
-                <img src="https://via.placeholder.com/150" alt="Image 1">
+                <img src="images/trilobita.jpg" alt="Image 1">
             </a>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Trilobiti&da=&a=">
                 <figcaption>Trilobiti</figcaption>
@@ -193,7 +211,7 @@
         </figure>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Piante&da=&a=">
-                <img src="https://via.placeholder.com/150" alt="Image 1">
+                <img src="images/piante-su-pi.jpg" alt="Image 1">
             </a>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Piante&da=&a=">
                 <figcaption>Piante</figcaption>
@@ -201,7 +219,7 @@
         </figure>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Pesci&da=&a=">
-                <img src="https://via.placeholder.com/150" alt="Image 1">
+                <img src="images/fishes.jpg" alt="Image 1">
             </a>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Pesci&da=&a=">
                 <figcaption>Pesci</figcaption>
@@ -209,7 +227,7 @@
         </figure>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Rettili&da=&a=">
-                <img src="https://via.placeholder.com/150" alt="Image 1">
+                <img src="images/fossil_lizard.jpg" alt="Image 1">
             </a>
             <a href="Dispatcher?controllerAction=Shopping.filterview&categoria=Rettili&da=&a=">
                 <figcaption>Rettili</figcaption>

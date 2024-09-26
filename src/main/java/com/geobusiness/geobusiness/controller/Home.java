@@ -290,8 +290,9 @@ public class Home {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String ruolo = request.getParameter("ruolo");
-            String indirizzo = request.getParameter("address");  // ANCORA DA METTERE NEL FORM
-
+            String citta = request.getParameter("citta");
+            String indirizzo_casa = request.getParameter("address");  // ANCORA DA METTERE NEL FORM
+            String indirizzo = indirizzo_casa + ", " + citta;
             System.out.println("Home.signin: nuovo utente: " + username);
 
             UtenteDAO userDAO = daoFactory.getUtenteDAO();

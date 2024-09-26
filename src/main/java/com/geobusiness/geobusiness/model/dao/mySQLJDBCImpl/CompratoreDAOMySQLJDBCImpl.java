@@ -344,6 +344,104 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         }
     }
 
+    @Override
+    public void vinciAsta(Integer id_articolo, Timestamp data) {
+        PreparedStatement ps;
+        List<Float> offerte = new ArrayList<>();
+        List<Integer> id_compratori = new ArrayList<>();
+        List<Integer> id_venditori = new ArrayList<>();
+        Float offerta = null;
+        Integer id_compratore = null;
+        Integer id_venditore = null;
+        ResultSet resultSet = null;
+
+        try{
+
+            String sql
+                    = "SELECT Offerta, Id_compratore, Id_venditore FROM FA_OFFERTA NATURAL JOIN METTE_IN_ASTA WHERE Id_asta=? ORDER BY Data DESC";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id_articolo);
+
+            resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                try {
+                    offerta = resultSet.getFloat("Offerta");
+                    id_compratore = resultSet.getInt("Id_compratore");
+                    id_venditore = resultSet.getInt("Id_venditore");
+                }catch (SQLException sqle) {
+                }
+                offerte.add(offerta);
+                id_compratori.add(id_compratore);
+                id_venditori.add(id_venditore);
+            }
+
+            resultSet.close();
+            ps.close();
+
+            sql
+                    = "INSERT INTO ART_IN_VENDITA"
+                    + "    ( ID,"
+                    + "      Prezzo"
+                    + "    )"
+                    + " VALUES (?,?)";
+
+            PreparedStatement ps2 = conn.prepareStatement(sql);
+            //i = 1;
+            ps2.setInt(1, id_articolo);
+            ps2.setFloat(2, offerte.get(0));
+
+            ps2.executeUpdate();
+            ps2.close();
+
+            sql
+                    = " INSERT INTO COMPRA "
+                    + "   ( Id_compratore,"
+                    + "     Id_articolo,"
+                    + "      Data_acquisto"
+                    + "   ) "
+                    + " VALUES (?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+            int i = 1;
+            ps.setInt(1, id_compratori.get(0));
+            ps.setInt(2, id_articolo);
+            ps.setTimestamp(3, data);
+            ps.executeUpdate();
+            ps.close();
+
+            sql
+                    = " INSERT INTO VENDE "
+                    + " ( Id_venditore,"
+                    + " Id_articolo,"
+                    + " data_pubbl"
+                    + " ) "
+                    + " VALUES (?,?,?) ";
+
+            ps = conn.prepareStatement(sql);
+            i = 1;
+            ps.setInt(1, id_venditori.get(0));
+            ps.setInt(2, id_articolo);
+            ps.setTimestamp(3, data);
+            ps.executeUpdate();
+            ps.close();
+
+
+            sql
+                    = "UPDATE ARTICOLO "
+                    + "SET Status=1 "
+                    + "WHERE ID=?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id_articolo);
+            ps.executeUpdate();
+            ps.close();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean hacompratoda(Integer id_comp, Integer id_vend){
         PreparedStatement ps;
 

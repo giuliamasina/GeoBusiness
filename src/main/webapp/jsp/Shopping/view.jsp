@@ -16,6 +16,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.Time" %>
 <%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.LocalDateTime" %>
 
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
@@ -261,14 +262,6 @@
         </figure>
         <%}
         }
-        }else {%>
-        <p>Non sono stati trovati articoli a prezzo fisso</p>
-        <%}%>
-        <%try {
-            //articoliasta.isEmpty();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServletException(e);
         }
 
             if(articoliasta != null && !articoliasta.isEmpty()){
@@ -289,8 +282,9 @@
         </figure>
          <%}
          }
-         } else {%>
-            <p>Non sono state trovate aste</p>
+         } %>
+        <%if((articoliasta == null || articoliasta.isEmpty())&& (articolivendita == null || articolivendita.isEmpty())){%>
+            <h3>Nessun risultato</h3>
         <%}%>
 
     </section>

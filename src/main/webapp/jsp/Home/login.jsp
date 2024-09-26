@@ -154,7 +154,7 @@
 </header>
 
 <main>
-    <img src="https://via.placeholder.com/150" alt="Image 1">
+    <img src="images/signin.jpg" alt="Image 1">
     <form action="Dispatcher" method="post">
         <h1>Entra nel tuo account</h1>
         <h2>Inserisci i tuoi dati</h2>
@@ -172,7 +172,7 @@
 </main>
 
 <footer>
-    <p>my footer</p>
+    <!--<p>my footer</p>-->
 </footer>
 
 </body>

@@ -38,7 +38,7 @@
             background-color: #CAB18C;
             padding: 0;
             margin:0;
-            height: 1500px;
+            height: 1600px; /*prima era 1500*/
         }
         header {
             background-color: #5B533D;
@@ -79,6 +79,7 @@
             position:relative;
             top: 90px;
             bottom: 90px;
+            margin-left: 90px;  /*prima non c'era*/
         }
         main h1 {
             font-size: 22px;
@@ -147,7 +148,7 @@
             display: inline-block; /* Posiziona gli elementi uno accanto all'altro */
             padding: 10px;
             margin: 5px;
-            border: 1px solid #000; /* Riquadro */
+            /*border: 1px solid #000; /* Riquadro */
         }
         main section figure {
             position: relative;
@@ -163,6 +164,9 @@
             position: relative;
             top:5px;
             left: 10px;
+        }
+        #recensioni{
+            top: 20px;
         }
     </style>
 </head>
@@ -231,6 +235,7 @@
     <section>
         <% if(!articoliasta.isEmpty()){
             for(i=0;i<articoliasta.size();i++){
+                if (articoliasta.get(i).getStatus() == 0){
                 String name = articoliasta.get(i).getNome();
                 String category = articoliasta.get(i).getCategoria();
                 Timestamp data=articoliasta.get(i).getData_scadenza();
@@ -245,15 +250,16 @@
             <figcaption>Scade il:   <%=data%></figcaption>
         </figure>
         <%}
+        }
         } else {%>
         <p>Non sono state trovate aste</p>
         <%}%>
     </section>
     <h1>Recensioni lasciate</h1>
-    <section>
+    <section id="recensioni">
         <%for(i=0;i<recensioni.size();i++) {%>
         <div class="box">
-            <h3><%=recensioni.get(i).getValutazione()%></h3>
+            <h3>Valutazione: <%=recensioni.get(i).getValutazione()%></h3>
             <p><%=recensioni.get(i).getCommento()%></p>
             <p><%=recensioni.get(i).getDataPubblicazione()%></p>
         </div>

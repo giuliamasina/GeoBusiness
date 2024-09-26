@@ -36,6 +36,7 @@ public class Profile {
         String username;
         Compratore compratore = null;
         Venditore venditore = null;
+        List<Float> offerte = new ArrayList<>();
 
         Logger logger = LogService.getApplicationLogger();
         try{
@@ -89,9 +90,25 @@ public class Profile {
             else if(venditore != null && compratore != null){
                 request.setAttribute("viewUrl", "Shopping/view");
             }
+
+            int i;
+            int result = 0;
+            for(i=0;i<articoliasta.size();i++){
+                result = articoliasta.get(i).getData_scadenza().compareTo(Timestamp.valueOf(LocalDateTime.now()));
+                if(result < 0 && articoliasta.get(i).getStatus() != 1){
+                    offerte = articoloAstaDAO.getOffersById(articoliasta.get(i).getId());
+                    if(!offerte.isEmpty()){
+                        compratoreDAO = daoFactory.getCompratoreDAO();
+                        compratoreDAO.vinciAsta(articoliasta.get(i).getId(), Timestamp.valueOf(LocalDateTime.now()));
+                        articoliasta.remove(articoliasta.get(i));
+                    }
+                }
+                result = 0;
+            }
             //request.setAttribute("viewUrl", "Shopping/view");
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
+
 
             request.setAttribute("articoli",articoli);
             request.setAttribute("articolivendita",articolivendita);
@@ -128,6 +145,7 @@ public class Profile {
         Compratore compratore = null;
         Venditore venditore = null;
         Recensione recensione = null;
+        List<Float> offerte = new ArrayList<>();
         boolean has_bought;
 
         Logger logger = LogService.getApplicationLogger();
@@ -164,6 +182,22 @@ public class Profile {
             recensioni = recensioneDAO.findByVenditoreId(venditore.getId());
             has_bought = compratoreDAO.hacompratoda(compratore.getId(),venditore.getId());
             recensione = recensioneDAO.checkIfAlreadyExists(compratore.getId(),venditore.getId());
+            ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
+
+            int i;
+            int result = 0;
+            for(i=0;i<articoliasta.size();i++){
+                result = articoliasta.get(i).getData_scadenza().compareTo(Timestamp.valueOf(LocalDateTime.now()));
+                if(result < 0 && articoliasta.get(i).getStatus() != 1){
+                    offerte = articoloAstaDAO.getOffersById(articoliasta.get(i).getId());
+                    if(!offerte.isEmpty()){
+                        compratoreDAO = daoFactory.getCompratoreDAO();
+                        compratoreDAO.vinciAsta(articoliasta.get(i).getId(), Timestamp.valueOf(LocalDateTime.now()));
+                        articoliasta.remove(articoliasta.get(i));
+                    }
+                }
+                result = 0;
+            }
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
@@ -354,8 +388,10 @@ public class Profile {
             ArticoloDAO articoloDAO = daoFactory.getArticoloDAO();
             VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
             RecensioneDAO recensioneDAO = daoFactory.getRecensioneDAO();
+            ArticoloAstaDAO articoloAstaDAO = daoFactory.getArticoloAstaDAO();
             articoloDAO.delete(Integer.parseInt(request.getParameter("Id_articolo")));
             Venditore venditore = null;
+            List<Float> offerte = new ArrayList<>();
             List<Articolo> articoli = new ArrayList<>();
             List<ArticoloVendita> articolivendita = new ArrayList<>();
             List<ArticoloAsta> articoliasta = new ArrayList<>();
@@ -365,6 +401,20 @@ public class Profile {
             articoliasta = venditoreDAO.findArticoliInAsta(venditore.getId());
             recensioni = recensioneDAO.findByVenditoreId(venditore.getId());
 
+            int i;
+            int result = 0;
+            for(i=0;i<articoliasta.size();i++){
+                result = articoliasta.get(i).getData_scadenza().compareTo(Timestamp.valueOf(LocalDateTime.now()));
+                if(result < 0 && articoliasta.get(i).getStatus() != 1){
+                    offerte = articoloAstaDAO.getOffersById(articoliasta.get(i).getId());
+                    if(!offerte.isEmpty()){
+                        CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+                        compratoreDAO.vinciAsta(articoliasta.get(i).getId(), Timestamp.valueOf(LocalDateTime.now()));
+                        articoliasta.remove(articoliasta.get(i));
+                    }
+                }
+                result = 0;
+            }
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();

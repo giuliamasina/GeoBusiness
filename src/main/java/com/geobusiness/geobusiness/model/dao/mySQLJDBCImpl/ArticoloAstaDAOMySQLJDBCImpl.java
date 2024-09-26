@@ -237,7 +237,10 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
     public List<Float> getOffersById(Integer id){
         PreparedStatement ps;
         List<Float> offerte = new ArrayList<>();
+        //List<Integer> id_compratori = new ArrayList<>();
         Float offerta = null;
+        //Integer id_compratore = null;
+        ResultSet resultSet = null;
 
         try{
             String sql
@@ -246,14 +249,17 @@ public class ArticoloAstaDAOMySQLJDBCImpl implements ArticoloAstaDAO {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
 
-            ResultSet resultSet = ps.executeQuery();
+            resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
                 try {
                     offerta = resultSet.getFloat("Offerta");
+                    //id_compratore = resultSet.getInt("Id_compratore");
+
                 }catch (SQLException sqle) {
                 }
                 offerte.add(offerta);
+                //id_compratori.add(id_compratore);
             }
 
             resultSet.close();

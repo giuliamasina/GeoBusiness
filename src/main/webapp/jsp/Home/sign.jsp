@@ -71,15 +71,15 @@
             font-size: 40px;
             position:relative;
             left: 120px;
-            top: 65px;
+            top: 35px; /*prima era 65*/
             margin-bottom: 10px;
         }
         main form h2 {
             font-size: 20px;
             position:relative;
             left: 120px;
-            top:45px;
-            margin-bottom: 150px;
+            top:15px;  /*prima era 45*/
+            margin-bottom: 50px; /*prima era 150*/
         }
         main form h2 a{
             color: black;
@@ -95,29 +95,31 @@
         }
         .form-group label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 5px; /*prima era 10*/
             font-weight: bold;
-            font-size: 25px;
+            font-size: 19px;  /*prima era 25*/
         }
         input[type="text"],
-        input[type="password"]{
+        input[type="password"],
+        input[type="email"]{
             border: none;
             border-bottom: 1px solid black;
             padding-left: 10px;
             padding-bottom: 5px;
             background-color: #B19770;
             width: 250px;
-            font-size: 19px;
+            font-size: 14px; /*prima era 19*/
         }
         input[type="text"]:focus,
-        input[type="password"]:focus{
+        input[type="password"]:focus,
+        input[type="email"]:focus{
             border: none;
             border-bottom: 1px solid black;
             padding-left: 10px;
             padding-bottom: 5px;
             background-color: #B19770;
             width: 250px;
-            font-size: 19px;
+            font-size: 14px;
         }
         #address {
             border: none;
@@ -126,7 +128,7 @@
             padding-bottom: 5px;
             background-color: #B19770;
             width: 400px;
-            font-size: 19px;
+            font-size: 14px;
         }
         #address:focus {
             border: none;
@@ -135,7 +137,7 @@
             padding-bottom: 5px;
             background-color: #B19770;
             width: 400px;
-            font-size: 19px;
+            font-size: 14px;
         }
         .form-group-select {
             position: relative;
@@ -168,11 +170,13 @@
     <script>
 
         function signin(){
+
             f = document.signForm;
             f2 = document.sign;
             f.email.value = f2.email.value;
             f.username.value = f2.username.value;
             f.password.value = f2.password.value;
+            f.citta.value = f2.citta.value;
             f.address.value = f2.address.value;
             f.ruolo.value = f2.ruolo.value;
             f.submit();
@@ -194,6 +198,7 @@
         <input type="hidden" name="email">
         <input type="hidden" name="username">
         <input type="hidden" name="password">
+        <input type="hidden" name="citta">
         <input type="hidden" name="address">
         <input type="hidden" name="ruolo">
         <input type="hidden" name="controllerAction" value="Home.signin">
@@ -206,7 +211,7 @@
 </div>
 <%}%>
 <main>
-    <img src="https://via.placeholder.com/150" alt="Image 1">
+    <img src="images/signin.jpg" alt="Image 1">
     <form name="sign" onsubmit="signin(); return false;">
         <h1>Crea il tuo Account</h1>
         <h2>Hai già un account? Fai il <a href="Dispatcher?controllerAction=Home.viewlogin">Login</a></h2>
@@ -223,8 +228,12 @@
             <input type="password" id="password" name="password" required>
         </div>
         <div class="form-group">
+            <label for="citta">Città di spedizione/consegna</label>
+            <input type="text" id="citta" name="citta" placeholder="Roma" required>
+        </div>
+        <div class="form-group">
             <label for="address">Indirizzo di spedizione/consegna</label>
-            <input type="text" id="address" name="address" placeholder="Scrivi indirizzo come: Via Bologna 2, Padova">
+            <input type="text" id="address" name="address" placeholder="Scrivi indirizzo come: Via Bologna 2" required>
         </div>
         <div class="form-group-select">
             <label>Vuoi vendere o comprare?</label>

@@ -42,6 +42,7 @@ public class Shopping {
         List<ArticoloVendita> articolivendita1 = null;
         List<ArticoloVendita> articolivendita = new ArrayList<>();
         List<ArticoloAsta> articoliasta = null;
+        List<Float> offerte = new ArrayList<>();
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -76,6 +77,20 @@ public class Shopping {
                 }
             }
             articoliasta = articoloAstaDAO.selectAll();
+            int i;
+            int result = 0;
+            for(i=0;i<articoliasta.size();i++){
+                result = articoliasta.get(i).getData_scadenza().compareTo(Timestamp.valueOf(LocalDateTime.now()));
+                if(result < 0 && articoliasta.get(i).getStatus() != 1){
+                    offerte = articoloAstaDAO.getOffersById(articoliasta.get(i).getId());
+                    if(!offerte.isEmpty()){
+                        CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+                        compratoreDAO.vinciAsta(articoliasta.get(i).getId(), Timestamp.valueOf(LocalDateTime.now()));
+                        articoliasta.remove(articoliasta.get(i));
+                    }
+                }
+                result = 0;
+            }
 
             articoli.addAll(articolivendita);
             articoli.addAll(articoliasta);
@@ -377,6 +392,7 @@ public class Shopping {
         List<ArticoloVendita> articolivendita1 = new ArrayList<>();
         List<ArticoloVendita> articolivendita = new ArrayList<>();
         List<ArticoloAsta> articoliasta = new ArrayList<>();
+        List<Float> offerte = new ArrayList<>();
 
         List<ArticoloVendita> articolivenditafinal = new ArrayList<>();
         List<ArticoloAsta> articoliastafinal = new ArrayList<>();
@@ -418,6 +434,21 @@ public class Shopping {
             }else{
                 articolivendita = articoloVenditaDAO.selectAll();
                 articoliasta = articoloAstaDAO.selectAll();
+            }
+
+            int i;
+            int result = 0;
+            for(i=0;i<articoliasta.size();i++){
+                result = articoliasta.get(i).getData_scadenza().compareTo(Timestamp.valueOf(LocalDateTime.now()));
+                if(result < 0 && articoliasta.get(i).getStatus() != 1){
+                    offerte = articoloAstaDAO.getOffersById(articoliasta.get(i).getId());
+                    if(!offerte.isEmpty()){
+                        CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
+                        compratoreDAO.vinciAsta(articoliasta.get(i).getId(), Timestamp.valueOf(LocalDateTime.now()));
+                        articoliasta.remove(articoliasta.get(i));
+                    }
+                }
+                result = 0;
             }
 
             //System.out.println(articolivendita.get(0).getNome());
@@ -514,6 +545,7 @@ public class Shopping {
         List<ArticoloVendita> articolivendita1 = null;
         List<ArticoloVendita> articolivendita = new ArrayList<>();
         List<ArticoloAsta> articoliasta = null;
+        List<Float> offerte = new ArrayList<>();
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -562,6 +594,21 @@ public class Shopping {
             }
             articoliasta = articoloAstaDAO.selectAll();
 
+            int i;
+            int result = 0;
+            for(i=0;i<articoliasta.size();i++){
+                result = articoliasta.get(i).getData_scadenza().compareTo(Timestamp.valueOf(LocalDateTime.now()));
+                if(result < 0 && articoliasta.get(i).getStatus() != 1){
+                    offerte = articoloAstaDAO.getOffersById(articoliasta.get(i).getId());
+                    if(!offerte.isEmpty()){
+                        compratoreDAO = daoFactory.getCompratoreDAO();
+                        compratoreDAO.vinciAsta(articoliasta.get(i).getId(), Timestamp.valueOf(LocalDateTime.now()));
+                        articoliasta.remove(articoliasta.get(i));
+                    }
+                }
+                result = 0;
+            }
+
             articoli.addAll(articolivendita);
             articoli.addAll(articoliasta);
 
@@ -601,6 +648,7 @@ public class Shopping {
         List<ArticoloVendita> articolivendita1 = null;
         List<ArticoloVendita> articolivendita = new ArrayList<>();
         List<ArticoloAsta> articoliasta = null;
+        List<Float> offerte = new ArrayList<>();
 
         Logger logger = LogService.getApplicationLogger();
         try {
@@ -649,6 +697,21 @@ public class Shopping {
                 }
             }
             articoliasta = articoloAstaDAO.selectAll();
+
+            int i;
+            int result = 0;
+            for(i=0;i<articoliasta.size();i++){
+                result = articoliasta.get(i).getData_scadenza().compareTo(Timestamp.valueOf(LocalDateTime.now()));
+                if(result < 0 && articoliasta.get(i).getStatus() != 1){
+                    offerte = articoloAstaDAO.getOffersById(articoliasta.get(i).getId());
+                    if(!offerte.isEmpty()){
+                        compratoreDAO = daoFactory.getCompratoreDAO();
+                        compratoreDAO.vinciAsta(articoliasta.get(i).getId(), Timestamp.valueOf(LocalDateTime.now()));
+                        articoliasta.remove(articoliasta.get(i));
+                    }
+                }
+                result = 0;
+            }
 
             articoli.addAll(articolivendita);
             articoli.addAll(articoliasta);
@@ -738,13 +801,23 @@ public class Shopping {
 
             if(!(request.getParameter("da").isEmpty())){
                 da = Float.parseFloat(request.getParameter("da"));
-                if(offerte.get(0) >= da) articoliastada.add(articoliasta.get(i));
+                if(offerte != null && !offerte.isEmpty()) {
+                    if (offerte.get(0) >= da) articoliastada.add(articoliasta.get(i));
+                }
+                else {
+                    articoliastada.add(articoliasta.get(i));
+                }
             }else{
                 articoliastada.add(articoliasta.get(i));
             }
             if(!(request.getParameter("a").isEmpty())){
                 a = Float.parseFloat(request.getParameter("a"));
-                if(offerte.get(0) >= a) articoliastaa.add(articoliasta.get(i));
+                if(offerte != null && !offerte.isEmpty()) {
+                    if (offerte.get(0) <= a) articoliastada.add(articoliasta.get(i));
+                }
+                else {
+                    articoliastada.add(articoliasta.get(i));
+                }
             }else{
                 articoliastaa.add(articoliasta.get(i));
             }

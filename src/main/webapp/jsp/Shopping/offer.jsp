@@ -186,12 +186,27 @@
     <section>
         <label for="offer">Inserisci la tua offerta</label>
         <input type="number" id="offer" name="offer" required >
-        <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
+        <h1 id="inserisci">Inserisci i dati del pagamento</h1>
+        <label for="card">Numero carta di credito: </label>
+        <input type="text" id="card" name="card" required >
+        <label for="expire">Scade il: </label>
+        <input type="text" id="expire" name="expire" required>
+        <label for="security">Numero di sicurezza</label>
+        <input type="text" id="security" name="security" required>
+        <%if(offerte != null && !offerte.isEmpty()) {%>
+            <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
+        <%} else{%>
+            <button type="button" onclick="checkAndConfirm(0)">Fai Offerta</button>
+        <%}%>
     </section>
     <section>
         <h1 id="details">Tutte le offerte</h1>
+        <%if(offerte != null && !offerte.isEmpty()) {%>
         <%for(i=0; i<offerte.size();i++){%>
             <h3 id="offers">$ <%=offerte.get(i)%>    <%=date_offerte.get(i)%></h3>
+        <%}
+        } else{%>
+            <h3>Non sono state fatte offerte</h3>
         <%}%>
     </section>
 

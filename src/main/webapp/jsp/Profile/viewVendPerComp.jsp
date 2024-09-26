@@ -40,7 +40,7 @@
             background-color: #CAB18C;
             padding: 0;
             margin:0;
-            height: 1300px;
+            height: 1600px;
         }
         header {
             background-color: #5B533D;
@@ -81,6 +81,7 @@
             position:relative;
             top: 90px;
             bottom: 90px;
+            margin-left: 90px;  /*prima non c'era*/
         }
         main h1 {
             font-size: 22px;
@@ -159,12 +160,129 @@
             display: inline-block; /* Posiziona gli elementi uno accanto all'altro */
             padding: 10px;
             margin: 5px;
-            border: 1px solid #000; /* Riquadro */
+            /*border: 1px solid #000; /* Riquadro */
         }
         main section figure figcaption {
             position: relative;
             top:5px;
             left: 10px;
+        }
+        #recensioni{
+            top: 20px;
+        }
+        /*roba di chatgpt*/
+        /*form[name="review"] {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge ombreggiatura
+            max-width: 500px;  Imposta una larghezza massima per il form
+            margin: 20px auto;  Centra il form orizzontalmente
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        form[name="review"] label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .rating input[type="radio"] {
+            display: none;  Nasconde i radio button
+        }
+
+        .rating label {
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px;
+            color: #FFD700;  Colore giallo per le stelle
+            transition: transform 0.3s;
+        }
+
+        .rating input[type="radio"]:checked + label {
+            transform: scale(1.2);  Effetto di ingrandimento quando selezionato
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #5B533D;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #444; /* Cambia colore al passaggio del mouse
+        }*/
+        form[name="review"] {
+            display: flex;               /* Usa flexbox per il layout orizzontale */
+            justify-content: flex-start; /* Allinea gli elementi a sinistra */
+            align-items: flex-start;     /* Allinea gli elementi in alto */
+            max-width: 1000px;           /* Aumenta la larghezza massima del form */
+            margin: 20px 0;              /* Rimuovi il centraggio del form */
+            padding: 20px;
+            background-color: #c9b89d;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            gap: 20px;                   /* Spaziatura tra gli elementi */
+        }
+
+        .rating {
+            display: flex;               /* Disporre gli input radio orizzontalmente */
+            flex-direction: row;         /* Assicura che gli elementi siano in linea */
+            gap: 5px;                    /* Spaziatura tra le stelle */
+            align-items: center;         /* Allinea verticalmente con il resto del form */
+        }
+
+        textarea {
+            flex: 1;                     /* Permetti al textarea di occupare lo spazio disponibile */
+            resize: vertical;            /* Permetti la modifica verticale del commento */
+            min-height: 80px;
+            margin-left: 20px;           /* Aggiungi spaziatura tra il rating e il textarea */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /*prima non c'era*/
+            font-size: 14px;  /*prima non c'era*/
+            padding: 10px;  /*prima non c'era*/
+            border-radius: 5px;  /*prima non c'era*/
+        }
+
+        .submit-btn {
+            align-self: flex-start;      /* Allinea il bottone in alto */
+            padding: 10px 20px;
+            background-color: #5B533D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #444;
+        }
+
+        .rating label {
+            margin-right: 10px; /* Spaziatura tra le etichette e gli input radio */
         }
     </style>
 </head>
@@ -250,6 +368,7 @@
         <%}%>
     </section>
     <h1>Lascia una recensione al venditore</h1>
+    <section>
     <%if(has_bought) {
         if(recensione != null) {  %>
             <h3>Hai già lasciato una recensione</h3>
@@ -288,14 +407,15 @@
     } else {%>
         <p>Devi prima aver ricevuto un ordine da questo venditore prima di poter lasciare una recensione</p>
     <%}%>
+    </section>
     <h1>Recensioni</h1>
-    <section>
+    <section id="recensioni">
         <%for(i=0;i<recensioni.size();i++) {%>
             <div class="box">
                 <%if(recensioni.get(i).getCompratoreId() == loggedUser.getId()) {%>
                 <p>La tua recensione</p>
                 <%}%>
-                <h3><%=recensioni.get(i).getValutazione()%></h3>
+                <h3>Valutazione: <%=recensioni.get(i).getValutazione()%></h3>
                 <p><%=recensioni.get(i).getCommento()%></p>
                 <p><%=recensioni.get(i).getDataPubblicazione()%></p>
             </div>

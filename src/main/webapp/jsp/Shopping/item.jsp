@@ -90,12 +90,12 @@
             display: flex;
             flex-direction: row;
             position:relative;
-            top: 1px;
+            top: 80px;
             bottom: 90px;
         }
         #tuo {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 1px; /*prima era 25*/
             margin-bottom: 0;
             padding: 20px;
         }
@@ -106,6 +106,9 @@
         }
         #info {
             margin-left: 120px;
+        }
+        #info a h3{
+            margin-left: 127px;  /*prima non c'era*/
         }
         main section img{
             width: 400px;
@@ -196,7 +199,11 @@
         <input type="hidden" name="controllerAction" value="Profile.viewVendPerComp">
     </form>
     <form name="deleteItemForm" action="Dispatcher" method="post">
+        <%if(!loggedOn) {%>
+        <input type="hidden" name="Id_venditoree">
+        <%}else{%>
         <input type="hidden" name="Id_venditore" value="<%=loggedUser.getId()%>">
+        <%}%>
         <input type="hidden" name="Id_articolo" value="<%=articolovendita.getId()%>">
         <input type="hidden" name="controllerAction" value="Profile.deleteItem">
     </form>
@@ -229,7 +236,7 @@
     <section>
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
-        <%if(articolovendita.getDescription() == null) {%>
+        <%if(articolovendita.getDescription() != null) {%>
             <p><%=articolovendita.getDescription()%></p>
         <%} else{  %>
             <p>Nessuna descrizione disponibile</p>
