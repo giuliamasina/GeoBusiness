@@ -166,6 +166,20 @@
             height: 110px;
             margin-top: auto;
         }
+        .alert {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center; /* Allinea verticalmente l'icona e il testo */
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        .alert-warning {
+            background-color: #fff3cd; /* Giallo chiaro */
+            color: #856404; /* Giallo scuro */
+            border: 1px solid #ffeeba; /* Giallo più scuro */
+        }
     </style>
     <script>
 
@@ -207,7 +221,7 @@
 
 <%if(applicationMessage != null) {%>
 <div class="alert alert-warning" role="alert">
-    <p><%=applicationMessage%></p>
+    <strong><%=applicationMessage%></strong>
 </div>
 <%}%>
 <main>
@@ -221,11 +235,11 @@
         </div>
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" minlength="4" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" minlength="8" maxlength="25" required>
         </div>
         <div class="form-group">
             <label for="citta">Città di spedizione/consegna</label>
@@ -238,7 +252,7 @@
         <div class="form-group-select">
             <label>Vuoi vendere o comprare?</label>
             <div class="inline">
-                <input type="radio" id="vendere" name="ruolo" value="vendere">
+                <input type="radio" id="vendere" name="ruolo" value="vendere" required>
                 <label for="vendere">Vendere</label>
                 <input type="radio" id="comprare" name="ruolo" value="comprare">
                 <label for="comprare">Comprare</label>

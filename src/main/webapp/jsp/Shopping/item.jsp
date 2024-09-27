@@ -40,6 +40,9 @@
         }
     }
     daoFactory.commitTransaction();
+    System.out.println(loggedUser.getId());
+    System.out.println(venditore.getId());
+
 %>
 <html>
 <head>
@@ -224,14 +227,14 @@
 </header>
 
 <%if(loggedOn) {%>
-<%if(venditore.getId() == loggedUser.getId()) {%>
+<%if(venditore.getId().equals(loggedUser.getId())) {%>
     <h2 id="tuo">Questo articolo è tuo</h2>
 <%}
 } %>
 
 <main>
     <section>
-        <img src="https://via.placeholder.com/150" alt="Image 1">
+        <img src="<%=articolovendita.getImmagine()%>" alt="Image 1">
     </section>
     <section>
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
@@ -241,13 +244,6 @@
         <%} else{  %>
             <p>Nessuna descrizione disponibile</p>
         <%}%>
-        <%if(loggedOn) {%>
-            <%if(venditore.getId() == loggedUser.getId()) {%>
-            <a href="javascript:deleteItemForm.submit()">
-                <button type="button">Elimina</button>
-            </a>
-        <%}
-        }%>
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>
@@ -258,6 +254,10 @@
         <%if (!loggedOn) {%>
         <a>
             <button type="button" onclick="notLoggedOn()">Compra</button>
+        </a>
+        <%} else if(venditore.getId().equals(loggedUser.getId()) ){%>
+        <a href="javascript:deleteItemForm.submit()">
+            <button type="button">Elimina</button>
         </a>
         <%} else if(isCompratore==0){%>
         <a>
@@ -271,7 +271,7 @@
     </section>
 </main>
 <footer>
-    <p>my footer</p>
+    <!--<p>my footer</p>-->
 </footer>
 </body>
 </html>

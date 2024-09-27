@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String applicationMessage = (String) request.getAttribute("applicationMessage");
+%>
 <html>
 <head>
     <title>Log-in</title>
@@ -138,6 +141,20 @@
             height: 110px;
             margin-top: auto;
         }
+        .alert {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center; /* Allinea verticalmente l'icona e il testo */
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        .alert-warning {
+            background-color: #fff3cd; /* Giallo chiaro */
+            color: #856404; /* Giallo scuro */
+            border: 1px solid #ffeeba; /* Giallo più scuro */
+        }
     </style>
 </head>
 <body>
@@ -152,6 +169,12 @@
         </ul>
     </nav>
 </header>
+
+<%if(applicationMessage != null) {%>
+<div class="alert alert-warning" role="alert">
+    <strong><%=applicationMessage%></strong>
+</div>
+<%}%>
 
 <main>
     <img src="images/signin.jpg" alt="Image 1">

@@ -68,12 +68,12 @@
             display: flex;
             flex-direction: column;
             position:relative;
-            top: 90px;
-            bottom: 90px;
+            top: 70px; /*prima era 90*/
+            bottom: 20px; /*prima era 90*/
         }
         main h2 {
             position: relative;
-            top: 110px;
+            top: 155px;  /*prima era 110*/
             left: 20px;  /*prima era 175*/
             margin-left: 170px;
             margin-top: 100px;
@@ -83,12 +83,13 @@
             position:absolute;
             left: 570px;
             top: 1px;
-            margin-bottom: 60px;
+            margin-bottom: 80px; /*prima era 60*/
+            margin-left: 20px; /*prima non c'era*/
         }
         main section {
             display: flex;
             flex-direction: row;
-            top:40px;
+            top:30px;
             flex-wrap: wrap;
             align-items: center;
             gap: 10px;
@@ -96,9 +97,12 @@
         main form {
             position: absolute;  /*prima era relative*/
             top: 10px;
-            left: 850px;
+            left: 833px;
             margin-top: 80px;  /*prima non c'era*/
             align-items: center;
+            display: flex; /*prima non c'era*/
+            flex-direction: column; /*prima non c'era*/
+            gap: 15px; /*prima non c'era*/
         }
         main form a button{
             background-color: #5B533D; /* Button background color */
@@ -134,14 +138,14 @@
             top:100px;
             margin-top: 90px;
         }
-        footer {
+        /*footer {
             background-color: #5B533D;
             color: white;
             text-align: center;
             padding: 10px 0;
             width: 100%;
             margin-bottom: 0;
-        }
+        }*/
     </style>
 
 </head>

@@ -77,6 +77,9 @@
         #info {
             margin-left: 120px;
         }
+        #info a h3{
+            margin-left: 127px;  /*prima non c'era*/
+        }
         main section img{
             width: 400px;
             height: 400px;
@@ -120,8 +123,8 @@
             position: relative;
             top: 70px;
             left: 130px;
-            width: 120px;
-            height: 60px;
+            width: 135px; /*prima era 120*/
+            height: 75px; /*prima era 60*/
             border: none;
             border-radius: 0;
             background-color: #F8D4A0;
@@ -171,7 +174,7 @@
 
 <main>
     <section>
-        <img src="https://via.placeholder.com/150" alt="Image 1">
+        <img src="<%=articolovendita.getImmagine()%>" alt="Image 1">
     </section>
     <section>
         <h1 id="nome"><%=articolovendita.getNome()%></h1>

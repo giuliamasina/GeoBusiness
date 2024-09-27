@@ -202,6 +202,7 @@
 
     <h1>Dettagli profilo</h1>
     <h3>Username: <%=compratore.getUsername()%></h3>
+    <h3>Email: <%=compratore.getEmail()%></h3>
     <h3>Indirizzo di consegna: <%=compratore.getIndirizzo_consegna()%></h3>
     <h3>Numero di fossili comprati: <%=articolivendita.size()%></h3>
     <a href="javascript:deleteProfileForm.submit()">
@@ -215,7 +216,8 @@
                 String name = articolivendita.get(i).getNome();
                 String category = articolivendita.get(i).getCategoria();
                 Float price = articolivendita.get(i).getPrezzo();
-                String image = articolivendita.get(i).getImmagine(); %>
+                String image = articolivendita.get(i).getImmagine();
+                System.out.println(image);%>
         <figure>
             <a href="Dispatcher?controllerAction=Profile.viewArtComprato&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <img src="<%=image%>">
@@ -255,7 +257,7 @@
         <p>Non sono state trovate aste</p>
         <%}%>
     </section>
-    <h1>Recensioni lasciate</h1>
+    <!--<h1>Recensioni lasciate</h1>
     <section id="recensioni">
         <%for(i=0;i<recensioni.size();i++) {%>
         <div class="box">
@@ -264,7 +266,7 @@
             <p><%=recensioni.get(i).getDataPubblicazione()%></p>
         </div>
         <%}%>
-    </section>
+    </section> -->
 </main>
 
 </body>

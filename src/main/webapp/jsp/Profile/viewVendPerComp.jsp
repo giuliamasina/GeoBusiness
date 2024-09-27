@@ -284,6 +284,11 @@
         .rating label {
             margin-right: 10px; /* Spaziatura tra le etichette e gli input radio */
         }
+        #tua{
+            margin-bottom: 6px;
+            bottom: 6px;
+            color: #444444;
+        }
     </style>
 </head>
 <body>
@@ -314,9 +319,9 @@
 <main>
     <h1>Dettagli profilo</h1>
     <h3>Username: <%=venditore.getUsername()%></h3>
+    <h3>Email: <%=venditore.getEmail()%></h3>
     <h3>Indirizzo di spedizione: <%=venditore.getIndirizzo_spedizione()%></h3>
     <h3>Numero di fossili messi in vendita/asta: <%=articolivendita.size() + articoliasta.size()%></h3>
-    <h3>Numero di fossili venduti: </h3>
 
     <h1>Fossili in vendita</h1>
     <section>
@@ -377,7 +382,7 @@
                 <!-- Sezione per la valutazione -->
                 <label for="rating">Valutazione (1 a 5):</label>
                 <div class="rating" id="rating">
-                    <input type="radio" id="star1" name="rating" value="1">
+                    <input type="radio" id="star1" name="rating" value="1" required>
                     <label for="star1">1</label>
 
                     <input type="radio" id="star2" name="rating" value="2">
@@ -394,7 +399,7 @@
                 </div>
                 <!-- Sezione per il commento -->
                 <label for="comment">Commento:</label>
-                <textarea id="comment" name="comment" rows="4" placeholder="Scrivi qui il tuo commento..." maxlength="250"></textarea>
+                <textarea id="comment" name="comment" rows="4" placeholder="Scrivi qui il tuo commento..." maxlength="250" required></textarea>
 
                 <input type="hidden" name="Id_compratore" value="<%=loggedUser.getId()%>">
                 <input type="hidden" name="Id_venditore" value="<%=venditore.getId()%>">
@@ -413,7 +418,7 @@
         <%for(i=0;i<recensioni.size();i++) {%>
             <div class="box">
                 <%if(recensioni.get(i).getCompratoreId() == loggedUser.getId()) {%>
-                <p>La tua recensione</p>
+                <p id="tua">La tua recensione</p>
                 <%}%>
                 <h3>Valutazione: <%=recensioni.get(i).getValutazione()%></h3>
                 <p><%=recensioni.get(i).getCommento()%></p>

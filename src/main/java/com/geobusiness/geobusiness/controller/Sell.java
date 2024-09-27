@@ -216,7 +216,7 @@ public class Sell {
             String nome = request.getParameter("nome");
             String categoria = request.getParameter("categoria");
             //String immagine = request.getParameter("immagine");
-            String description = request.getParameter("description");
+            String description = request.getParameter("descrizione");
             //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             //java.util.Date utilDate = format.parse(request.getParameter("data_scad"));
             //Date data_scad = new Date(utilDate.getTime());  // non so se sta roba è giusta

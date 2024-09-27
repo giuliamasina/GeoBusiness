@@ -163,6 +163,7 @@ public class Home {
         DAOFactory daoFactory = null;
         Utente loggedUser;
         String applicationMessage = null;
+        Venditore venditore = null;
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -185,14 +186,18 @@ public class Home {
             UtenteDAO userDAO = daoFactory.getUtenteDAO();
             VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
             Utente utente = userDAO.findByUsername(username);
-            Venditore venditore = venditoreDAO.findByUtenteId(utente.getId());
+            if(utente != null) {
+                venditore = venditoreDAO.findByUtenteId(utente.getId());
+            }
 
             if (utente == null || !utente.getPassword().equals(password)) {
                 sessionUtenteDAO.delete(null);
                 applicationMessage = "Username e password errati!";
+                request.setAttribute("viewUrl", "Home/login");
                 loggedUser=null;
             } else {
                 loggedUser = sessionUtenteDAO.create(utente.getUsername(), utente.getEmail(), null); // ho tolto l'id perchè non so come ricavarlo
+                request.setAttribute("viewUrl", "Home/view");
             }
 
             daoFactory.commitTransaction();
@@ -207,7 +212,6 @@ public class Home {
             request.setAttribute("loggedOn",loggedUser!=null);
             request.setAttribute("loggedUser", loggedUser);
             request.setAttribute("applicationMessage", applicationMessage);
-            request.setAttribute("viewUrl", "Home/view");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Controller Error", e);
             try {

@@ -220,9 +220,9 @@
 <main>
     <h1>Dettagli profilo</h1>
     <h3>Username: <%=venditore.getUsername()%></h3>
+    <h3>Email: <%=venditore.getEmail()%></h3>
     <h3>Indirizzo di spedizione: <%=venditore.getIndirizzo_spedizione()%></h3>
     <h3>Numero di fossili messi in vendita/asta: <%=articolivendita.size() + articoliasta.size()%></h3>
-    <h3>Numero di fossili venduti: </h3>
     <a href="javascript:deleteProfileForm.submit()">
         <button type="button">Elimina profilo</button>
     </a>
@@ -238,7 +238,7 @@
                 String image = articolivendita.get(i).getImmagine(); %>
         <figure>
             <%if(articolivendita.get(i).getStatus() == 1) {%>
-            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a>
                 <img class="venduto" src="<%=image%>">
                 <div class="text">Venduto</div>
             </a>
@@ -247,7 +247,7 @@
                 <img src="<%=image%>">
             </a>
             <%}%>
-            <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
+            <a>
                 <figcaption><%= name%></figcaption>
             </a>
             <figcaption><%= price%></figcaption>
@@ -270,7 +270,7 @@
                 String image = articoliasta.get(i).getImmagine(); %>
         <figure>
             <%if(articoliasta.get(i).getStatus() == 1) {%>
-            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a>
                 <img class="venduto" src="<%=image%>">
                 <div class="text">Venduto</div>
             </a>
@@ -279,7 +279,7 @@
                 <img src="<%=image%>">
             </a>
             <%} %>
-            <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
+            <a>
                 <figcaption><%=name%></figcaption>
             </a>
             <figcaption>Scade il:   <%=data%></figcaption>

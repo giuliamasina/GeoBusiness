@@ -86,13 +86,14 @@
             position:relative;
             top: 90px;
             bottom: 90px;
+            margin-left: 125px; /*prima non c'era*/
         }
         main h1 {
             font-size: 40px;
             position:relative;
             left: 120px;
             top: 65px;
-            margin-bottom: 60px;
+            margin-bottom: 60px; /*prima era 60*/
         }
         main form {
             display: flex;
@@ -104,7 +105,9 @@
             left: 30px;
             right:10px;
             bottom:20px;
-            top:55px;
+            top:45px; /*prima era 55*/
+            /*margin-bottom: 20px; /*prima non c'era*/
+            margin-right: 18px; /*prima non c'era*/
         }
         .form-group {
             position: relative;
@@ -127,9 +130,10 @@
             margin-left: 7px;
         }
         main form h2 {
-            font-size: 19px;
+            font-size: 16px;
             position: relative;
             left: 50px;
+            margin-right: 9px; /*prima non c'era*/
             top: 45px;
             right: 35px;
         }
