@@ -250,7 +250,7 @@
             <a>
                 <figcaption><%= name%></figcaption>
             </a>
-            <figcaption><%= price%></figcaption>
+            <figcaption><%= price%> €</figcaption>
         </figure>
         <%}
         }

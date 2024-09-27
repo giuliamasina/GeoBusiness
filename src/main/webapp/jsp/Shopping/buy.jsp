@@ -85,7 +85,7 @@
             width: 300px;
             height: 300px;
         }
-        #nome,#venditore {
+        #nome,#venditore,#prezzo {
             margin-left: 80px;
             font-size: 25px;
         }
@@ -147,6 +147,7 @@
             var text3 = document.getElementById("security").value;
             if(text !== "" && text2 !== "" && text3 !== "") {
                 alert("Grazie dell'acquisto!")
+                document.buyForm.submit();
             }else{
                 alert("Inserisci tutti i dati richiesti");
             }
@@ -180,11 +181,12 @@
         <img src="<%=articolovendita.getImmagine()%>" alt="Image 1">
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
+        <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%> €</h2>
     </section>
     <section>
         <h1 id="inserisci">Inserisci i dati del pagamento</h1>
         <label for="card">Numero carta di credito: </label>
-        <input type="text" id="card" name="card" inputmode="numeric" pattern="[0-9]{13,19}" maxlength="19" placeholder="1234 5678 9012 3456" required >
+        <input type="text" id="card" name="card" inputmode="numeric" pattern="[0-9]{13,19}" minlength="16" maxlength="19" placeholder="1234 5678 9012 3456" required >
         <label for="expire">Scade il: </label>
         <input type="text" id="expire" name="expire" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" placeholder="MM/YY" required>
         <label for="security">CVV: </label>

@@ -475,12 +475,14 @@ public class Profile {
 
             Integer id_utente = Integer.parseInt(request.getParameter("ID"));
             VenditoreDAO venditoreDAO = daoFactory.getVenditoreDAO();
+            CompratoreDAO compratoreDAO = daoFactory.getCompratoreDAO();
             Venditore venditore = null;
             venditore = venditoreDAO.findByUtenteId(id_utente);
 
             if(venditore == null){
                 UtenteDAO utenteDAO = daoFactory.getUtenteDAO();
                 utenteDAO.delete(id_utente);
+                compratoreDAO.deleteOfferte(id_utente);
             }
             else{
                 venditoreDAO.deleteVend(id_utente);

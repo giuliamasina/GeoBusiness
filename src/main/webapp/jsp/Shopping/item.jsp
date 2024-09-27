@@ -40,8 +40,8 @@
         }
     }
     daoFactory.commitTransaction();
-    System.out.println(loggedUser.getId());
-    System.out.println(venditore.getId());
+    //System.out.println(loggedUser.getId());
+    //System.out.println(venditore.getId());
 
 %>
 <html>
@@ -143,7 +143,11 @@
             left: 120px;
             font-size: 20px;
         }
-        #username{
+        #username1{
+            position: relative;
+            font-size: 17px;
+        }
+        #username2{
             position: relative;
             font-size: 17px;
         }
@@ -239,7 +243,7 @@
     <section>
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
-        <%if(articolovendita.getDescription() != null) {%>
+        <%if(articolovendita.getDescription() != null && !articolovendita.getDescription().isEmpty()) {%>
             <p><%=articolovendita.getDescription()%></p>
         <%} else{  %>
             <p>Nessuna descrizione disponibile</p>
@@ -247,10 +251,16 @@
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>
+        <%if(isCompratore == 1){%>
         <a href="javascript:viewVendForm.submit()">
-            <h3 id="username"><%=venditore.getUsername()%></h3>
+            <h3 id="username1"><%=venditore.getUsername()%></h3>
         </a>
-        <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%></h2>
+        <%} else{%>
+        <a>
+            <h3 id="username2"><%=venditore.getUsername()%></h3>
+        </a>
+        <%}%>
+        <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%> €</h2>
         <%if (!loggedOn) {%>
         <a>
             <button type="button" onclick="notLoggedOn()">Compra</button>

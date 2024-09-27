@@ -11,6 +11,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.geobusiness.geobusiness.model.mo.*" %>
 <%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.io.InputStream" %>
+<%@ page import="static sun.tools.jconsole.inspector.Utils.getClass" %>
 <%
     boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
@@ -225,7 +227,7 @@
             <a href="Dispatcher?controllerAction=Profile.viewArtComprato&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
             </a>
-            <figcaption><%= price%></figcaption>
+            <figcaption><%= price%> €</figcaption>
         </figure>
         <%}
         }else {%>

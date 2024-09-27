@@ -58,7 +58,8 @@
             padding: 10px;
         }
         nav ul li a:hover {
-            background-color: #444;
+            /*background-color: #444;*/
+            text-decoration: underline;
         }
         main {
             padding: 0;

@@ -203,11 +203,11 @@
         <input type="number" id="offer" name="offer" required >
         <h1 id="inserisci">Inserisci i dati del pagamento</h1>
         <label for="card">Numero carta di credito: </label>
-        <input type="text" id="card" name="card" inputmode="numeric" pattern="[0-9]{13,19}" maxlength="19" placeholder="1234 5678 9012 3456" required >
+        <input type="text" id="card" name="card" inputmode="numeric" pattern="[0-9]{13,19}" minlength="16" maxlength="19" placeholder="1234 5678 9012 3456" required >
         <label for="expire">Scade il: </label>
-        <input type="text" id="expire" name="expire" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" placeholder="MM/YY" required>
+        <input type="text" id="expire" name="expire" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" placeholder="MM/YY" minlength="5" required>
         <label for="security">CVV: </label>
-        <input type="text" id="security" name="security" pattern="\d{3}" maxlength="3" placeholder="123" required>
+        <input type="text" id="security" name="security" pattern="\d{3}" maxlength="3" minlength="3" placeholder="123" required>
         <%if(offerte != null && !offerte.isEmpty()) {%>
             <button type="button" onclick="checkAndConfirm(<%=offerte.get(0)%>)">Fai Offerta</button>
         <%} else{%>
@@ -218,7 +218,7 @@
         <h1 id="details">Tutte le offerte</h1>
         <%if(offerte != null && !offerte.isEmpty()) {%>
         <%for(i=0; i<offerte.size();i++){%>
-            <h3 id="offers">$ <%=offerte.get(i)%>       il  <%=date_offerte.get(i)%></h3>
+            <h3 id="offers">$ <%=offerte.get(i)%> €       il  <%=date_offerte.get(i)%></h3>
         <%}
         } else{%>
             <h3>Non sono state fatte offerte</h3>

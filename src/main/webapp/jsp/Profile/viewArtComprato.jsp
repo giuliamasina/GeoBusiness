@@ -186,7 +186,7 @@
         <a href="javascript:viewVendForm.submit()">
             <h3 id="username"><%=venditore.getUsername()%></h3>
         </a>
-        <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%></h2>
+        <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%> €</h2>
         <a href="javascript:viewVendForm.submit()">
             <button>Lascia una recensione al venditore</button>
         </a>

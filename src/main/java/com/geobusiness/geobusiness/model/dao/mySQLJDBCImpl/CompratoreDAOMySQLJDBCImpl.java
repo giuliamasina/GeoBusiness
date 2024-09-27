@@ -442,6 +442,24 @@ public class CompratoreDAOMySQLJDBCImpl implements CompratoreDAO {
         }
     }
 
+    @Override
+    public void deleteOfferte(Integer id_compratore) {
+        PreparedStatement ps;
+
+        try{
+
+            String sql
+                    = "DELETE FROM FA_OFFERTA WHERE Id_compratore=?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,id_compratore);
+
+            ps.close();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean hacompratoda(Integer id_comp, Integer id_vend){
         PreparedStatement ps;
 

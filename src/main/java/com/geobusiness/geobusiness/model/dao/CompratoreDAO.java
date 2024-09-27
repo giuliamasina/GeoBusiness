@@ -33,5 +33,7 @@ public interface CompratoreDAO extends UtenteDAO{
 
     public void vinciAsta(Integer id_articolo, Timestamp data);
 
+    public void deleteOfferte(Integer id_compratore);
+
     public boolean hacompratoda(Integer id_comp, Integer id_vend);
 }

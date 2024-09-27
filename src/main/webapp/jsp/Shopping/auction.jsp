@@ -46,8 +46,8 @@
     }
     daoFactory.commitTransaction();
 
-    System.out.println(loggedUser.getId());
-    System.out.println(venditore.getId());
+    //System.out.println(loggedUser.getId());
+    //System.out.println(venditore.getId());
 %>
 <html>
 <head>
@@ -149,7 +149,11 @@
             left: 120px;
             font-size: 20px;
         }
-        #username{
+        #username1{
+            position: relative;
+            font-size: 17px;
+        }
+        #username2{
             position: relative;
             font-size: 17px;
         }
@@ -245,7 +249,7 @@
     <section>
         <h1 id="nome"><%=articoloasta.getNome()%></h1>
         <h2 id="descrizione">Descrizione</h2>
-        <%if(articoloasta.getDescription() != null) {%>
+        <%if(articoloasta.getDescription() != null && !articoloasta.getDescription().isEmpty()) {%>
             <p><%=articoloasta.getDescription()%></p>
         <%} else{  %>
             <p>Nessuna descrizione disponibile</p>
@@ -253,12 +257,18 @@
     </section>
     <section id="info">
         <h2 id="venditore">Venditore:</h2>
+        <%if(isCompratore == 1){%>
         <a href="javascript:viewVendForm.submit()">
-            <h3 id="username"><%=venditore.getUsername()%></h3>
+            <h3 id="username1"><%=venditore.getUsername()%></h3>
         </a>
+        <%} else{%>
+        <a>
+        <h3 id="username2"><%=venditore.getUsername()%></h3>
+        </a>
+        <%}%>
         <h2 id="data">Scade il: <%=articoloasta.getData_scadenza()%></h2>
         <% if (offerte != null && !offerte.isEmpty() && date_offerte != null && !date_offerte.isEmpty()) { %>
-        <h2 id="prezzo">Ultima offerta:   <%=offerte.get(0)%>   <%=date_offerte.get(0)%></h2>
+        <h2 id="prezzo">Ultima offerta:   <%=offerte.get(0)%> €   <%=date_offerte.get(0)%></h2>
         <%} else {%>
         <h2 id="prezzo">Nessuna offerta fatta</h2>
         <%}%>

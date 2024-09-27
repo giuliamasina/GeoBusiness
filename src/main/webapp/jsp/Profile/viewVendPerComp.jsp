@@ -339,7 +339,7 @@
             <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
             </a>
-            <figcaption><%= price%></figcaption>
+            <figcaption><%= price%> €</figcaption>
         </figure>
         <%}
         }
