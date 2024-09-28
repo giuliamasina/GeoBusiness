@@ -31,6 +31,7 @@
     int isCompratore = 0;
     Compratore compratore = null;
     DAOFactory daoFactory = null;
+    String http = "http://localhost:12345/";
     daoFactory = DAOFactory.getDAOFactory(Configuration.DAO_IMPL,null);
     daoFactory.beginTransaction();
     if(loggedOn){
@@ -88,7 +89,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-
+            text-decoration: underline;
         }
         main {
             padding: 0;
@@ -244,7 +245,7 @@
 
 <main>
     <section>
-        <img src="<%=articoloasta.getImmagine()%>" alt="Image 1">
+        <img src="<%=http+articoloasta.getImmagine()%>" alt="Image 1">
     </section>
     <section>
         <h1 id="nome"><%=articoloasta.getNome()%></h1>

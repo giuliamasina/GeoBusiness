@@ -16,6 +16,7 @@
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
     String applicationMessage = (String) request.getAttribute("applicationMessage");
     String menuActiveLink = "Profile";
+    String http = "http://localhost:12345/";
 
     List<Articolo> articoli = (List<Articolo>) request.getAttribute("articoli");
     List<ArticoloVendita> articolivendita = new ArrayList<>();
@@ -69,7 +70,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-            background-color: #444;
+            text-decoration: underline;
         }
         main {
             padding: 0;
@@ -330,7 +331,7 @@
                 String name = articolivendita.get(i).getNome();
                 String category = articolivendita.get(i).getCategoria();
                 Float price = articolivendita.get(i).getPrezzo();
-                String image = articolivendita.get(i).getImmagine();
+                String image = http+articolivendita.get(i).getImmagine();
                 if(articolivendita.get(i).getStatus() == 0  && !articolivendita.get(i).isDeleted()) {%>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
@@ -355,7 +356,7 @@
                 String name = articoliasta.get(i).getNome();
                 String category = articoliasta.get(i).getCategoria();
                 Timestamp data=articoliasta.get(i).getData_scadenza();
-                String image = articoliasta.get(i).getImmagine();
+                String image = http+articoliasta.get(i).getImmagine();
                 if(articoliasta.get(i).getStatus() == 0 && !articoliasta.get(i).isDeleted()) {%>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">

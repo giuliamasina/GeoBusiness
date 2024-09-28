@@ -22,6 +22,7 @@
 
     ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
+    String http = "http://localhost:12345/";
 
     int isCompratore = 0;   // dovrò mettere tutto questo anche nelle altre view per entrare in Profilo (bisogna sapere se ho un compratore o un venditore)
     Compratore compratore = null;
@@ -83,7 +84,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-
+            text-decoration: underline;
         }
         main {
             padding: 0;
@@ -238,7 +239,7 @@
 
 <main>
     <section>
-        <img src="<%=articolovendita.getImmagine()%>" alt="Image 1">
+        <img src="<%=http+articolovendita.getImmagine()%>" alt="Image 1">
     </section>
     <section>
         <h1 id="nome"><%=articolovendita.getNome()%></h1>

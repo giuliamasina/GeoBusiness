@@ -29,6 +29,7 @@
     articolivendita = (List<ArticoloVendita>) request.getAttribute("articolivendita");
     List<ArticoloAsta> articoliasta = new ArrayList<>();
     articoliasta = (List<ArticoloAsta>) request.getAttribute("articoliasta");
+    String http = "http://localhost:12345/";
     //String categoria = (String) request.getAttribute("categoria");
     //Float da = (Float) request.getAttribute("da");
     //Float a = (Float) request.getAttribute("a");
@@ -74,7 +75,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-            background-color: #444;
+            text-decoration: underline;
         }
         main {
             padding: 0;
@@ -257,7 +258,7 @@
             String image = articolivendita.get(i).getImmagine(); %>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
-                <img src="<%=image%>">
+                <img src="<%=http+image%>">
             </a>
             <a href="Dispatcher?controllerAction=Shopping.itemview&articolovendita=<%=articolivendita.get(i).getId()%>">
                 <figcaption><%= name%></figcaption>
@@ -277,7 +278,7 @@
             String image = articoliasta.get(i).getImmagine(); %>
         <figure>
             <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
-                <img src="<%=image%>">
+                <img src="<%=http+image%>">
             </a>
             <a href="Dispatcher?controllerAction=Shopping.auctionview&articoloasta=<%=articoliasta.get(i).getId()%>">
                 <figcaption><%=name%></figcaption>

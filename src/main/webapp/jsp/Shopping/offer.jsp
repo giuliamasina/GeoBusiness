@@ -22,6 +22,7 @@
     ArticoloAsta articoloasta = (ArticoloAsta) request.getAttribute("articoloasta");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
     List<Float> offerte = (List<Float>) request.getAttribute("offerte");
+    String http = "http://localhost:12345/";
     List<Timestamp> date_offerte = (List<Timestamp>) request.getAttribute(("date_offerte"));
     //Integer Id_compratore = (Integer) request.getAttribute("Id_compratore");
     int i;
@@ -65,7 +66,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-
+            text-decoration: underline;
         }
         body main {
             display: flex;
@@ -194,7 +195,7 @@
 
 <main>
     <section>
-        <img src="<%=articoloasta.getImmagine()%>" alt="Image 1">
+        <img src="<%=http+articoloasta.getImmagine()%>" alt="Image 1">
         <h1 id="nome"><%=articoloasta.getNome()%></h1>
         <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
     </section>

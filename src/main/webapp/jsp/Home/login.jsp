@@ -48,7 +48,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-
+            text-decoration: underline;
         }
         main {
             padding: 0;

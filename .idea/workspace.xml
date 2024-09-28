@@ -11,10 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a7d42c3c-389f-4560-ada6-ae00a90dd2b0" name="Changes" comment=" html e controller">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/controller/Profile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CompratoreDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/CompratoreDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/CompratoreDAOMySQLJDBCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geobusiness/geobusiness/model/dao/mySQLJDBCImpl/CompratoreDAOMySQLJDBCImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Home/view.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewArtComprato.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewArtComprato.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewCompratore.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewCompratore.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewVendPerComp.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Profile/viewVendPerComp.jsp" afterDir="false" />
@@ -73,33 +69,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaMethodFindUsagesOptions.isSearchForTextOccurrences": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Tomcat Server.Tomcat 10.1.19.executor": "Run",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/giuggiu/GeoBusiness/src/main/resources/immagini",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.40574712",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaMethodFindUsagesOptions.isSearchForTextOccurrences&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Tomcat 10.1.19.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/giuggiu/GeoBusiness/src/main/resources/immagini&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.40574712&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlserver.localdb",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlserver.localdb&quot;,
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/immagini" />
@@ -243,6 +239,7 @@
       <workItem from="1727252139986" duration="22583000" />
       <workItem from="1727340182611" duration="2346000" />
       <workItem from="1727342712361" duration="59805000" />
+      <workItem from="1727508454015" duration="1992000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />

@@ -22,6 +22,7 @@
     Utente loggedUser = (Utente) request.getAttribute("loggedUser");
     String applicationMessage = (String) request.getAttribute("applicationMessage");
     String menuActiveLink = "Shopping";
+    String http = "http://localhost:12345/";
 
     ArticoloVendita articolovendita = (ArticoloVendita) request.getAttribute("articolovendita");
     Venditore venditore = (Venditore) request.getAttribute("venditore");
@@ -67,7 +68,7 @@
             padding: 10px;
         }
         nav ul li a:hover{
-
+            text-decoration: underline;
         }
         body main {
             display: flex;
@@ -178,7 +179,7 @@
 
 <main>
     <section>
-        <img src="<%=articolovendita.getImmagine()%>" alt="Image 1">
+        <img src="<%=http+articolovendita.getImmagine()%>" alt="Image 1">
         <h1 id="nome"><%=articolovendita.getNome()%></h1>
         <h2 id="venditore">Venditore: <%=venditore.getUsername()%></h2>
         <h2 id="prezzo">Prezzo: <%=articolovendita.getPrezzo()%> €</h2>
